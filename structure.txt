@@ -1,0 +1,26 @@
+.api (core 2.2 WebAPI)
+	_Logs: gitignored, system log files
+	Controllers: 
+		Logs: MVC pull log files
+		WhoIs: API read executing environment data
+	Data:
+		Contatins bound context domain
+	Extensions:
+		useful class extensions
+	Filters:
+		request/reqponse/exception filters
+	Helpers:
+		Common debug and environment helper classes, details in each helper
+	Models:
+		View Model container
+	Views:
+		Only necessary for Logs directory
+
+.web (core 3.0, Razor Compnents)
+	Components:
+		razor components (web assembly)
+	Pages:
+		layout and container cshtml files
+	Services:
+		Classes to communicate with .api layer
+.tests (core 3.0, MUnit)

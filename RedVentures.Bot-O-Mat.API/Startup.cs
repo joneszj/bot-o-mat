@@ -1,24 +1,28 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Net;
+using CommonPatterns.Filters;
+using CommonPatterns.Helpers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+using RedVentures.Bot_O_Mat.API.Data;
 
 namespace RedVentures.Bot_O_Mat.API
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private ILogger<Startup> _logger;
+        private Guid _correlationId;
+
+        public Startup(IConfiguration configuration, ILogger<Startup> logger)
         {
             Configuration = configuration;
+            _logger = logger;
+            _correlationId = Guid.NewGuid();
         }
 
         public IConfiguration Configuration { get; }
@@ -26,31 +30,65 @@ namespace RedVentures.Bot_O_Mat.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc()
-                .AddNewtonsoftJson();
+            try
+            {
+                DefaultServices(services);
+                HelpersManager.Configure(_correlationId, services, Configuration);
+                ExceptionFilter.Configure(services);
+                RequestResponseFilter.Configure(services);
+                SwaggerHelper.Configure(services);
+                CacheHelper.Configure(services);
+                HealthCheckHelper.Configure(services);
+                BeatPulseHelper.Configure(services, Configuration);
+                WhoIsHelper.Configure(services);
+                ContextInjections(services);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception: Startup.ConfigureServices");
+                throw;
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
-            {
-                app.UseDeveloperExceptionPage();
-            }
+            if (!env.IsProduction()) app.UseDeveloperExceptionPage();
             else
             {
+                app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
             app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseCookiePolicy();
 
-            app.UseRouting(routes =>
+            HealthCheckHelper.Setup(app);
+            BeatPulseHelper.Setup(app);
+            SwaggerHelper.Setup(app);
+
+            app.UseMvc(routes =>
             {
-                routes.MapControllers();
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
             });
-
-            app.UseAuthorization();
         }
+
+        #region helpers
+        private static void DefaultServices(IServiceCollection services)
+        {
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddHttpClient();
+        }
+
+        /// <summary>
+        /// NOTE: account context is registered Areas/Identity/IdentityHostingStartup.cs
+        /// </summary>
+        /// <param name="services"></param>
+        private void ContextInjections(IServiceCollection services) => services.AddDbContext<BotOMatContext>(options => options.UseInMemoryDatabase(DateTime.Today.Month.ToString()));
+        #endregion
     }
 }

@@ -1,0 +1,14 @@
+﻿@model RedVentures.Bot_O_Mat.API.Modles.LogsIndexViewModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<ul>
+    @foreach (var item in Model.Files)
+    {
+        <li>
+            <a href="/Logs/@item.Substring(10,8)">@item</a>
+        </li>
+    }
+</ul>
