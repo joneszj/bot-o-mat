@@ -1,0 +1,7 @@
+init
+added api project
+added tests project
+added solution documents
+	changelog: running log of modifications on project
+	concept: general acceptance criteria and todo ideas
+	troubleshooting: common troubleshooting techniques and tips

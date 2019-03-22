@@ -5,6 +5,15 @@ VisualStudioVersion = 16.0.28714.193
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedVentures.Bot-O-Mat.API", "RedVentures.Bot-O-Mat.API\RedVentures.Bot-O-Mat.API.csproj", "{F4785A44-F4F4-40B8-931B-883F7169441F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedVentures.Bot-O-Mat.Tests", "RedVentures.Bot-O-Mat.Tests\RedVentures.Bot-O-Mat.Tests.csproj", "{03B951C4-57FE-467C-8020-1E72DAF373F1}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_documentation", "_documentation", "{114AB981-C5C8-4A01-A3B5-08F18D2E8B77}"
+	ProjectSection(SolutionItems) = preProject
+		changelog.txt = changelog.txt
+		concept.txt = concept.txt
+		troubleshooting.txt = troubleshooting.txt
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +24,10 @@ Global
 		{F4785A44-F4F4-40B8-931B-883F7169441F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4785A44-F4F4-40B8-931B-883F7169441F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4785A44-F4F4-40B8-931B-883F7169441F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03B951C4-57FE-467C-8020-1E72DAF373F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03B951C4-57FE-467C-8020-1E72DAF373F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03B951C4-57FE-467C-8020-1E72DAF373F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03B951C4-57FE-467C-8020-1E72DAF373F1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
