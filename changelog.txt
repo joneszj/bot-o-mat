@@ -5,3 +5,11 @@ added solution documents
 	changelog: running log of modifications on project
 	concept: general acceptance criteria and todo ideas
 	troubleshooting: common troubleshooting techniques and tips
+	structure: general folder structure
+added common helper classes (notifications, healthchecks, etc)
+added services for BLL logic
+added robot and base class (audit columns) as dbset => botomatcontext
+added robotType enum
+added robot controller
+began irobotservice
+	any robot query/command must go through the irobotservice

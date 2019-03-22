@@ -71,3 +71,4 @@ Personal touches
 -add robot schematic modules
 -give modules weight in task completion
 -limit total modules to enforce optimization limitations
+-images for robots

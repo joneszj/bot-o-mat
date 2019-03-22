@@ -15,6 +15,8 @@
 		View Model container
 	Views:
 		Only necessary for Logs directory
+	Services:
+		Contains BLL related classes
 
 .web (core 3.0, Razor Compnents)
 	Components:
@@ -24,3 +26,6 @@
 	Services:
 		Classes to communicate with .api layer
 .tests (core 3.0, MUnit)
+
+.common
+	with the isomorphic nature of razor component, we can share validation logic between the .web and .api layers
