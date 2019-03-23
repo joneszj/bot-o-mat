@@ -1,3 +1,5 @@
+db is not checked in, so if you will need to run "update-database -context botomatcontext" in package manager
+
 healthcheck paths:
     // ~/healthchecks-ui
     // ~/healthchecks-api
@@ -6,6 +8,6 @@ healthcheck paths:
 
 ensure .api and .web apps are set to startup together
 could not get ilogger and swagger to play nice with core 3.0, reverted .api project to 2.2
-make sure healthcheck uri port matches executing port (appsettings.json)
+make sure healthcheck uri port matches executing port (appsettings.json) in the .api project
 
 ensure node is allowed in firewall settings

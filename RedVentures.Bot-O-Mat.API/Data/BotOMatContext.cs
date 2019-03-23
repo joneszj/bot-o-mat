@@ -2,8 +2,6 @@
 using RedVentures.Bot_O_Mat.API.Data.DbSets;
 using RedVentures.Bot_O_Mat.API.Data.Enums;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace RedVentures.Bot_O_Mat.API.Data
 {
@@ -63,6 +61,7 @@ namespace RedVentures.Bot_O_Mat.API.Data
                 .HasValue<Cyborg>(ActorType.Cyborg);
             #endregion
 
+            #region seed
             Random random = new Random();
             int actorId = 0;
             int errandId = 0;
@@ -93,7 +92,8 @@ namespace RedVentures.Bot_O_Mat.API.Data
                         modelBuilder.Entity<Errand>().HasData(new Errand { ActorId = actorId, Id = ++errandId, Status = (ErrandStatus)ErrandStatusvalues.GetValue(random.Next(ErrandStatusvalues.Length)), Type = (ErrandType)ErrandTypevalues.GetValue(random.Next(ErrandTypevalues.Length)), TimeToComplete = random.Next(1000, 25000) });
                     }
                 }
-            }
+            } 
+            #endregion
         }
     }
 }
