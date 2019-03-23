@@ -37,6 +37,7 @@ namespace RedVentures.Bot_O_Mat.API
                 HelpersManager.Configure(_correlationId, services, Configuration);
                 ExceptionFilter.Configure(services);
                 RequestResponseFilter.Configure(services);
+                RefreshRobotCacheFilter.Configure(services);
                 SwaggerHelper.Configure(services);
                 CacheHelper.Configure(services);
                 HealthCheckHelper.Configure(services);

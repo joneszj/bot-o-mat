@@ -6,13 +6,11 @@ namespace RedVentures.Bot_O_Mat.API.Modles
 {
     public class RobotViewModel
     {
-        public RobotViewModel()
-        {
-
-        }
+        public RobotViewModel() { }
         public RobotViewModel(Robot robot)
         {
             Name = robot.Name;
+            Type = robot.Type;
             Errands = robot.Errands?.Select(e => new ErrandViewModel(e)).ToArray();
         }
 

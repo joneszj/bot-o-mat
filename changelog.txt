@@ -23,3 +23,6 @@ added robot and errand view models
 modified irobotservice
 added robotservice
 Add-Migration InitialCreate -OutputDir "Data/Migrations" -Context BotOMatContext
+Update-Database -Context BotOMatContext
+added a refreshRobotCacheFilter on command requests
+added simple validaiton to robot controller

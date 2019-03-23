@@ -29,25 +29,45 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
 
         #region public members
         [HttpGet("{id}")]
-        public async Task<RobotViewModel> Get(int id) => new RobotViewModel(await _robotService.GetRobot(id));
-
-        [HttpGet]
-        public async Task<IEnumerable<RobotViewModel>> Get()
+        public async Task<ActionResult<RobotViewModel>> Get(int id)
         {
-            var cacheResponse = _helpersManager.Cache.TryGet<DateTime, RobotViewModel[]>(DateTime.Today, out bool IsFound);
-            if (IsFound) return await Task.FromResult(cacheResponse);
-            else
-            {
-                var robots = await _robotService.GetRobotsBy(string.Empty, null);
-                return _helpersManager.Cache.Set(DateTime.Today, robots.Select(e => new RobotViewModel(e)).ToArray());
-            }
+            var robot = new RobotViewModel(await _robotService.GetRobot(id));
+            if (robot == null) return NotFound();
+            return new RobotViewModel(await _robotService.GetRobot(id));
         }
 
-        [HttpPost]
-        public async Task<RobotViewModel> Post([FromBody] RobotViewModel robot) => new RobotViewModel(await _robotService.CreateRobot(robot.Name, robot.Type));
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<RobotViewModel>>> Get()
+        {
+            var cacheResponse = _helpersManager.Cache.TryGet<DateTime, RobotViewModel[]>(DateTime.Today, out bool IsFound);
+            if (IsFound) return Ok(await Task.FromResult(cacheResponse));
+            else return Ok(await RefreshCache());
+        }
 
+        [ServiceFilter(typeof(RefreshRobotCacheFilter))]
+        [HttpPost]
+        public async Task<ActionResult<RobotViewModel>> Post([FromBody] RobotViewModel robot)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            return new RobotViewModel(await _robotService.CreateRobot(robot.Name, robot.Type));
+        }
+
+        [ServiceFilter(typeof(RefreshRobotCacheFilter))]
         [HttpDelete("{id}")]
-        public async Task Delete(int id) => await _robotService.ScrapRobot(id);
+        public async Task<ActionResult> Delete(int id)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            await _robotService.ScrapRobot(id);
+            return Ok();
+        }
+        #endregion
+
+        #region helpers
+        private async Task<RobotViewModel[]> RefreshCache()
+        {
+            var robots = await _robotService.GetRobotsBy(string.Empty, null);
+            return _helpersManager.Cache.Set(DateTime.Today, robots.Select(e => new RobotViewModel(e)).ToArray());
+        } 
         #endregion
     }
 }
