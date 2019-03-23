@@ -6,3 +6,4 @@ abandoned .web (razor components)
 	dont want to spend forever debugging something, will instead use a traditional mvc or angular project
 attempted an angular web ui but abandoned in favor of the features embedded in razor pages, so .net core mvc ftw
 added common tooling
+NavBar: https://github.com/azouaoui-med/pro-sidebar-template
