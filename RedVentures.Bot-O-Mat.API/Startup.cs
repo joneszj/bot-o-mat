@@ -87,11 +87,7 @@ namespace RedVentures.Bot_O_Mat.API
             services.AddHttpClient();
         }
 
-        /// <summary>
-        /// NOTE: account context is registered Areas/Identity/IdentityHostingStartup.cs
-        /// </summary>
-        /// <param name="services"></param>
-        private void ContextInjections(IServiceCollection services) => services.AddDbContext<BotOMatContext>(options => options.UseInMemoryDatabase(DateTime.Today.Month.ToString()));
+        private void ContextInjections(IServiceCollection services) => services.AddDbContext<BotOMatContext>(options => options.UseSqlite("Data Source=BotOMatContext.db"));
         #endregion
     }
 }

@@ -22,3 +22,4 @@ added a seed method but it kept failing. TODO: understand seed method failure
 added robot and errand view models
 modified irobotservice
 added robotservice
+Add-Migration InitialCreate -OutputDir "Data/Migrations" -Context BotOMatContext
