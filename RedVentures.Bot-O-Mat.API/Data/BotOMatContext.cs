@@ -62,46 +62,6 @@ namespace RedVentures.Bot_O_Mat.API.Data
                 .HasValue<Robot>(ActorType.Robot)
                 .HasValue<Cyborg>(ActorType.Cyborg); 
             #endregion
-
-            //Seed(modelBuilder);
-        }
-
-        private void Seed(ModelBuilder modelBuilder)
-        {
-            var robots = new List<Robot>();
-
-            Array errandTypeValues = Enum.GetValues(typeof(ErrandType));
-            Array errandStatusValues = Enum.GetValues(typeof(ErrandType));
-            Random random = new Random();
-
-            var errands = new List<Errand>();
-            var errandId = 0;
-
-            foreach (var i in Enumerable.Range(1, 200))
-            {
-                var robot = new Robot
-                {
-                    Id = i,
-                    Name = Faker.Name.FullName(),
-                    Errands = errands
-                };
-
-                foreach (var y in Enumerable.Range(2, random.Next(1, 10)))
-                {
-                    errands.Add(new Errand
-                    {
-                        Id = ++errandId,
-                        ActorId = robot.Id,
-                        Actor = robot,
-                        Type = (ErrandType)errandTypeValues.GetValue(random.Next(errandTypeValues.Length)),
-                        Status = (ErrandStatus)errandStatusValues.GetValue(random.Next(errandStatusValues.Length))
-                    });
-                };
-
-                robots.Add(robot);
-            };
-
-            modelBuilder.Entity<Robot>().HasData(robots);
         }
     }
 }

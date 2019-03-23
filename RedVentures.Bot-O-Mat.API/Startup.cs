@@ -38,6 +38,7 @@ namespace RedVentures.Bot_O_Mat.API
                 ExceptionFilter.Configure(services);
                 RequestResponseFilter.Configure(services);
                 RefreshRobotCacheFilter.Configure(services);
+                RefreshCyborgCacheFilter.Configure(services);
                 SwaggerHelper.Configure(services);
                 CacheHelper.Configure(services);
                 HealthCheckHelper.Configure(services);
@@ -47,6 +48,7 @@ namespace RedVentures.Bot_O_Mat.API
 
                 services.AddScoped<IErrandService, ErrandService>(serviceProvider => new ErrandService(serviceProvider.GetService<BotOMatContext>()));
                 services.AddScoped<IRobotService, RobotService>(serviceProvider => new RobotService(serviceProvider.GetService<BotOMatContext>(), serviceProvider.GetService<IErrandService>()));
+                services.AddScoped<ICyborgService, CyborgService>(serviceProvider => new CyborgService(serviceProvider.GetService<BotOMatContext>(), serviceProvider.GetService<IErrandService>()));
             }
             catch (Exception ex)
             {

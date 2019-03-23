@@ -13,7 +13,6 @@
     <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="2.2.0" />
     <PackageReference Include="AspNetCore.HealthChecks.System" Version="2.2.1" />
     <PackageReference Include="AspNetCore.HealthChecks.UI" Version="2.2.17" />
-    <PackageReference Include="Faker.NETCore" Version="1.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.2" />
@@ -30,10 +29,6 @@
 
   <ItemGroup>
     <Folder Include="Views\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\RedVentures.Bot-O-Mat.Common\RedVentures.Bot-O-Mat.Common.csproj" />
   </ItemGroup>
 
 </Project>

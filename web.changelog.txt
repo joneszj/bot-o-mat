@@ -1,0 +1,6 @@
+index will render the leaderboard and have means to create errand actors
+created leaderboard component
+abandoned .web
+	without error or warning, external project or nuget references kept being silently removed from the porject on build
+	i havent been able to identify why this happens (could be version conflicts), but its still in preview mode so quirks are expected
+	dont want to spend forever debugging something, will instead use a traditional mvc or angular project

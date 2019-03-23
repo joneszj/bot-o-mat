@@ -7,6 +7,7 @@ added solution documents
 	troubleshooting: common troubleshooting techniques and tips
 	structure: general folder structure
 added common helper classes (notifications, healthchecks, etc)
+could not get ilogger and swagger to play nice with core 3.0, reverted .api project to 2.2
 added services for BLL logic
 added robot and base class (audit columns) as dbset => botomatcontext
 added robotType enum
@@ -36,3 +37,8 @@ issues with sqllite migrations (SQLite does not support this migration operation
 	Add-Migration InitialContext -OutputDir "Data/Migrations" -Context BotOMatContext
 	update-database -Context BotOMatContext
 	I think id prefer a tpt schema but its not natively supported, so went with tph, ref: https://www.learnentityframeworkcore.com/inheritance/table-per-hierarchy
+abandoned .web (razor component) project
+created .spa (mvc + angular) to replace the .web project
+TODO: considering how alike the robot and cybor services are, consiger a generic abstraction
+added cyborg infrstructure
+added leaderboard controller and infrastructure

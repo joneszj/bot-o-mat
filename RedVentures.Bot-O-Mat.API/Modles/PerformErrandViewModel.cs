@@ -8,7 +8,7 @@ namespace RedVentures.Bot_O_Mat.API.Modles
 {
     public class PerformErrandViewModel
     {
-        public int RobotId { get; set; }
+        public int ActorId { get; set; }
         public ErrandType ErrandType { get; set; }
     }
 }

@@ -10,8 +10,8 @@ namespace CommonPatterns.Controllers
     [ServiceFilter(typeof(RequestResponseFilter))]
     public class LogsController : Controller
     {
-        private string _filepath { get; set; }
-        private string _filepathCopy { get; set; }
+        private string _filepath;
+        private string _filepathCopy;
 
         [Route("Logs")]
         [HttpGet]

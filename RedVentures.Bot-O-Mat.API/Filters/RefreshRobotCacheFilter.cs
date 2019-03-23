@@ -1,6 +1,7 @@
 ﻿using CommonPatterns.Helpers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
+using RedVentures.Bot_O_Mat.API.Data.Enums;
 using RedVentures.Bot_O_Mat.API.Modles;
 using RedVentures.Bot_O_Mat.API.Services;
 using System;
@@ -29,7 +30,7 @@ namespace CommonPatterns.Filters
         {
             //TODO: invalidate cache, this is inefficient
             var robots = await _robotService.GetRobotsBy(string.Empty, null);
-            _helpersManager.Cache.Set(DateTime.Today, robots.Select(e => new RobotViewModel(e)).ToArray());
+            _helpersManager.Cache.Set((DateTime.Today, ActorType.Robot), robots.Select(e => new RobotViewModel(e)).ToArray());
         }
 
         public static void Configure(IServiceCollection services) => services.AddScoped<RefreshRobotCacheFilter>();

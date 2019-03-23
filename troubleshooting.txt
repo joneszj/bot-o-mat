@@ -7,3 +7,5 @@ healthcheck paths:
 ensure .api and .web apps are set to startup together
 could not get ilogger and swagger to play nice with core 3.0, reverted .api project to 2.2
 make sure healthcheck uri port matches executing port (appsettings.json)
+
+ensure node is allowed in firewall settings

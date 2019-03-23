@@ -13,7 +13,7 @@ namespace CommonPatterns.Controllers
     [ApiController]
     public class WhoIsController : ControllerBase
     {
-        private IWhoIsHelper _whoIsHelper;
+        private readonly IWhoIsHelper _whoIsHelper;
         private readonly IHostingEnvironment _hostingEnvironment;
 
         public WhoIsController(IWhoIsHelper whoIsHelper, IHostingEnvironment hostingEnvironment)

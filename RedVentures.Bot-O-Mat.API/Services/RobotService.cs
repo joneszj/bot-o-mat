@@ -18,7 +18,7 @@ namespace RedVentures.Bot_O_Mat.API.Services
         {
             _botOMatContext = botOMatContext;
             _errandService = errandService;
-        } 
+        }
         #endregion
 
         public async Task<Robot> CreateRobot(string Name, RobotType robotType)
@@ -42,7 +42,10 @@ namespace RedVentures.Bot_O_Mat.API.Services
             var filter = _botOMatContext.Robots.AsQueryable();
             if (!string.IsNullOrEmpty(Name)) filter = filter.Where(e => e.Name.Contains(Name)).AsQueryable();
             if (Type != null) filter = filter.Where(e => e.Type == Type).AsQueryable();
-            return await filter.Skip(Skip).Take(100).ToListAsync();
+            return await filter
+                .OrderByDescending(robot => robot.Errands.Where(errand => errand.Status == ErrandStatus.Completed).Count())
+                .Skip(Skip).Take(100)
+                .ToListAsync();
         }
 
         /// <summary>
