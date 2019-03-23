@@ -42,3 +42,6 @@ created .spa (mvc + angular) to replace the .web project
 TODO: considering how alike the robot and cybor services are, consiger a generic abstraction
 added cyborg infrstructure
 added leaderboard controller and infrastructure
+added cors for ui requests
+reapproached the seed and got that to work :)
+Add-Migration InitWithSeed -Context BotOMatContext -OutputDir Data/Migrations

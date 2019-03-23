@@ -72,6 +72,8 @@ namespace RedVentures.Bot_O_Mat.API
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
+            app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+
             HealthCheckHelper.Setup(app);
             BeatPulseHelper.Setup(app);
             SwaggerHelper.Setup(app);
