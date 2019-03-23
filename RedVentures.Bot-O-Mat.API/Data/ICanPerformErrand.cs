@@ -1,4 +1,5 @@
 ﻿using RedVentures.Bot_O_Mat.API.Data.DbSets;
+using RedVentures.Bot_O_Mat.API.Data.Enums;
 using System.Collections.Generic;
 
 namespace RedVentures.Bot_O_Mat.API.Data
@@ -8,7 +9,7 @@ namespace RedVentures.Bot_O_Mat.API.Data
     /// </summary>
     public interface ICanPerformErrand
     {
-        int ActorType { get; }
         ICollection<Errand> Errands { get; set; }
+        ActorType ActorType { get; set; }
     }
 }

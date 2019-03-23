@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RedVentures.Bot_O_Mat.API.Data;
+using RedVentures.Bot_O_Mat.API.Data.Enums;
 
 namespace RedVentures.Bot_O_Mat.API.Data.Migrations
 {
@@ -47,10 +48,12 @@ namespace RedVentures.Bot_O_Mat.API.Data.Migrations
                     b.ToTable("Errands");
                 });
 
-            modelBuilder.Entity("RedVentures.Bot_O_Mat.API.Data.DbSets.Robot", b =>
+            modelBuilder.Entity("RedVentures.Bot_O_Mat.API.Data.DbSets.ErrandActor", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd();
+
+                    b.Property<int>("ActorType");
 
                     b.Property<string>("CreatedBy");
 
@@ -66,17 +69,36 @@ namespace RedVentures.Bot_O_Mat.API.Data.Migrations
                         .IsRequired()
                         .HasMaxLength(50);
 
+                    b.HasKey("Id");
+
+                    b.ToTable("ErrandActor");
+
+                    b.HasDiscriminator<int>("ActorType");
+                });
+
+            modelBuilder.Entity("RedVentures.Bot_O_Mat.API.Data.DbSets.Cyborg", b =>
+                {
+                    b.HasBaseType("RedVentures.Bot_O_Mat.API.Data.DbSets.ErrandActor");
+
+                    b.Property<string>("Gender")
+                        .IsRequired();
+
+                    b.HasDiscriminator().HasValue(1);
+                });
+
+            modelBuilder.Entity("RedVentures.Bot_O_Mat.API.Data.DbSets.Robot", b =>
+                {
+                    b.HasBaseType("RedVentures.Bot_O_Mat.API.Data.DbSets.ErrandActor");
+
                     b.Property<string>("Type")
                         .IsRequired();
 
-                    b.HasKey("Id");
-
-                    b.ToTable("Robots");
+                    b.HasDiscriminator().HasValue(0);
                 });
 
             modelBuilder.Entity("RedVentures.Bot_O_Mat.API.Data.DbSets.Errand", b =>
                 {
-                    b.HasOne("RedVentures.Bot_O_Mat.API.Data.DbSets.Robot", "Actor")
+                    b.HasOne("RedVentures.Bot_O_Mat.API.Data.DbSets.ErrandActor", "Actor")
                         .WithMany("Errands")
                         .HasForeignKey("ActorId")
                         .OnDelete(DeleteBehavior.Cascade);

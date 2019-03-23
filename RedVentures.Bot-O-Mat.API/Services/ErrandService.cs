@@ -27,9 +27,9 @@ namespace RedVentures.Bot_O_Mat.API.Services
             //TODO: calculate weighted augmentation preferences on robot type
             //higher RobotTypes reduce the speed of completion, but have extra 'dice rolls' to fail
             //... (int)((Robot)robot).Type)) actually works
-            foreach (var item in Enumerable.Range(0, actor.ActorType))
+            foreach (var item in Enumerable.Range(0, (int)actor.ActorType))
             {
-                Thread.Sleep((int)errandType / actor.ActorType);
+                Thread.Sleep((int)errandType / (int)actor.ActorType);
                 //TODO: add chance to fail (perhaps on robot type?)
                 if (_randomGenerator.Next(100) < 20)
                 {

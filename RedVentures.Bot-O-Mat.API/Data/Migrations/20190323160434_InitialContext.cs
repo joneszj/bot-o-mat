@@ -3,12 +3,12 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace RedVentures.Bot_O_Mat.API.Data.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialContext : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Robots",
+                name: "ErrandActor",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -19,11 +19,13 @@ namespace RedVentures.Bot_O_Mat.API.Data.Migrations
                     ModifiedDate = table.Column<DateTime>(nullable: false),
                     IsActive = table.Column<bool>(nullable: false),
                     Name = table.Column<string>(maxLength: 50, nullable: false),
-                    Type = table.Column<string>(nullable: false)
+                    ActorType = table.Column<int>(nullable: false),
+                    Gender = table.Column<string>(nullable: true),
+                    Type = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Robots", x => x.Id);
+                    table.PrimaryKey("PK_ErrandActor", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -46,9 +48,9 @@ namespace RedVentures.Bot_O_Mat.API.Data.Migrations
                 {
                     table.PrimaryKey("PK_Errands", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Errands_Robots_ActorId",
+                        name: "FK_Errands_ErrandActor_ActorId",
                         column: x => x.ActorId,
-                        principalTable: "Robots",
+                        principalTable: "ErrandActor",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -65,7 +67,7 @@ namespace RedVentures.Bot_O_Mat.API.Data.Migrations
                 name: "Errands");
 
             migrationBuilder.DropTable(
-                name: "Robots");
+                name: "ErrandActor");
         }
     }
 }
