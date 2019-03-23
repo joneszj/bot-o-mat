@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace RedVentures.Bot_O_Mat.API.Data.Enums
+﻿namespace RedVentures.Bot_O_Mat.API.Data.Enums
 {
-    public enum RobotTask
+    public enum ErrandType
     {
         do_the_dishes = 1000,
         sweep_the_house = 3000,

@@ -1,7 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using CommonPatterns.Filters;
 using CommonPatterns.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using RedVentures.Bot_O_Mat.API.Modles;
+using RedVentures.Bot_O_Mat.API.Services;
 
 namespace RedVentures.Bot_O_Mat.API.Controllers
 {
@@ -13,45 +18,36 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
     {
         #region constructor && private members
         private HelpersManager _helpersManager;
+        private IRobotService _robotService;
 
-        public RobotController(HelpersManager helperManager)
+        public RobotController(HelpersManager helperManager, IRobotService robotService)
         {
             _helpersManager = helperManager;
+            _robotService = robotService;
         }
         #endregion
 
         #region public members
-        // GET: api/Robot
+        [HttpGet("{id}")]
+        public async Task<RobotViewModel> Get(int id) => new RobotViewModel(await _robotService.GetRobot(id));
+
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IEnumerable<RobotViewModel>> Get()
         {
-            return new string[] { "value1", "value2" };
+            var cacheResponse = _helpersManager.Cache.TryGet<DateTime, RobotViewModel[]>(DateTime.Today, out bool IsFound);
+            if (IsFound) return await Task.FromResult(cacheResponse);
+            else
+            {
+                var robots = await _robotService.GetRobotsBy(string.Empty, null);
+                return _helpersManager.Cache.Set(DateTime.Today, robots.Select(e => new RobotViewModel(e)).ToArray());
+            }
         }
 
-        // GET: api/Robot/5
-        [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST: api/Robot
         [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+        public async Task<RobotViewModel> Post([FromBody] RobotViewModel robot) => new RobotViewModel(await _robotService.CreateRobot(robot.Name, robot.Type));
 
-        // PUT: api/Robot/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE: api/Robot/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        } 
+        public async Task Delete(int id) => await _robotService.ScrapRobot(id);
         #endregion
     }
 }

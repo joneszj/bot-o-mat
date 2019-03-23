@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RedVentures.Bot_O_Mat.API.Data;
+using RedVentures.Bot_O_Mat.API.Services;
 
 namespace RedVentures.Bot_O_Mat.API
 {
@@ -42,6 +43,8 @@ namespace RedVentures.Bot_O_Mat.API
                 BeatPulseHelper.Configure(services, Configuration);
                 WhoIsHelper.Configure(services);
                 ContextInjections(services);
+
+                services.AddScoped<IRobotService, RobotService>(serviceProvider => new RobotService(serviceProvider.GetService<BotOMatContext>()));
             }
             catch (Exception ex)
             {

@@ -69,6 +69,7 @@ Be creative and have fun! Use this list or create your own features.
 
 Personal touches
 -add robot schematic modules
--give modules weight in task completion
+-give modules (augments) weight in task completion
 -limit total modules to enforce optimization limitations
 -images for robots
+-cyborg as errand preformers
