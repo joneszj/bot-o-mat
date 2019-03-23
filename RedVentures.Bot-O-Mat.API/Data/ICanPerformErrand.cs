@@ -8,6 +8,7 @@ namespace RedVentures.Bot_O_Mat.API.Data
     /// </summary>
     public interface ICanPerformErrand
     {
+        int ActorType { get; }
         ICollection<Errand> Errands { get; set; }
     }
 }

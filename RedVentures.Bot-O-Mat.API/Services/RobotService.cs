@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using RedVentures.Bot_O_Mat.API.Data;
@@ -13,13 +11,13 @@ namespace RedVentures.Bot_O_Mat.API.Services
     public class RobotService : IRobotService
     {
         #region constructor && private members
-        private BotOMatContext _botOMatContext;
-        private Random _randomGenerator;
+        private readonly BotOMatContext _botOMatContext;
+        private readonly IErrandService _errandService;
 
-        public RobotService(BotOMatContext botOMatContext)
+        public RobotService(BotOMatContext botOMatContext, IErrandService errandService)
         {
             _botOMatContext = botOMatContext;
-            _randomGenerator = new Random();
+            _errandService = errandService;
         } 
         #endregion
 
@@ -32,7 +30,7 @@ namespace RedVentures.Bot_O_Mat.API.Services
 
         public async Task ScrapRobot(int Id)
         {
-            var robot = await _botOMatContext.Robots.FindAsync(Id);
+            var robot = await GetRobot(Id);
             robot.Scrap();
             await _botOMatContext.SaveChangesAsync();
         }
@@ -55,24 +53,7 @@ namespace RedVentures.Bot_O_Mat.API.Services
         /// <returns></returns>
         public async Task<Robot> PerformErrand(Robot robot, ErrandType errandType)
         {
-            var errand = new Errand(robot, errandType);
-            errand.Status = ErrandStatus.In_Progress;
-
-            //TODO: calculate weighted augmentation preferences on robot type
-            foreach (var item in Enumerable.Range(0, (int)robot.Type))
-            {
-                Thread.Sleep((int)errandType / (int)robot.Type);
-                //TODO: add chance to fail (perhaps on robot type?)
-                if (_randomGenerator.Next(100) < 10)
-                {
-                    //robot destroyed the errand task!!!!
-                    errand.Status = ErrandStatus.Failed;
-                    break;
-                }
-            }
-
-            if (errand.Status != ErrandStatus.Failed) errand.Status = ErrandStatus.Completed;
-            await _botOMatContext.SaveChangesAsync();
+            await _errandService.PerformErrand(robot, errandType);
             return robot;
         }
     }

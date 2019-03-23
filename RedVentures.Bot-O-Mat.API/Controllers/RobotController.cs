@@ -17,8 +17,8 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
     public class RobotController : ControllerBase
     {
         #region constructor && private members
-        private HelpersManager _helpersManager;
-        private IRobotService _robotService;
+        private readonly HelpersManager _helpersManager;
+        private readonly IRobotService _robotService;
 
         public RobotController(HelpersManager helperManager, IRobotService robotService)
         {
@@ -31,6 +31,7 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<RobotViewModel>> Get(int id)
         {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
             var robot = new RobotViewModel(await _robotService.GetRobot(id));
             if (robot == null) return NotFound();
             return new RobotViewModel(await _robotService.GetRobot(id));
@@ -49,7 +50,17 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
         public async Task<ActionResult<RobotViewModel>> Post([FromBody] RobotViewModel robot)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            return new RobotViewModel(await _robotService.CreateRobot(robot.Name, robot.Type));
+            return Ok(new RobotViewModel(await _robotService.CreateRobot(robot.Name, robot.Type)));
+        }
+
+        [ServiceFilter(typeof(RefreshRobotCacheFilter))]
+        [HttpPut]
+        public async Task<ActionResult<RobotViewModel>> Put([FromBody] PerformErrandViewModel performErrandViewModel)
+        {
+            if (!ModelState.IsValid) return BadRequest(ModelState);
+            var robot = await _robotService.GetRobot(performErrandViewModel.RobotId);
+            if (robot == null) return NotFound();
+            return new RobotViewModel(await _robotService.PerformErrand(robot, performErrandViewModel.ErrandType));
         }
 
         [ServiceFilter(typeof(RefreshRobotCacheFilter))]

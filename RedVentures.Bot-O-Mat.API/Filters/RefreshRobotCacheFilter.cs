@@ -17,7 +17,7 @@ namespace CommonPatterns.Filters
     {
         #region ctor && private
         private readonly HelpersManager _helpersManager;
-        IRobotService _robotService;
+        readonly IRobotService _robotService;
         public RefreshRobotCacheFilter(HelpersManager helpersManager, IRobotService robotService)
         {
             _helpersManager = helpersManager;

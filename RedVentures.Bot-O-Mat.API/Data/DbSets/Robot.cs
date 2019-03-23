@@ -12,6 +12,7 @@ namespace RedVentures.Bot_O_Mat.API.Data.DbSets
         [Required]
         public RobotType Type { get; set; }
         public ICollection<Errand> Errands { get; set; }
+        public int ActorType { get => (int)Type; }
 
         public Robot Scrap()
         {

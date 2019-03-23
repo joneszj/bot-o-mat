@@ -16,9 +16,9 @@ namespace RedVentures.Bot_O_Mat.API.Data.DbSets
 
         }
 
-        public Errand(Robot robot, ErrandType errandType)
+        public Errand(ICanPerformErrand actor, ErrandType errandType)
         {
-            Actor = robot;
+            Actor = actor;
             Type = errandType;
             Status = ErrandStatus.Not_Started;
         }

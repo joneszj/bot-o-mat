@@ -16,7 +16,7 @@ namespace RedVentures.Bot_O_Mat.API
 {
     public class Startup
     {
-        private ILogger<Startup> _logger;
+        private readonly ILogger<Startup> _logger;
         private Guid _correlationId;
 
         public Startup(IConfiguration configuration, ILogger<Startup> logger)
@@ -45,7 +45,8 @@ namespace RedVentures.Bot_O_Mat.API
                 WhoIsHelper.Configure(services);
                 ContextInjections(services);
 
-                services.AddScoped<IRobotService, RobotService>(serviceProvider => new RobotService(serviceProvider.GetService<BotOMatContext>()));
+                services.AddScoped<IErrandService, ErrandService>(serviceProvider => new ErrandService(serviceProvider.GetService<BotOMatContext>()));
+                services.AddScoped<IRobotService, RobotService>(serviceProvider => new RobotService(serviceProvider.GetService<BotOMatContext>(), serviceProvider.GetService<IErrandService>()));
             }
             catch (Exception ex)
             {
