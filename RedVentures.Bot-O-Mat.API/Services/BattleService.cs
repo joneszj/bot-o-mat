@@ -19,9 +19,13 @@ namespace RedVentures.Bot_O_Mat.API.Services
             _randomGenerator = new Random();
         }
 
+        /// <summary>
+        /// actor destroyed another actor!!!!
+        /// </summary>
+        /// <param name="actor"></param>
+        /// <returns></returns>
         public async Task KillAnotherActor(ICanPerformErrand actor)
         {
-            //actor destroyed another actor!!!!
             if (actor.ActorType == ActorType.Cyborg)
             {
                 var deadActorRange = await _robotService.GetRobotsBy(string.Empty, null);
@@ -29,7 +33,7 @@ namespace RedVentures.Bot_O_Mat.API.Services
                 if (deadActor != null)
                 {
                     deadActor.IsActive = false;
-                    deadActor.KilledBy = actor.Id;
+                    deadActor.KilledById = actor.Id;
                 }
             }
             else
@@ -39,7 +43,7 @@ namespace RedVentures.Bot_O_Mat.API.Services
                 if (deadActor != null)
                 {
                     deadActor.IsActive = false;
-                    deadActor.KilledBy = actor.Id;
+                    deadActor.KilledById = actor.Id;
                 }
             }
         }

@@ -50,3 +50,5 @@ Add-Migration killedby -Context botomatcontext
 created battleservice
 	makes inactive a random actor based on dice roll chance while an actor is performing an errand, this can include itself
 actor services no longer have reference to the errandservice (circular was inevitable), that is done by the errand service
+TODO: set navigation prop and fk constraint on killedBy
+Add-Migration killedbySeed -Context botomatcontext
