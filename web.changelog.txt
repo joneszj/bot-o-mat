@@ -13,3 +13,4 @@ used nav from codrop https://tympanus.net/codrops/2012/06/05/fullscreen-slit-sli
 created DTOs folder (didnt want to reference API project)
 added AppViewModel as a parent model for the webs partial views
 completed leader board partial view
+completed kill board partial view

@@ -78,10 +78,11 @@ namespace RedVentures.Bot_O_Mat.API.Data
             Array ErrandTypevalues = Enum.GetValues(typeof(ErrandType));
             Array Gendervalues = Enum.GetValues(typeof(Gender));
 
-            while (actorId <= 100)
+            while (actorId <= 300)
             {
                 actorId++;
                 var lastkillerId = actorId / 10;
+                if (lastkillerId == 0) lastkillerId = 1;
                 var errandcount = random.Next(1, 7);
                 if (random.Next(1, 10) < 5)
                 {
