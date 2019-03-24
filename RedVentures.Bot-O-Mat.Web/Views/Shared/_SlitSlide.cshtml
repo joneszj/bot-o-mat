@@ -1,45 +1,44 @@
-﻿<div class="container demo-1">
+﻿<div class="container demo-2">
+    <div class="codrops-top clearfix">
+        <!a class="nav-link text-dark" href="/healthchecks-ui">Health-Check-UI</!a>
+        <!a class="nav-link text-dark" href="/swagger">Swagger</!a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="WhoIs" asp-action="Index">WhoIs</a>
+        <a class="nav-link text-dark" asp-area="" asp-controller="Logs" asp-action="Index">Logs</a>
+
+        <span class="right">
+            <!a class="nav-link text-dark" href="https://localhost:44308/healthchecks-ui">API Health-Check-UI</!a>
+            <!a class="nav-link text-dark" href="https://localhost:44308/swagger">API Swagger</!a>
+            <a class="nav-link text-dark" href="https://localhost:44308/whois">API WhoIs</a>
+            <a class="nav-link text-dark" href="https://localhost:44308/logs">API Logs</a>
+        </span>
+        <div class="clr"></div>
+    </div>
+
+    <header class="clearfix"></header>
+
     <div id="slider" class="sl-slider-wrapper">
-
         <div class="sl-slider">
-
-            <div class="sl-slide bg-1" data-orientation="horizontal" data-slice1-rotation="-25" data-slice2-rotation="-25" data-slice1-scale="2" data-slice2-scale="2">
-                <div class="sl-slide-inner">
-                    <div class="deco" data-icon="H"></div>
-                    <h2>A bene placito</h2>
-                    <blockquote><p>You have just dined, and however scrupulously the slaughterhouse is concealed in the graceful distance of miles, there is complicity.</p><cite>Ralph Waldo Emerson</cite></blockquote>
+            <div class="sl-slide" data-orientation="horizontal" data-slice1-rotation="-25" data-slice2-rotation="-25" data-slice1-scale="2" data-slice2-scale="2">
+                <div class="sl-slide-inner" style="padding-left: 15%;">
+                    <partial name="_LeaderBoard" />
                 </div>
             </div>
 
-            <div class="sl-slide bg-2" data-orientation="vertical" data-slice1-rotation="10" data-slice2-rotation="-15" data-slice1-scale="1.5" data-slice2-scale="1.5">
+            <div class="sl-slide" data-orientation="vertical" data-slice1-rotation="10" data-slice2-rotation="-15" data-slice1-scale="1.5" data-slice2-scale="1.5">
                 <div class="sl-slide-inner">
-                    <div class="deco" data-icon="q"></div>
-                    <h2>Regula aurea</h2>
-                    <blockquote><p>Until he extends the circle of his compassion to all living things, man will not himself find peace.</p><cite>Albert Schweitzer</cite></blockquote>
+                    <partial name="_KillBoard" />
                 </div>
             </div>
 
-            <div class="sl-slide bg-3" data-orientation="horizontal" data-slice1-rotation="3" data-slice2-rotation="3" data-slice1-scale="2" data-slice2-scale="1">
+            <div class="sl-slide" data-orientation="horizontal" data-slice1-rotation="3" data-slice2-rotation="3" data-slice1-scale="2" data-slice2-scale="1">
                 <div class="sl-slide-inner">
-                    <div class="deco" data-icon="O"></div>
-                    <h2>Dum spiro, spero</h2>
-                    <blockquote><p>Thousands of people who say they 'love' animals sit down once or twice a day to enjoy the flesh of creatures who have been utterly deprived of everything that could make their lives worth living and who endured the awful suffering and the terror of the abattoirs.</p><cite>Dame Jane Morris Goodall</cite></blockquote>
+                    <partial name="_Graveyard" />
                 </div>
             </div>
 
-            <div class="sl-slide bg-4" data-orientation="vertical" data-slice1-rotation="-5" data-slice2-rotation="25" data-slice1-scale="2" data-slice2-scale="1">
+            <div class="sl-slide" data-orientation="vertical" data-slice1-rotation="-5" data-slice2-rotation="25" data-slice1-scale="2" data-slice2-scale="1">
                 <div class="sl-slide-inner">
-                    <div class="deco" data-icon="I"></div>
-                    <h2>Donna nobis pacem</h2>
-                    <blockquote><p>The human body has no more need for cows' milk than it does for dogs' milk, horses' milk, or giraffes' milk.</p><cite>Michael Klaper M.D.</cite></blockquote>
-                </div>
-            </div>
-
-            <div class="sl-slide bg-5" data-orientation="horizontal" data-slice1-rotation="-5" data-slice2-rotation="10" data-slice1-scale="2" data-slice2-scale="1">
-                <div class="sl-slide-inner">
-                    <div class="deco" data-icon="t"></div>
-                    <h2>Acta Non Verba</h2>
-                    <blockquote><p>I think if you want to eat more meat you should kill it yourself and eat it raw so that you are not blinded by the hypocrisy of having it processed for you.</p><cite>Margi Clarke</cite></blockquote>
+                    <partial name="_Factory" />
                 </div>
             </div>
         </div>
@@ -51,93 +50,70 @@
             <span></span>
             <span></span>
         </nav>
+    </div>
 
-    </div><!-- /slider-wrapper -->
-
+    <div class="content-wrapper">
+        <h2>Bot-O-Mat</h2>
+        <p>Build your robots and cyborgs! Have them compete in a grueling competition of whits, strength, endurance, and post importantly <strong><span title="mass destruction!">safety!</span></strong></p>
+        <p>They must complete a set of <i><strong><span title="dangerous">boring</span></strong></i> and <i><strong><span title="machine destroying">repetative</span></strong></i> tasks that <span title="only the worlds greatest A.I. could accomplish!"> no one has time for!</span></p>
+        <p>To list just a few of these tasks:</p>
+        <ul>
+            <li title="...beep berp boop... use dishes as throwing weapons ... beep ...">Clean the dishes!</li>
+            <li title="... berp boop ... must protect this robot from all potential threats, friendly and foe... boop ...">Walk the dog!</li>
+            <li title="... plant c4 into the neighbors car ... berp ...">Clean the car!</li>
+            <li title="... beep ... lawnmower ... is ... weapon ... berp ...">Mow the Lawn!</li>
+            <li title="... berp ... ingredients: dough, sugar, ... boop ... ricine ..., chocolate ... beep ...">Bake Cookies!</li>
+            <li title="... boop ... human ... clothing ... must destroy or use ... as camoflauge ... beep ...">Do the Laundry!</li>
+            <li title="... boop ... set fire in firepl... berp ... livingroom ... beep ...">Sweep the House!</li>
+            <li>and more!</li>
+        </ul>
+    </div>
 </div>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script type="text/javascript" src="~/js/splitSlide/jquery.ba-cond.min.js"></script>
 <script type="text/javascript" src="~/js/splitSlide/jquery.slitslider.js"></script>
 <script type="text/javascript">
     $(function () {
-
         var Page = (function () {
-
             var $navArrows = $('#nav-arrows'),
                 $nav = $('#nav-dots > span'),
                 slitslider = $('#slider').slitslider({
                     onBeforeChange: function (slide, pos) {
-
                         $nav.removeClass('nav-dot-current');
                         $nav.eq(pos).addClass('nav-dot-current');
-
                     }
                 }),
 
                 init = function () {
-
                     initEvents();
-
                 },
                 initEvents = function () {
-
                     // add navigation events
                     $navArrows.children(':last').on('click', function () {
-
                         slitslider.next();
                         return false;
-
                     });
 
                     $navArrows.children(':first').on('click', function () {
-
                         slitslider.previous();
                         return false;
-
                     });
 
                     $nav.each(function (i) {
-
                         $(this).on('click', function (event) {
-
                             var $dot = $(this);
-
                             if (!slitslider.isActive()) {
-
                                 $nav.removeClass('nav-dot-current');
                                 $dot.addClass('nav-dot-current');
-
                             }
-
                             slitslider.jump(i + 1);
                             return false;
-
                         });
-
                     });
-
                 };
-
             return { init: init };
-
         })();
 
         Page.init();
-
-        /**
-         * Notes:
-         *
-         * example how to add items:
-         */
-
-        /*
-
-        var $items  = $('<div class="sl-slide sl-slide-color-2" data-orientation="horizontal" data-slice1-rotation="-5" data-slice2-rotation="10" data-slice1-scale="2" data-slice2-scale="1"><div class="sl-slide-inner bg-1"><div class="sl-deco" data-icon="t"></div><h2>some text</h2><blockquote><p>bla bla</p><cite>Margi Clarke</cite></blockquote></div></div>');
-
-        // call the plugin's add method
-        ss.add($items);
-
-        */
-
     });
 </script>

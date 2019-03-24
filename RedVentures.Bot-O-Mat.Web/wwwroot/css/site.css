@@ -54,3 +54,41 @@ body {
   height: 60px;
   line-height: 60px; /* Vertically center the text there */
 }
+
+
+
+/*https://www.w3schools.com/howto/howto_css_split_screen.asp*/
+/* Split the screen in half */
+.split {
+    width: 50%;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+}
+
+/* Control the left side */
+.left {
+    float:left;
+    left: -300px;
+}
+
+/* Control the right side */
+.right {
+    float: right;
+    right: 0;
+}
+
+/* If you want the content centered horizontally and vertically */
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+    /* Style the image inside the centered container, if needed */
+    .centered img {
+        width: 150px;
+        border-radius: 50%;
+    }
