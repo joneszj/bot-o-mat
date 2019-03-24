@@ -12,13 +12,8 @@ namespace RedVentures.Bot_O_Mat.API.Services
     {
         #region constructor && private members
         private readonly BotOMatContext _botOMatContext;
-        private readonly IErrandService _errandService;
 
-        public RobotService(BotOMatContext botOMatContext, IErrandService errandService)
-        {
-            _botOMatContext = botOMatContext;
-            _errandService = errandService;
-        }
+        public RobotService(BotOMatContext botOMatContext) => _botOMatContext = botOMatContext;
         #endregion
 
         public async Task<Robot> CreateRobot(string Name, RobotType robotType)
@@ -47,18 +42,6 @@ namespace RedVentures.Bot_O_Mat.API.Services
                 .Include(e=>e.Errands)
                 .Skip(Skip).Take(100)
                 .ToListAsync();
-        }
-
-        /// <summary>
-        /// Note: should errands be passed to robots to perform, or robots passed to an errand service to perform?
-        /// because errands belong to (are composed in) robots, I felt it best to have an errand passed to the robot (ICanPerformErrand)
-        /// </summary>
-        /// <param name="errandType"></param>
-        /// <returns></returns>
-        public async Task<Robot> PerformErrand(Robot robot, ErrandType errandType)
-        {
-            await _errandService.PerformErrand(robot, errandType);
-            return robot;
         }
     }
 }

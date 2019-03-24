@@ -11,6 +11,5 @@ namespace RedVentures.Bot_O_Mat.API.Services
         Task<Cyborg> GetCyborg(int Id);
         Task<IEnumerable<Cyborg>> GetCyborgsBy(string Name, Gender? Gender, int Skip = 0);
         Task ScrapCyborg(int Id);
-        Task<Cyborg> PerformErrand(Cyborg robot, ErrandType errandType);
     }
 }

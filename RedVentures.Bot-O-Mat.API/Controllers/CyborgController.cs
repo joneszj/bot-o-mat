@@ -20,11 +20,13 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
         #region constructor && private members
         private readonly HelpersManager _helpersManager;
         private readonly ICyborgService _cyborgService;
+        private readonly IErrandService _errandService;
 
-        public CyborgController(HelpersManager helperManager, ICyborgService cyborgService)
+        public CyborgController(HelpersManager helperManager, ICyborgService cyborgService, IErrandService errandService)
         {
             _helpersManager = helperManager;
             _cyborgService = cyborgService;
+            _errandService = errandService;
         }
         #endregion
 
@@ -56,12 +58,12 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
 
         [ServiceFilter(typeof(RefreshCyborgCacheFilter))]
         [HttpPut]
-        public async Task<ActionResult<CyborgViewModel>> Put([FromBody] PerformErrandViewModel performErrandViewModel)
+        public async Task<ActionResult<PerformErrandResult>> Put([FromBody] PerformErrandViewModel performErrandViewModel)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var cyborg = await _cyborgService.GetCyborg(performErrandViewModel.ActorId);
             if (cyborg == null) return NotFound();
-            return new CyborgViewModel(await _cyborgService.PerformErrand(cyborg, performErrandViewModel.ErrandType));
+            return await _errandService.PerformErrand(cyborg, performErrandViewModel.ErrandType);
         }
 
         [ServiceFilter(typeof(RefreshCyborgCacheFilter))]

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using RedVentures.Bot_O_Mat.API.Data;
 using RedVentures.Bot_O_Mat.API.Data.Enums;
@@ -9,9 +10,10 @@ using RedVentures.Bot_O_Mat.API.Data.Enums;
 namespace RedVentures.Bot_O_Mat.API.Data.Migrations
 {
     [DbContext(typeof(BotOMatContext))]
-    partial class BotOMatContextModelSnapshot : ModelSnapshot
+    [Migration("20190324031251_killedby")]
+    partial class killedby
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

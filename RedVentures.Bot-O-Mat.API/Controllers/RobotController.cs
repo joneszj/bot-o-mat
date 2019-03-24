@@ -19,11 +19,13 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
     {
         #region constructor && private members
         private readonly HelpersManager _helpersManager;
+        private readonly IErrandService _errandService;
         private readonly IRobotService _robotService;
 
-        public RobotController(HelpersManager helperManager, IRobotService robotService)
+        public RobotController(HelpersManager helperManager, IRobotService robotService, IErrandService errandService)
         {
             _helpersManager = helperManager;
+            _errandService = errandService;
             _robotService = robotService;
         }
         #endregion
@@ -56,12 +58,12 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
 
         [ServiceFilter(typeof(RefreshRobotCacheFilter))]
         [HttpPut]
-        public async Task<ActionResult<RobotViewModel>> Put([FromBody] PerformErrandViewModel performErrandViewModel)
+        public async Task<ActionResult<PerformErrandResult>> Put([FromBody] PerformErrandViewModel performErrandViewModel)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var robot = await _robotService.GetRobot(performErrandViewModel.ActorId);
             if (robot == null) return NotFound();
-            return new RobotViewModel(await _robotService.PerformErrand(robot, performErrandViewModel.ErrandType));
+            return await _errandService.PerformErrand(robot, performErrandViewModel.ErrandType);
         }
 
         [ServiceFilter(typeof(RefreshRobotCacheFilter))]

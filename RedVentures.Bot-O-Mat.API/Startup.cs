@@ -46,9 +46,11 @@ namespace RedVentures.Bot_O_Mat.API
                 WhoIsHelper.Configure(services);
                 ContextInjections(services);
 
-                services.AddScoped<IErrandService, ErrandService>(serviceProvider => new ErrandService(serviceProvider.GetService<BotOMatContext>()));
-                services.AddScoped<IRobotService, RobotService>(serviceProvider => new RobotService(serviceProvider.GetService<BotOMatContext>(), serviceProvider.GetService<IErrandService>()));
-                services.AddScoped<ICyborgService, CyborgService>(serviceProvider => new CyborgService(serviceProvider.GetService<BotOMatContext>(), serviceProvider.GetService<IErrandService>()));
+
+                services.AddScoped<IRobotService, RobotService>();
+                services.AddScoped<ICyborgService, CyborgService>();
+                services.AddScoped<IBattleService, BattleService>();
+                services.AddScoped<IErrandService, ErrandService>();
             }
             catch (Exception ex)
             {

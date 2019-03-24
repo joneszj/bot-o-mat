@@ -11,5 +11,6 @@ namespace RedVentures.Bot_O_Mat.API.Data.DbSets
         public string Name { get; set; }
         public ICollection<Errand> Errands { get; set; }
         public ActorType ActorType { get; set; }
+        public int? KilledBy { get; set; }
     }
 }

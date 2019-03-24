@@ -12,13 +12,8 @@ namespace RedVentures.Bot_O_Mat.API.Services
     {
         #region constructor && private members
         private readonly BotOMatContext _botOMatContext;
-        private readonly IErrandService _errandService;
 
-        public CyborgService(BotOMatContext botOMatContext, IErrandService errandService)
-        {
-            _botOMatContext = botOMatContext;
-            _errandService = errandService;
-        }
+        public CyborgService(BotOMatContext botOMatContext) => _botOMatContext = botOMatContext;
         #endregion
 
         public async Task<Cyborg> CreateCyborg(string Name, Gender Gender)
@@ -47,12 +42,6 @@ namespace RedVentures.Bot_O_Mat.API.Services
                 .Include(e=>e.Errands)
                 .Skip(Skip).Take(100)
                 .ToListAsync();
-        }
-
-        public async Task<Cyborg> PerformErrand(Cyborg cyborg, ErrandType errandType)
-        {
-            await _errandService.PerformErrand(cyborg, errandType);
-            return cyborg;
         }
     }
 }
