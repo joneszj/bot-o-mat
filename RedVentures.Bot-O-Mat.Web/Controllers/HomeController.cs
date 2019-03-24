@@ -1,5 +1,6 @@
 ﻿using System.Diagnostics;
 using System.Threading.Tasks;
+using CommonPatterns.Filters;
 using CommonPatterns.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using RedVentures.Bot_O_Mat.Web.DTOs;
@@ -7,6 +8,8 @@ using RedVentures.Bot_O_Mat.Web.Models;
 
 namespace RedVentures.Bot_O_Mat.Web.Controllers
 {
+    [ServiceFilter(typeof(ExceptionFilter))]
+    [ServiceFilter(typeof(RequestResponseFilter))]
     public class HomeController : Controller
     {
         private readonly HelpersManager _helpersManager;
