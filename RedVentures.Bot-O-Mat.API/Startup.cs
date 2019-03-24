@@ -51,6 +51,8 @@ namespace RedVentures.Bot_O_Mat.API
                 services.AddScoped<ICyborgService, CyborgService>();
                 services.AddScoped<IBattleService, BattleService>();
                 services.AddScoped<IErrandService, ErrandService>();
+                services.AddScoped<IKillBoardService, KillBoardService>();
+                services.AddScoped<ILeaderBoardService, LeaderBoardService>();
             }
             catch (Exception ex)
             {

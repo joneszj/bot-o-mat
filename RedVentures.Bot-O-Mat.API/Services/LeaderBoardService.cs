@@ -1,48 +1,39 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using CommonPatterns.Filters;
 using CommonPatterns.Helpers;
-using Microsoft.AspNetCore.Mvc;
 using RedVentures.Bot_O_Mat.API.Data.Enums;
 using RedVentures.Bot_O_Mat.API.Modles;
-using RedVentures.Bot_O_Mat.API.Services;
 
-namespace RedVentures.Bot_O_Mat.API.Controllers
+namespace RedVentures.Bot_O_Mat.API.Services
 {
-    [ServiceFilter(typeof(ExceptionFilter))]
-    [ServiceFilter(typeof(RequestResponseFilter))]
-    [Route("api/[controller]")]
-    [ApiController]
-    public class LeaderBoardController : ControllerBase
+    public class LeaderBoardService : ILeaderBoardService
     {
         private readonly HelpersManager _helpersManager;
         private readonly IRobotService _robotService;
         private readonly ICyborgService _cyborgService;
 
-        public LeaderBoardController(HelpersManager helperManager, IRobotService robotService, ICyborgService cyborgService)
+        public LeaderBoardService(HelpersManager helpersManager, IRobotService robotService, ICyborgService cyborgService)
         {
-            _helpersManager = helperManager;
+            _helpersManager = helpersManager;
             _robotService = robotService;
             _cyborgService = cyborgService;
         }
-
-        [HttpGet]
-        public async Task<ActionResult<LeaderBoardViewModel>> Get()
+        public async Task<LeaderBoardViewModel> GetLeaderBoard()
         {
             var cachedRobots = _helpersManager.Cache.TryGet<Tuple<DateTime, ActorType>, RobotViewModel[]>(new Tuple<DateTime, ActorType>(DateTime.Today, ActorType.Cyborg), out bool robotsFound);
             if (!robotsFound) cachedRobots = await RefreshRobotCache();
             var cachedCyborgs = _helpersManager.Cache.TryGet<Tuple<DateTime, ActorType>, CyborgViewModel[]>(new Tuple<DateTime, ActorType>(DateTime.Today, ActorType.Cyborg), out bool cyborgsFound);
             if (!cyborgsFound) cachedCyborgs = await RefreshCyborgCache();
 
-            return Ok(new LeaderBoardViewModel
+            return new LeaderBoardViewModel
             {
-                LeaderBoardRecord = cachedRobots.Select(e => 
-                        new LeaderBoardRecord { ActorType = "Robot", Name = e.Name, CompletedErrandCount = e.Errands?.Count(i => i.ErrandStatus == ErrandStatus.Completed) ?? 0, FailedErrandCount = e.Errands?.Count(i=>i.ErrandStatus == ErrandStatus.Failed) ?? 0 })
-                    .Union(cachedCyborgs.Select(e => 
+                LeaderBoardRecord = cachedRobots.Select(e =>
+                        new LeaderBoardRecord { ActorType = "Robot", Name = e.Name, CompletedErrandCount = e.Errands?.Count(i => i.ErrandStatus == ErrandStatus.Completed) ?? 0, FailedErrandCount = e.Errands?.Count(i => i.ErrandStatus == ErrandStatus.Failed) ?? 0 })
+                    .Union(cachedCyborgs.Select(e =>
                         new LeaderBoardRecord { ActorType = "Cyborg", Name = e.Name, CompletedErrandCount = e.Errands?.Count(i => i.ErrandStatus == ErrandStatus.Completed) ?? 0, FailedErrandCount = e.Errands?.Count(i => i.ErrandStatus == ErrandStatus.Failed) ?? 0 }))
                     .OrderByDescending(e => e.CompletedErrandCount)
-            });
+            };
         }
 
         #region helpers

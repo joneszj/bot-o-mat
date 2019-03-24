@@ -52,3 +52,5 @@ created battleservice
 actor services no longer have reference to the errandservice (circular was inevitable), that is done by the errand service
 TODO: set navigation prop and fk constraint on killedBy
 Add-Migration killedbySeed -Context botomatcontext
+had to drop db again (DropForeignKeyOperation not supported by sqllite)
+Add-Migration InitWithSeed -Context botomatcontext

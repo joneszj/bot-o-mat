@@ -9,7 +9,7 @@ namespace RedVentures.Bot_O_Mat.Web.Controllers
 {
     public class HomeController : Controller
     {
-        private HelpersManager _helpersManager;
+        private readonly HelpersManager _helpersManager;
 
         public HomeController(HelpersManager helpersManager)
         {
@@ -18,7 +18,8 @@ namespace RedVentures.Bot_O_Mat.Web.Controllers
 
         public async Task<ActionResult<AppViewModel>> Index()
         {
-            var leaderBoardDto = await _helpersManager.HttpHelper.Get<LeaderBoardViewModelDTO>(_helpersManager.EnvironmentHelper.Configuration.GetSection("API-URIs")["LeaderboardAPI"]);
+            var leaderBoardDto = await _helpersManager.HttpHelper
+                .Get<LeaderBoardViewModelDTO>($"{ _helpersManager.EnvironmentHelper.Configuration.GetSection("API-URIs")["StatisticsAPI"]}/LeaderBoard");
             return View(new AppViewModel(leaderBoardDto));
         }
 

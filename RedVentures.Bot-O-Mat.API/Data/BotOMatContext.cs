@@ -9,6 +9,7 @@ namespace RedVentures.Bot_O_Mat.API.Data
     {
         public BotOMatContext(DbContextOptions options) : base(options) { }
 
+        public DbSet<ErrandActor> ErrandActors { get; set; }
         public DbSet<Robot> Robots { get; set; }
         public DbSet<Cyborg> Cyborgs { get; set; }
         public DbSet<Errand> Errands { get; set; }
@@ -59,6 +60,11 @@ namespace RedVentures.Bot_O_Mat.API.Data
                 .HasDiscriminator<ActorType>("ActorType")
                 .HasValue<Robot>(ActorType.Robot)
                 .HasValue<Cyborg>(ActorType.Cyborg);
+            #endregion
+
+            #region filters
+            //https://docs.microsoft.com/en-us/ef/core/querying/filters
+            modelBuilder.Entity<ErrandActor>().HasQueryFilter(p => p.IsActive);
             #endregion
 
             #region seed
