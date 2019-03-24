@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using RedVentures.Bot_O_Mat.API.Data.Enums;
-using RedVentures.Bot_O_Mat.API.Modles;
+using RedVentures.Bot_O_Mat.API.Models;
 using RedVentures.Bot_O_Mat.API.Services;
 using System;
 using System.Linq;

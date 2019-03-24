@@ -15,10 +15,11 @@ namespace RedVentures.Bot_O_Mat.Web
         private readonly ILogger<Startup> _logger;
         private Guid _correlationId;
 
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, ILogger<Startup> logger)
         {
             Configuration = configuration;
             _correlationId = Guid.NewGuid();
+            _logger = logger;
         }
 
         public IConfiguration Configuration { get; }

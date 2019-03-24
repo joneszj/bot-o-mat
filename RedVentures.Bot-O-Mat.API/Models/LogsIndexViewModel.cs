@@ -1,4 +1,4 @@
-﻿namespace RedVentures.Bot_O_Mat.API.Modles
+﻿namespace RedVentures.Bot_O_Mat.API.Models
 {
     public class LogsIndexViewModel
     {

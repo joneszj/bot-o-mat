@@ -17,7 +17,7 @@
 .demo-2 .sl-slider blockquote {
 	padding: 100px 30px 10px 30px;
 	width: 80%;
-	max-width: 960px;
+	/*max-width: 960px;*/
 	color: #fff;
 	margin: 0 auto;
 	position: relative;

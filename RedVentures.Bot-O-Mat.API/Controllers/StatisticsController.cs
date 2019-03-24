@@ -1,11 +1,7 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CommonPatterns.Filters;
-using CommonPatterns.Helpers;
 using Microsoft.AspNetCore.Mvc;
-using RedVentures.Bot_O_Mat.API.Data.Enums;
-using RedVentures.Bot_O_Mat.API.Modles;
+using RedVentures.Bot_O_Mat.API.Models;
 using RedVentures.Bot_O_Mat.API.Services;
 
 namespace RedVentures.Bot_O_Mat.API.Controllers
@@ -18,11 +14,13 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
     {
         private readonly ILeaderBoardService _leaderBoardService;
         private readonly IKillBoardService _killBoardService;
+        private readonly IGraveyardService _graveyardService;
 
-        public StatisticsController(ILeaderBoardService leaderBoardService, IKillBoardService killBoardService)
+        public StatisticsController(ILeaderBoardService leaderBoardService, IKillBoardService killBoardService, IGraveyardService graveyardService)
         {
             _leaderBoardService = leaderBoardService;
             _killBoardService = killBoardService;
+            _graveyardService = graveyardService;
         }
 
         [Route("LeaderBoard")]
@@ -32,5 +30,9 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
         [Route("KillBoard")]
         [HttpGet]
         public async Task<ActionResult<KillBoardViewModel>> GetKillBoard() => Ok(await _killBoardService.GetKillCounts());
+
+        [Route("Graveyard")]
+        [HttpGet]
+        public async Task<ActionResult<GraveyardViewModel>> GetGraveyard() => Ok(await _graveyardService.GetFallenActors());
     }
 }

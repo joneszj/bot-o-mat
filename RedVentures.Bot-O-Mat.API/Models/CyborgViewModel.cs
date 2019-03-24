@@ -2,7 +2,7 @@
 using RedVentures.Bot_O_Mat.API.Data.Enums;
 using System.Linq;
 
-namespace RedVentures.Bot_O_Mat.API.Modles
+namespace RedVentures.Bot_O_Mat.API.Models
 {
     public class CyborgViewModel
     {

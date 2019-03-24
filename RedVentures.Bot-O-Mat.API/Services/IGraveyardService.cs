@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 
 namespace RedVentures.Bot_O_Mat.API.Services
 {
-    public interface IKillBoardService
+    public interface IGraveyardService
     {
-        Task<KillBoardViewModel> GetKillCounts();
+        Task<GraveyardViewModel> GetFallenActors();
     }
 }

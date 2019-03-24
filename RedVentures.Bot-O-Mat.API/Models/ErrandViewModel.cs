@@ -1,7 +1,7 @@
 ﻿using RedVentures.Bot_O_Mat.API.Data.DbSets;
 using RedVentures.Bot_O_Mat.API.Data.Enums;
 
-namespace RedVentures.Bot_O_Mat.API.Modles
+namespace RedVentures.Bot_O_Mat.API.Models
 {
     public class ErrandViewModel
     {

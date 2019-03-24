@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using RedVentures.Bot_O_Mat.API.Data;
 using RedVentures.Bot_O_Mat.API.Data.Enums;
-using RedVentures.Bot_O_Mat.API.Modles;
+using RedVentures.Bot_O_Mat.API.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -44,7 +44,7 @@ namespace RedVentures.Bot_O_Mat.API.Services
                     KillCount = killerIds.Where(i => i.Key.Value == e.Id).SelectMany(y => y).Count(),
                     ActorType = Enum.GetName(typeof(ActorType), e.ActorType)
                 })
-                .OrderByDescending(e => e.KillCount).ToArrayAsync();
+                .OrderByDescending(e => e.KillCount).Take(100).ToArrayAsync();
             return _helpersManager.Cache.Set((DateTime.Today, "killers"), (killerActors));
         }
         #endregion

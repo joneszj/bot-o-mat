@@ -6,7 +6,7 @@ using CommonPatterns.Filters;
 using CommonPatterns.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using RedVentures.Bot_O_Mat.API.Data.Enums;
-using RedVentures.Bot_O_Mat.API.Modles;
+using RedVentures.Bot_O_Mat.API.Models;
 using RedVentures.Bot_O_Mat.API.Services;
 
 namespace RedVentures.Bot_O_Mat.API.Controllers

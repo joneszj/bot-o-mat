@@ -53,6 +53,7 @@ namespace RedVentures.Bot_O_Mat.API
                 services.AddScoped<IErrandService, ErrandService>();
                 services.AddScoped<IKillBoardService, KillBoardService>();
                 services.AddScoped<ILeaderBoardService, LeaderBoardService>();
+                services.AddScoped<IGraveyardService, GraveyardService>();
             }
             catch (Exception ex)
             {

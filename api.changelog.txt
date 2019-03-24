@@ -56,3 +56,6 @@ had to drop db again (DropForeignKeyOperation not supported by sqllite)
 Add-Migration InitWithSeed -Context botomatcontext
 Add-Migration NewSeed -Context botomatcontext
 added errandactor to db context to enable typeless querying TODO: this allows us to refactor and make more flexible the services layer
+api.modles sc correction models
+added graveyard service
+simplified keys for caching

@@ -1,3 +1,12 @@
-﻿<div class="bg-img bg-img-3"></div>
-<h2>Robot/Cyborg Graveyard</h2>
-<blockquote><p>Thousands of people who say they 'love' animals sit down once or twice a day to enjoy the flesh of creatures who have been utterly deprived of everything that could make their lives worth living and who endured the awful suffering and the terror of the abattoirs.</p><cite>Dame Jane Morris Goodall</cite></blockquote>
+﻿@model IEnumerable<GraveyardViewModel>
+<div class="bg-img bg-img-3"></div>
+<h2>Graveyard</h2>
+<div >
+    <blockquote>
+        <p>Top 5 most destructive robots</p>
+        @foreach (var fallenActor in Model)
+        {
+            <div><span class="detailsSpan" data-id="@fallenActor.Id"><strong>@fallenActor.Name</strong></span> was destroyed on <strong>@fallenActor.DeathDate.ToShortDateString()</strong> by <span class="detailsSpan" data-id="@fallenActor.KilledById"><strong>@fallenActor.KilledByName (@(fallenActor.KilledByType == "0" ? "Cyborg" : "Robot"))</strong></span>!</div>
+        }
+    </blockquote>
+</div>

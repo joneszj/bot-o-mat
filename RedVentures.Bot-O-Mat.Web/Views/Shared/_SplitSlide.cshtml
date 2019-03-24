@@ -34,7 +34,7 @@
 
             <div class="sl-slide" data-orientation="horizontal" data-slice1-rotation="3" data-slice2-rotation="3" data-slice1-scale="2" data-slice2-scale="1">
                 <div class="sl-slide-inner" style="padding-left: 15%;">
-                    <partial name="_Graveyard" />
+                    @await Html.PartialAsync("_Graveyard", Model.GraveyardViewModel)
                 </div>
             </div>
 
