@@ -20,7 +20,9 @@ namespace RedVentures.Bot_O_Mat.Web.Controllers
         {
             var leaderBoardDto = await _helpersManager.HttpHelper
                 .Get<LeaderBoardViewModelDTO>($"{ _helpersManager.EnvironmentHelper.Configuration.GetSection("API-URIs")["StatisticsAPI"]}/LeaderBoard");
-            return View(new AppViewModel(leaderBoardDto));
+            var killboardBoardDto = await _helpersManager.HttpHelper
+                .Get<KillBoardViewModelDTO>($"{ _helpersManager.EnvironmentHelper.Configuration.GetSection("API-URIs")["StatisticsAPI"]}/KillBoard");
+            return View(new AppViewModel(leaderBoardDto, killboardBoardDto));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

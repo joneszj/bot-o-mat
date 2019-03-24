@@ -5,7 +5,7 @@ namespace RedVentures.Bot_O_Mat.Web.Models
 {
     public class AppViewModel
     {
-        public AppViewModel(LeaderBoardViewModelDTO leaderBoardDto)
+        public AppViewModel(LeaderBoardViewModelDTO leaderBoardDto, KillBoardViewModelDTO killboardBoardDto)
         {
             LeaderBoardViewModel = new LeaderBoardViewModel
             {
@@ -15,6 +15,13 @@ namespace RedVentures.Bot_O_Mat.Web.Models
                 Cyborgs = leaderBoardDto.LeaderBoardRecord
                     .Where(e => e.ActorType == "Cyborg").OrderByDescending(e => e.CompletedErrandCount).Take(5)
                     .Select(e => new CyborgViewModel { CompletedErrandCount = e.CompletedErrandCount, Name = e.Name })
+            };
+            KillBoardViewModel = new KillBoardViewModel
+            {
+                Robots = killboardBoardDto.KillBoardRecord.Where(e=>e.ActorType == "Robot").OrderByDescending(e => e.KillCount).Take(5)
+                    .Select(e=> new KillerRobotViewModel { KillCount = e.KillCount, Name = e.Name }),
+                Cyborgs = killboardBoardDto.KillBoardRecord.Where(e=>e.ActorType == "Cyborg").OrderByDescending(e => e.KillCount).Take(5)
+                    .Select(e=> new KillerCyborgViewModel { KillCount = e.KillCount, Name = e.Name })
             };
         }
 

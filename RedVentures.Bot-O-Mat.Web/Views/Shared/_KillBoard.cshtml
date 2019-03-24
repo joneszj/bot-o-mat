@@ -1,3 +1,25 @@
-﻿<div class="bg-img bg-img-2"></div>
+﻿@model KillBoardViewModel
+<div class="bg-img bg-img-2"></div>
 <h2>Kill Count</h2>
-<blockquote><p>Until he extends the circle of his compassion to all living things, man will not himself find peace.</p><cite>Albert Schweitzer</cite></blockquote>
+<div class="split left">
+    <blockquote>
+        <p>Top 5 most destructive robots</p>
+        <ol>
+            @foreach (var robot in Model.Robots)
+            {
+                <li><strong>@robot.Name</strong> has destroyed <strong>@robot.KillCount</strong> units!</li>
+            }
+        </ol>
+    </blockquote>
+</div>
+<div class="split right">
+    <blockquote>
+        <p>Top 5 destructive cyborgs</p>
+        <ol>
+            @foreach (var cyborg in Model.Cyborgs)
+            {
+            <li><strong>@cyborg.Name</strong> has destroyed <strong>@cyborg.KillCount</strong> units!</li>
+            }
+        </ol>
+    </blockquote>
+</div>

@@ -25,11 +25,11 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
             _killBoardService = killBoardService;
         }
 
-        [Route("api/[controller]/LeaderBoard")]
+        [Route("LeaderBoard")]
         [HttpGet]
         public async Task<ActionResult<LeaderBoardViewModel>> GetLeaderBoard() => Ok(await _leaderBoardService.GetLeaderBoard());
 
-        [Route("api/[controller]/KillBoard")]
+        [Route("KillBoard")]
         [HttpGet]
         public async Task<ActionResult<KillBoardViewModel>> GetKillBoard() => Ok(await _killBoardService.GetKillCounts());
     }
