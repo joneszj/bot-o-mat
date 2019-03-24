@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 
-namespace RedVentures.Bot_O_Mat.API.Modles
+namespace RedVentures.Bot_O_Mat.Web.DTOs
 {
-    public class LeaderBoardViewModel
+    public class LeaderBoardViewModelDTO
     {
         public IEnumerable<LeaderBoardRecord> LeaderBoardRecord { get; set; }
     }

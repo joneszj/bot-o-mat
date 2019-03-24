@@ -10,3 +10,6 @@ NavBar: https://github.com/azouaoui-med/pro-sidebar-template
 	abandoned
 added page partials, images, and splitslider
 used nav from codrop https://tympanus.net/codrops/2012/06/05/fullscreen-slit-slider-with-jquery-and-css3/
+created DTOs folder (didnt want to reference API project)
+added AppViewModel as a parent model for the webs partial views
+completed leader board partial view

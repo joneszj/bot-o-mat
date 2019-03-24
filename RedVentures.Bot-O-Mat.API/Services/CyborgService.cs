@@ -44,6 +44,7 @@ namespace RedVentures.Bot_O_Mat.API.Services
             if (Gender != null) filter = filter.Where(e => e.Gender == Gender).AsQueryable();
             return await filter
                 .OrderByDescending(cyborg => cyborg.Errands.Where(errand => errand.Status == ErrandStatus.Completed).Count())
+                .Include(e=>e.Errands)
                 .Skip(Skip).Take(100)
                 .ToListAsync();
         }

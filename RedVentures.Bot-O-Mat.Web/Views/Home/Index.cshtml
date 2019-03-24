@@ -1,5 +1,6 @@
-﻿@{
+﻿@model AppViewModel
+@{
     ViewData["Title"] = "Home Page";
 }
 
-<partial name="_SplitSlide" />
+@await Html.PartialAsync("_SplitSlide", Model)

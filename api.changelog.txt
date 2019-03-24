@@ -45,3 +45,4 @@ added leaderboard controller and infrastructure
 added cors for ui requests
 reapproached the seed and got that to work :)
 Add-Migration InitWithSeed -Context BotOMatContext -OutputDir Data/Migrations
+included Errands on actor getmany requests

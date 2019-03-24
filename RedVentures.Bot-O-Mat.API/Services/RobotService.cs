@@ -44,6 +44,7 @@ namespace RedVentures.Bot_O_Mat.API.Services
             if (Type != null) filter = filter.Where(e => e.Type == Type).AsQueryable();
             return await filter
                 .OrderByDescending(robot => robot.Errands.Where(errand => errand.Status == ErrandStatus.Completed).Count())
+                .Include(e=>e.Errands)
                 .Skip(Skip).Take(100)
                 .ToListAsync();
         }

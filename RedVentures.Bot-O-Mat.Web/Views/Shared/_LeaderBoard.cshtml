@@ -1,15 +1,15 @@
-﻿@* leaderboard *@
+﻿@model LeaderBoardViewModel
+@* leaderboard *@
 <div class="bg-img bg-img-1"></div>
 <h2>Leaderboard</h2>
 <div class="split left">
     <blockquote>
         <p>Top 5 performing robots</p>
         <ol>
-            <li><strong>alph 500 tasks completed</strong></li>
-            <li><strong>alph 400 tasks completed</strong></li>
-            <li><strong>alph 300 tasks completed</strong></li>
-            <li><strong>alph 200 tasks completed</strong></li>
-            <li><strong>alph 100 tasks completed</strong></li>
+            @foreach (var robot in Model.Robots)
+            {
+                <li><strong>@robot.Name</strong> has completed <strong>@robot.CompletedErrandCount</strong> tasks</li>
+            }
         </ol>
     </blockquote>
 </div>
@@ -17,11 +17,10 @@
     <blockquote>
         <p>Top 5 performing cyborgs</p>
         <ol>
-            <li><strong>alph 500 tasks completed</strong></li>
-            <li><strong>alph 400 tasks completed</strong></li>
-            <li><strong>alph 300 tasks completed</strong></li>
-            <li><strong>alph 200 tasks completed</strong></li>
-            <li><strong>alph 100 tasks completed</strong></li>
+            @foreach (var cyborg in Model.Cyborgs)
+            {
+                <li><strong>@cyborg.Name</strong> has completed <strong>@cyborg.CompletedErrandCount</strong> tasks</li>
+            }
         </ol>
     </blockquote>
 </div>
