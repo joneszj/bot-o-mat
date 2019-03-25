@@ -60,6 +60,7 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
         [HttpPut]
         public async Task<ActionResult<PerformErrandResult>> Put([FromBody] PerformErrandViewModel performErrandViewModel)
         {
+            throw new NotImplementedException();
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var cyborg = await _cyborgService.GetCyborg(performErrandViewModel.ActorId);
             if (cyborg == null) return NotFound();

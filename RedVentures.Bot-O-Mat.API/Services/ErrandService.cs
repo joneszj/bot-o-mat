@@ -32,7 +32,7 @@ namespace RedVentures.Bot_O_Mat.API.Services
 
             //TODO: calculate weighted augmentation preferences on robot type
             //higher actorTypes have extra chances to kill an opponent, but have extra 'dice rolls' to fail their task
-            foreach (var item in Enumerable.Range(0, (int)actor.ActorType))
+            foreach (var item in Enumerable.Range(0, (int)actor.ActorType + 1))
             {
                 Thread.Sleep((int)errandType / (int)actor.ActorType);
                 if (_randomGenerator.Next(100) < 10)
