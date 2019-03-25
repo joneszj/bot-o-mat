@@ -16,3 +16,8 @@ completed leader board partial view
 completed kill board partial view
 completed graveyard partial view
 simplivied view model by adding ctors of dependant types
+added enums to /dtos
+modified site.js to handle spa requests
+completed create actor partial view
+completed create factory partial view
+began errand on actor create view

@@ -16,7 +16,11 @@
         <div class="clr"></div>
     </div>
 
-    <header class="clearfix"></header>
+    <header class="clearfix" style="text-align: center;">
+        @await Html.PartialAsync("_CreateActorCTA")
+        @await Html.PartialAsync("_CreateActorModal")
+        @await Html.PartialAsync("_CreateActorErrandsModal")
+    </header>
 
     <div id="slider" class="sl-slider-wrapper">
         <div class="sl-slider">
@@ -41,6 +45,7 @@
             <div class="sl-slide" data-orientation="vertical" data-slice1-rotation="-5" data-slice2-rotation="25" data-slice1-scale="2" data-slice2-scale="1">
                 <div class="sl-slide-inner" style="padding-left: 15%;">
                     <partial name="_Factory" />
+                    <partial name="_ManufacturingReport" />
                 </div>
             </div>
         </div>

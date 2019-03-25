@@ -31,6 +31,7 @@ namespace CommonPatterns.Filters
             //TODO: invalidate cache, this is inefficient
             var robots = await _cyborgService.GetCyborgsBy(string.Empty, null);
             _helpersManager.Cache.Set((DateTime.Today, ActorType.Cyborg), robots.Select(e => new CyborgViewModel(e)).ToArray());
+            await next();
         }
 
         public static void Configure(IServiceCollection services) => services.AddScoped<RefreshCyborgCacheFilter>();

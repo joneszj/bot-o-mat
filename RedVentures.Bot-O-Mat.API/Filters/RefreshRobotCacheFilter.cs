@@ -31,6 +31,7 @@ namespace CommonPatterns.Filters
             //TODO: invalidate cache, this is inefficient
             var robots = await _robotService.GetRobotsBy(string.Empty, null);
             _helpersManager.Cache.Set((DateTime.Today, ActorType.Robot), robots.Select(e => new RobotViewModel(e)).ToArray());
+            await next();
         }
 
         public static void Configure(IServiceCollection services) => services.AddScoped<RefreshRobotCacheFilter>();

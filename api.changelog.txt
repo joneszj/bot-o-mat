@@ -59,3 +59,8 @@ added errandactor to db context to enable typeless querying TODO: this allows us
 api.modles sc correction models
 added graveyard service
 simplified keys for caching
+2 means to create actors
+	1 cta to create 1 via modal form
+	2 slide 4 to create random number of actors
+added images controller and mapped to actors in db
+added missing next() on refreshfilters (was producing false positives with null responses)

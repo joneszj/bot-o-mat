@@ -37,7 +37,7 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var robot = new RobotViewModel(await _robotService.GetRobot(id));
             if (robot == null) return NotFound();
-            return new RobotViewModel(await _robotService.GetRobot(id));
+            return Ok(new RobotViewModel(await _robotService.GetRobot(id)));
         }
 
         [HttpGet]
@@ -63,7 +63,7 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var robot = await _robotService.GetRobot(performErrandViewModel.ActorId);
             if (robot == null) return NotFound();
-            return await _errandService.PerformErrand(robot, performErrandViewModel.ErrandType);
+            return Ok(await _errandService.PerformErrand(robot, performErrandViewModel.ErrandType));
         }
 
         [ServiceFilter(typeof(RefreshRobotCacheFilter))]

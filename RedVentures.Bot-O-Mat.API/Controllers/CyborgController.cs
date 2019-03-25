@@ -37,7 +37,7 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var robot = new CyborgViewModel(await _cyborgService.GetCyborg(id));
             if (robot == null) return NotFound();
-            return new CyborgViewModel(await _cyborgService.GetCyborg(id));
+            return Ok(new CyborgViewModel(await _cyborgService.GetCyborg(id)));
         }
 
         [HttpGet]
@@ -63,7 +63,7 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var cyborg = await _cyborgService.GetCyborg(performErrandViewModel.ActorId);
             if (cyborg == null) return NotFound();
-            return await _errandService.PerformErrand(cyborg, performErrandViewModel.ErrandType);
+            return Ok(await _errandService.PerformErrand(cyborg, performErrandViewModel.ErrandType));
         }
 
         [ServiceFilter(typeof(RefreshCyborgCacheFilter))]

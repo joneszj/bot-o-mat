@@ -356,16 +356,27 @@
 }
 
 .demo-2 .bg-img-1 {
-    background-image: url(../images/robot-gorod-kiberpank.jpg);
+    background: linear-gradient( rgba(0, 0, 0, 0.45), rgba(255, 0, 0, 0.45) ), url(../images/robot-gorod-kiberpank.jpg);
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: overlay;
 }
 .demo-2 .bg-img-2 {
-	background-image: url(../images/terminator.png);
+    background: linear-gradient( rgba(0, 0, 0, 0.45), rgba(255, 0, 0, 0.45) ), url(../images/terminator.png);
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: color-burn;
 }
 .demo-2 .bg-img-3 {
-	background-image: url(../images/sad-robot.jpg);
+    background: linear-gradient( rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.45) ), url(../images/sad-robot.jpg);
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: soft-light;
 }
 .demo-2 .bg-img-4 {
-	background-image: url(../images/robotfactory.jpg);
+    background: linear-gradient( rgba(0, 0, 0, 0.45), rgba(255, 0, 0, 0.45) ), url(../images/robotfactory.jpg);
+    background-size: cover;
+    background-position: center;
 }
 
 /* Animations for content elements */

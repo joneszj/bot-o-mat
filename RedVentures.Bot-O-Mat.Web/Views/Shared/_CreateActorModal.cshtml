@@ -1,0 +1,219 @@
+﻿@* https://codepen.io/timothylong/pen/HhAer/ *@
+@* https://www.w3schools.com/howto/howto_css_contact_form.asp *@
+@* https://www.w3schools.com/howto/howto_css_stacked_form.asp *@
+
+<div id="open-modal-actor" class="modal-window" style="z-index: 1001;">
+    <div>
+        <a href="#" title="Close" class="modal-close">Close</a>
+
+        <div>
+            @* http://jsfiddle.net/barney/uxPjN/ *@
+            <label class="fileContainer">
+                <span id="preview">Add an Image</span>
+                <input name="image" type="file" id="actorPreviewFile" />
+                <img src="" id="actorPreview" height="200" alt="Image preview..." style="border-radius: 50%; display:none;">
+            </label>
+            <br />
+            <label class="fileContainer" id="previewRemove" style="display:none;">
+                Remove Image
+            </label>
+        </div>
+        <br />
+        <hr />
+
+        <form class="form-inline" id="createActorModal">
+            <div id="createActorModalFormValidationSummary" style="display:none;">
+                <ul style="color:red;list-style: none;"></ul>
+            </div>
+
+            <div>
+                <label for="type"><b>Robot or Cyborg</b></label>
+                <select id="actorSelect" name="type" required>
+                    <option value="">Select...</option>
+                    <option>Cyborg</option>
+                    <option>Robot</option>
+                </select>
+            </div>
+            <div style="display:none;" class="SubType" id="CyborgSubType">
+                <label><b>Gender </b></label>
+                <select id="genderSelect" name="gender" asp-items="Html.GetEnumSelectList<RedVentures.Bot_O_Mat.Web.DTOs.Enums.Gender>()">
+                    <option selected="selected" value="">Select...</option>
+                </select>
+            </div>
+            <div style="display:none;" class="SubType" id="RobotSubType">
+                <label><b>Robot Type </b></label>
+                <select id="robotTypeSelect" name="type" asp-items="Html.GetEnumSelectList<RedVentures.Bot_O_Mat.Web.DTOs.Enums.RobotType>()">
+                    <option selected="selected" value="">Select...</option>
+                </select>
+            </div>
+            <div>
+                <label for="uname"><b>Unit Name: </b></label>
+                <input id="unitName" type="text" placeholder="Enter Name" name="name" required>
+            </div>
+
+            <button id="CTASubmit" class="CTASubmit">Create Unit</button>
+        </form>
+        <script>
+            $(document).ready(lib.views.index.createActorModal.eventListeners);
+        </script>
+    </div>
+</div>
+
+<script>
+    $("#CTASubmit").click(function (event) {
+        event.preventDefault();
+        //lib.views.index.createActorModal.enable_progressive_form_fill($('#createActorModal'));
+        //lib.views.index.createActorModal.eventListeners();
+        lib.views.index.createActorModal.validate(function (result) {
+            if (result) {
+                lib.views.index.createActorModal.submit(
+                    lib.helpers.http.JsonStringifyForm($('#createActorModal')),
+                    $('#actorSelect').val().toLowerCase(),
+                    lib.views.index.createActorModal.handleResponse);
+            }
+        })
+    });
+</script>
+
+<style>
+    .fileContainer {
+    overflow: hidden;
+    position: relative;
+}
+
+
+.fileContainer [type=file] {
+    cursor: inherit;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    top: 0;
+}
+
+
+    /* Style inputs */
+    input[type=text], select {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        display: inline-block;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+    }
+
+    /* Style the submit button */
+    .CTASubmit {
+        width: 100%;
+        background-color: #4CAF50;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        /* Add a background color to the submit button on mouse-over */
+        .CTASubmit:hover {
+            background-color: #45a049;
+        }
+
+    /* Add a hover effect for buttons */
+    button:hover {
+        opacity: 0.8;
+    }
+
+    /* Center the avatar image inside this container */
+    .imgcontainer {
+        text-align: center;
+        margin: 24px 0 12px 0;
+    }
+
+    /* Avatar image */
+    img.avatar {
+        width: 40%;
+        border-radius: 50%;
+    }
+
+    /* Add padding to containers */
+    .container-modal {
+        padding: 16px;
+    }
+
+    /* The "Forgot password" text */
+    span.psw {
+        float: right;
+        padding-top: 16px;
+    }
+
+    /* Change styles for span and cancel button on extra small screens */
+    @@media screen and (max-width: 300px) {
+        span.psw {
+            display: block;
+            float: none;
+        }
+
+        .cancelbtn {
+            width: 100%;
+        }
+    }
+
+    .modal-window {
+        position: fixed;
+        background-color: rgba(0, 0, 0, 0.5);
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        z-index: 999;
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.3s;
+    }
+
+        .modal-window:target {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal-window > div {
+            width: 400px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            -webkit-transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%);
+            padding: 2em;
+            background: #ffffff;
+            color: #333333;
+        }
+
+        .modal-window header {
+            font-weight: bold;
+        }
+
+        .modal-window h1 {
+            font-size: 150%;
+            margin: 0 0 15px;
+            color: #333333;
+        }
+
+    .modal-close {
+        color: #aaa;
+        line-height: 50px;
+        font-size: 80%;
+        position: absolute;
+        right: 0;
+        text-align: center;
+        top: 0;
+        width: 70px;
+        text-decoration: none;
+    }
+
+        .modal-close:hover {
+            color: #000;
+        }
+</style>
