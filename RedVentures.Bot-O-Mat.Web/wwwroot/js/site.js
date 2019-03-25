@@ -16,7 +16,7 @@
                 if (message.data) {
                     console.log(message.data, "response");
                 }
-                if (callback) {
+                if (typeof callback === "function") {
                     callback(message);
                 }
             }
@@ -80,26 +80,40 @@
                         .then(function (response) { lib.helpers.log(response, callback); })
                         .catch(lib.helpers.log.error);
                 }
-            },
-            many: function (requests) {
-                return new Promise(function (res, rej) {
-
-                });
             }
         },
         images: {
             post: function (body, callback) {
-                axios.post(`${lib.controllers.apiHost}/images`, body)
+                axios.post(`${lib.controllers.apiHost}/image`, body)
+                    .then(function (response) { lib.helpers.log(response, callback); })
+                    .catch(lib.helpers.log.error);
+            }
+        },
+        errands: {
+            post: function (body, callback) {
+                axios.post(`${lib.controllers.apiHost}/errand`, body)
                     .then(function (response) { lib.helpers.log(response, callback); })
                     .catch(lib.helpers.log.error);
             }
         }
     };
 
+    //TODO: build services abstractions to reduce work done in views
     var views = {
         index: {
             createActorModal: {
                 eventListeners: function () {
+                    $("#CTASubmit").click(function (event) {
+                        event.preventDefault();
+                        lib.views.index.createActorModal.validate(function (result) {
+                            if (result) {
+                                lib.views.index.createActorModal.submit(
+                                    lib.helpers.http.JsonStringifyForm($('#createActorModal')),
+                                    $('#actorSelect').val().toLowerCase(),
+                                    lib.views.index.createActorModal.handleResponse);
+                            }
+                        });
+                    });
                     $('#actorSelect').change(function () {
                         $('.SubType').hide();
                         $(`#${$(this).val()}SubType`).show();
@@ -130,7 +144,7 @@
                         }
                     });
 
-                    if (callback) {
+                    if (typeof callback === "function") {
                         callback(isValid);
                     }
 
@@ -155,6 +169,7 @@
                         lib.helpers.images.preview('#actorPreview', '#actorPreviewFile', function (data) {
                             lib.helpers.images.preview('#actorImageErrands', '#actorPreviewFile', function (data) {
                                 $("#actorImageErrands").show();
+                                $('#robotId').val(response.data.id);
                                 lib.controllers.images.post({ ActorId: response.data.id, ImageData: data.split(',')[1] }, lib.views.index.createActorErrandsModal.show);
                             });
                         });
@@ -164,8 +179,54 @@
                 }
             },
             createActorErrandsModal: {
+                eventListeners: function () {
+                    $("#CTAErrandSubmit").click(function (event) {
+                        event.preventDefault();
+                        lib.views.index.createActorErrandsModal.validate(function (result) {
+                            if (result) {
+                                lib.views.index.createActorErrandsModal.submit([{
+                                    actorId: $('#robotId').val(),
+                                    errandIds: []
+                                }]);
+                            }
+                        });
+                    });
+                    $('input', $('#createActorErrandsModal')).click(lib.views.index.createActorErrandsModal.validate);
+                },
+                validate: function (callback) {
+                    var isValid = true;
+                    $("#createActorErrandsModalFormValidationSummary").hide();
+                    $("#createActorErrandsModalFormValidationSummary ul").html("");
+
+                    isValid = $("input:checked", $('#createActorErrandsModal')).length > 0;
+
+                    if (!isValid) {
+                        $("#createActorErrandsModalFormValidationSummary ul").append(`<li>At Least 1 Errand is Required</li>`);
+                        ShowNotValidMessage();
+                    }
+
+                    if (typeof callback === "function") {
+                        callback(isValid);
+                    }
+
+                    function ShowNotValidMessage() {
+                        $("#createActorErrandsModalFormValidationSummary").show();
+                        isValid = false;
+                    }
+                },
+                submit: function (actor) {
+                    lib.views.index.errandReport.show(actor);
+                },
                 show: function (actor) {
                     window.location.hash = 'open-modal-errands';
+                }
+            },
+            errandReport: {
+                show: function (actors) {
+                    if (!Array.isArray(actors)) { return lib.helpers.error('must pass an array of actors'); }
+                    //render each actor
+                    window.location.hash = 'open-modal-errands-report';
+                    //perform actor errands concurrently per actor and render updates
                 }
             }
         },
@@ -173,10 +234,8 @@
             actorTypes: function () {
                 return ['robot', 'cyborg'];
             },
-            errands: function () {
-                return [];
-            },
             beginManufacturing: function () {
+                //TODO: does too much, separate
                 var requests = [];
 
                 setTimeout(function () {

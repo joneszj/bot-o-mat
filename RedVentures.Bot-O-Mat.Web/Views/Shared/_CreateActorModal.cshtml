@@ -59,22 +59,6 @@
     </div>
 </div>
 
-<script>
-    $("#CTASubmit").click(function (event) {
-        event.preventDefault();
-        //lib.views.index.createActorModal.enable_progressive_form_fill($('#createActorModal'));
-        //lib.views.index.createActorModal.eventListeners();
-        lib.views.index.createActorModal.validate(function (result) {
-            if (result) {
-                lib.views.index.createActorModal.submit(
-                    lib.helpers.http.JsonStringifyForm($('#createActorModal')),
-                    $('#actorSelect').val().toLowerCase(),
-                    lib.views.index.createActorModal.handleResponse);
-            }
-        })
-    });
-</script>
-
 <style>
     .fileContainer {
     overflow: hidden;

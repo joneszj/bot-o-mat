@@ -12,12 +12,12 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
     [ServiceFilter(typeof(RequestResponseFilter))]
     [Route("api/[controller]")]
     [ApiController]
-    public class ErrandsController : ControllerBase
+    public class ErrandController : ControllerBase
     {
         private readonly BotOMatContext _botOMatContext;
         private readonly IErrandService _errandService;
 
-        public ErrandsController(BotOMatContext botOMatContext, IErrandService errandService)
+        public ErrandController(BotOMatContext botOMatContext, IErrandService errandService)
         {
             _botOMatContext = botOMatContext;
             _errandService = errandService;

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RedVentures.Bot_O_Mat.API.Data;
 using RedVentures.Bot_O_Mat.API.Models;
@@ -15,11 +11,11 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
     /// </summary>
     [Route("api/[controller]")]
     [ApiController]
-    public class ImagesController : ControllerBase
+    public class ImageController : ControllerBase
     {
         private BotOMatContext _botOMatContext;
 
-        public ImagesController(BotOMatContext botOMatContext)
+        public ImageController(BotOMatContext botOMatContext)
         {
             _botOMatContext = botOMatContext;
         }
