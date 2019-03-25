@@ -5,6 +5,6 @@ namespace RedVentures.Bot_O_Mat.API.Services
 {
     public interface IBattleService
     {
-        Task KillAnotherActor(ICanPerformErrand actor);
+        Task<ICanPerformErrand> KillAnotherActor(ICanPerformErrand actor);
     }
 }

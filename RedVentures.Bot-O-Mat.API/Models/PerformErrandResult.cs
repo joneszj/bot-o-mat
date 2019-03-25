@@ -1,8 +1,5 @@
 ﻿using RedVentures.Bot_O_Mat.API.Data;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using RedVentures.Bot_O_Mat.API.Data.DbSets;
 
 namespace RedVentures.Bot_O_Mat.API.Models
 {
@@ -10,5 +7,6 @@ namespace RedVentures.Bot_O_Mat.API.Models
     {
         public ICanPerformErrand PerformingActor { get; set; }
         public ICanPerformErrand TerminatedActor { get; set; }
+        public Errand PerformedErrand { get; set; }
     }
 }

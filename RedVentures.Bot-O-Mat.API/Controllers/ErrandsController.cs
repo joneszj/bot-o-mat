@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using CommonPatterns.Filters;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using RedVentures.Bot_O_Mat.API.Data;
 using RedVentures.Bot_O_Mat.API.Models;
 using RedVentures.Bot_O_Mat.API.Services;
@@ -22,14 +23,13 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
             _errandService = errandService;
         }
 
-        // POST: api/Errands
         [HttpPost]
-        public async Task<ActionResult<PerformErrandResult>> Post([FromBody] PerformErrandViewModel performErrandViewModel)
+        public async Task<ActionResult<PerformErrandResultViewModel>> Post([FromBody] PerformErrandViewModel performErrandViewModel)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            var actor = await _botOMatContext.ErrandActors.FindAsync(performErrandViewModel.ActorId);
+            var actor = await _botOMatContext.ErrandActors.Include(e=>e.Errands).FirstOrDefaultAsync(e=>e.Id == performErrandViewModel.ActorId);
             if (actor == null) return NotFound();
-            return Ok(await _errandService.PerformErrand(actor, performErrandViewModel.ErrandType));
+            return (new PerformErrandResultViewModel(await _errandService.PerformErrand(actor, performErrandViewModel.ErrandType)));
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using RedVentures.Bot_O_Mat.API.Data;
+using RedVentures.Bot_O_Mat.API.Data.DbSets;
 using RedVentures.Bot_O_Mat.API.Data.Enums;
 using System;
 using System.Linq;
@@ -24,7 +25,7 @@ namespace RedVentures.Bot_O_Mat.API.Services
         /// </summary>
         /// <param name="actor"></param>
         /// <returns></returns>
-        public async Task KillAnotherActor(ICanPerformErrand actor)
+        public async Task<ICanPerformErrand> KillAnotherActor(ICanPerformErrand actor)
         {
             if (actor.ActorType == ActorType.Cyborg)
             {
@@ -34,6 +35,7 @@ namespace RedVentures.Bot_O_Mat.API.Services
                 {
                     deadActor.IsActive = false;
                     deadActor.KilledById = actor.Id;
+                    return deadActor;
                 }
             }
             else
@@ -44,8 +46,10 @@ namespace RedVentures.Bot_O_Mat.API.Services
                 {
                     deadActor.IsActive = false;
                     deadActor.KilledById = actor.Id;
+                    return deadActor;
                 }
             }
+            return null;
         }
     }
 }
