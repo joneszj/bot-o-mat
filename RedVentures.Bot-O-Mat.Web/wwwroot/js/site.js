@@ -1,4 +1,6 @@
 ﻿var lib = (function ($, axios) {
+    window.location.hash = "";
+
     if (!$) {
         alert("jQuery not imported");
     }
@@ -10,14 +12,11 @@
         environment: {
             IsLocal: window.location.href.indexOf('localhost') > -1
         },
-        log: function (message, callback) {
+        log: function (message) {
             if (this.environment.IsLocal) {
                 console.dir(message);
                 if (message.data) {
                     console.log(message.data, "response");
-                }
-                if (typeof callback === "function") {
-                    callback(message);
                 }
             }
         },
@@ -47,18 +46,91 @@
             return vars;
         })(),
         images: {
-            preview: function (imageElement, fileElement, callback) {
-                var preview = document.querySelector(imageElement);
-                var file = document.querySelector(fileElement).files[0];
-                var reader = new FileReader();
+            preview: function (imageElement, fileElement) {
+                return new Promise((res, rej) => {
+                    var preview = document.querySelector(imageElement);
+                    var file = document.querySelector(fileElement).files[0];
+                    var reader = new FileReader();
 
-                reader.addEventListener("load", function () {
-                    preview.src = reader.result;
-                    callback(reader.result);
-                }, false);
+                    reader.addEventListener("load", function () {
+                        preview.src = reader.result;
+                        res(reader.result);
+                    }, false);
 
-                if (file) {
-                    reader.readAsDataURL(file);
+                    if (file) {
+                        reader.readAsDataURL(file);
+                    }
+                });
+            },
+            random: function (imageElement) {
+                //https://stackoverflow.com/a/20285053
+                return new Promise(async function (res, rej) {
+                    var preview;
+                    if (imageElement) {
+                        preview = document.querySelector(imageElement);
+                    }
+                    const toDataURL = url => fetch(url)
+                        .then(response => response.blob())
+                        .then(blob => new Promise((resolve, reject) => {
+                            const reader = new FileReader();
+                            reader.onloadend = () => {
+                                preview.src = reader.result;
+                                resolve(reader.result);
+                            };
+                            reader.onerror = reject;
+                            reader.readAsDataURL(blob);
+                        }));
+
+
+                    res(toDataURL('https://picsum.photos/200/200/?random'));
+                    //.then(dataUrl => {
+                    //    console.log('RESULT:', dataUrl);
+                    //});
+                });
+            }
+        },
+        html: {
+            generateCard: function (container, cardObject, direction, isSingle) {
+                var parentContainer = $('<div>').addClass('card').addClass(direction);
+                var cardContainer = parentContainer.append($('<div>').addClass('card_container'));
+                if (cardObject.imageData) {
+                    cardContainer.append($('<img>').attr('src', cardObject.imageData).attr('height', 200).attr('width', 200).css('border-radius', '50%'));
+                }
+                cardContainer.append($('<h4>').append('<b>').attr('id', 'cardTaskName_' + cardObject.actorId).text(cardObject.name + " (still working)"));
+                cardContainer.append($('<div>').attr('id', 'cardTaskList_' + cardObject.actorId)).addClass('card_container');
+
+                generateTasksHtml(cardObject.errandIds, cardObject.actorId);
+
+                function generateTasksHtml(tasks, actorId) {
+                    //https://codeburst.io/javascript-async-await-with-foreach-b6ba62bbf404
+                    const start = async () => {
+                        await asyncForEach(tasks, async (task) => {
+                            var result = await lib.controllers.errands.post({ actorId: actorId, errandType: task });
+                            result = result.data;
+                            var success = result.completedSuccessfully === true ? '<b style="color:green;">successfully</b> performed task: ' : '<b style="color: red;">utterly failed</b> task: ';
+                            $(`#cardTaskList_${actorId}`).append($('<p>').html(`${cardObject.name} ${success} <b>${result.errand}<b>!`));
+                            if (result.terminatedActorId) {
+                                $(`#cardTaskList_${actorId}`).append($('<p>')).append($('<b>').css('color', 'red').text(`${cardObject.name} managed to destroy a unit (${result.terminatedActorName})!`));
+                            }
+                        });
+                        $(`#cardTaskName_${actorId}`).text(cardObject.name);
+                    };
+
+                    start();
+
+                    async function asyncForEach(array, callback) {
+                        for (let index = 0; index < array.length; index++) {
+                            await callback(array[index], index, array);
+                        }
+                    }
+                }
+
+                container.append(parentContainer);
+
+                if (isSingle) {
+                    $('.card').css('width', '80%').css('margin', 'auto').removeClass('cardLeft').removeClass('cardRight');
+                } else {
+                    $('.card').css('margin-left', '10px').css('margin-right', '10px').css('width', '45%');
                 }
             }
         }
@@ -68,32 +140,82 @@
         apiHost: "https://localhost:44308/api",
         actors: {
             robot: {
-                post: function (body, callback) {
-                    axios.post(`${lib.controllers.apiHost}/robot`, body)
-                        .then(function (response) { lib.helpers.log(response, callback); })
-                        .catch(lib.helpers.log.error);
+                get: async function (id) {
+                    try {
+                        var response = await axios.get(`${lib.controllers.apiHost}/robot/${id}`);
+                        lib.helpers.log(response);
+                        return response;
+                    } catch (e) {
+                        lib.helpers.log.error(e);
+                        throw e;
+                    }
+                },
+                post: async function (body) {
+                    try {
+                        var response = await axios.post(`${lib.controllers.apiHost}/robot`, body);
+                        lib.helpers.log(response);
+                        return response;
+                    } catch (e) {
+                        lib.helpers.log.error(e);
+                        throw e;
+                    }
                 }
             },
             cyborg: {
-                post: function (body, callback) {
-                    axios.post(`${lib.controllers.apiHost}/cyborg`, body)
-                        .then(function (response) { lib.helpers.log(response, callback); })
-                        .catch(lib.helpers.log.error);
+                get: async function (id) {
+                    try {
+                        var response = await axios.get(`${lib.controllers.apiHost}/cyborg/${id}`);
+                        lib.helpers.log(response);
+                        return response;
+                    } catch (e) {
+                        lib.helpers.log.error(e);
+                        throw e;
+                    }
+                },
+                post: async function (body) {
+                    try {
+                        var response = await axios.post(`${lib.controllers.apiHost}/cyborg`, body);
+                        lib.helpers.log(response);
+                        return response;
+                    } catch (e) {
+                        lib.helpers.log.error(e);
+                        throw e;
+                    }
                 }
             }
         },
         images: {
-            post: function (body, callback) {
-                axios.post(`${lib.controllers.apiHost}/image`, body)
-                    .then(function (response) { lib.helpers.log(response, callback); })
-                    .catch(lib.helpers.log.error);
+            get: async function (actorId) {
+                try {
+                    var response = await axios.get(`${lib.controllers.apiHost}/image/${actorId}`);
+                    lib.helpers.log(response);
+                    return response;
+                } catch (e) {
+                    lib.helpers.log.error(e);
+                    throw e;
+                }
+            },
+            post: async function (body) {
+                try {
+                    var response = await axios.post(`${lib.controllers.apiHost}/image`, body);
+                    lib.helpers.log(response);
+                    return response;
+                } catch (e) {
+                    lib.helpers.log.error(e);
+                    throw e;
+                }
             }
         },
         errands: {
-            post: function (body, callback) {
-                axios.post(`${lib.controllers.apiHost}/errand`, body)
-                    .then(function (response) { lib.helpers.log(response, callback); })
-                    .catch(lib.helpers.log.error);
+            post: async function (body) {
+                try {
+                    var response = await axios.post(`${lib.controllers.apiHost}/errand`, body);
+                    lib.helpers.log(response);
+                    return response;
+                } catch (e) {
+                    lib.helpers.log.error(e);
+                    throw e;
+                }
             }
         }
     };
@@ -105,12 +227,11 @@
                 eventListeners: function () {
                     $("#CTASubmit").click(function (event) {
                         event.preventDefault();
-                        lib.views.index.createActorModal.validate(function (result) {
+                        lib.views.index.createActorModal.validate(async function (result) {
                             if (result) {
-                                lib.views.index.createActorModal.submit(
+                                await lib.views.index.createActorModal.submit(
                                     lib.helpers.http.JsonStringifyForm($('#createActorModal')),
-                                    $('#actorSelect').val().toLowerCase(),
-                                    lib.views.index.createActorModal.handleResponse);
+                                    $('#actorSelect').val().toLowerCase());
                             }
                         });
                     });
@@ -118,12 +239,11 @@
                         $('.SubType').hide();
                         $(`#${$(this).val()}SubType`).show();
                     });
-                    $('#actorPreviewFile').change(function () {
-                        lib.helpers.images.preview('#actorPreview', '#actorPreviewFile', function () {
-                            $("#actorPreview").show();
-                            $("#preview").hide();
-                            $("#previewRemove").show();
-                        });
+                    $('#actorPreviewFile').change(async function () {
+                        await lib.helpers.images.preview('#actorPreview', '#actorPreviewFile');
+                        $("#actorPreview").show();
+                        $("#preview").hide();
+                        $("#previewRemove").show();
                     });
                     $("#previewRemove").click(function () {
                         $("#preview").show();
@@ -159,21 +279,23 @@
                         .change(lib.views.index.createActorModal.validate)
                         .keyup(lib.views.index.createActorModal.validate);
                 },
-                submit: function (body, type) {
-                    controllers.actors[type].post(body, function (response) {
-                        lib.views.index.createActorModal.handleResponse(response);
-                    });
+                submit: async function (body, type) {
+                    var response = await controllers.actors[type].post(body);
+                    await lib.views.index.createActorModal.handleResponse(response);
                 },
-                handleResponse: function (response) {
+                handleResponse: async function (response) {
+                    $('#actorId').val(response.data.id);
+                    $('#actorType').val(response.data.actorType);
+
                     if ($('#actorPreviewFile').val()) {
-                        lib.helpers.images.preview('#actorPreview', '#actorPreviewFile', function (data) {
-                            lib.helpers.images.preview('#actorImageErrands', '#actorPreviewFile', function (data) {
-                                $("#actorImageErrands").show();
-                                $('#robotId').val(response.data.id);
-                                lib.controllers.images.post({ ActorId: response.data.id, ImageData: data.split(',')[1] }, lib.views.index.createActorErrandsModal.show);
-                            });
-                        });
+                        response.data.ImageData = await lib.helpers.images.preview('#actorImageErrands', '#actorPreviewFile');
+                        await lib.controllers.images.post({ ActorId: response.data.id, ImageData: response.data.ImageData.split(',')[1] });
+                        $("#actorImageErrands").show();
+                        lib.views.index.createActorErrandsModal.show(response);
                     } else {
+                        response.data.ImageData = await lib.helpers.images.random('#actorImageErrands');
+                        await lib.controllers.images.post({ ActorId: response.data.id, ImageData: response.data.ImageData.split(',')[1] });
+                        $("#actorImageErrands").show();
                         lib.views.index.createActorErrandsModal.show(response);
                     }
                 }
@@ -184,10 +306,11 @@
                         event.preventDefault();
                         lib.views.index.createActorErrandsModal.validate(function (result) {
                             if (result) {
-                                lib.views.index.createActorErrandsModal.submit([{
-                                    actorId: $('#robotId').val(),
-                                    errandIds: []
-                                }]);
+                                lib.views.index.createActorErrandsModal.submit({
+                                    actorId: $('#actorId').val(),
+                                    userCreated: true,
+                                    errandIds: Array.from($('#createActorErrandsModal input:checked')).map(element => element.value)
+                                });
                             }
                         });
                     });
@@ -215,6 +338,8 @@
                     }
                 },
                 submit: function (actor) {
+                    $('.card').remove();
+
                     lib.views.index.errandReport.show(actor);
                 },
                 show: function (actor) {
@@ -222,29 +347,45 @@
                 }
             },
             errandReport: {
-                show: function (actors) {
-                    if (!Array.isArray(actors)) { return lib.helpers.error('must pass an array of actors'); }
-                    //render each actor
+                show: async function (actor, index) {
+                    var actorCard = {
+                        actorId: actor.id,
+                        errandIds: actor.errandIds,
+                        name: actor.name,
+                        imageData: actor.imageData
+                    };
+                    if (actor.userCreated) {
+                        var response = await lib.controllers.actors[$('#actorType').val().toLowerCase()].get($('#actorId').val());
+                        actorCard = response.data;
+                        var image = await lib.controllers.images.get($('#actorId').val());
+                        actorCard.imageData = "data:image/jpeg;base64," + image.data;
+                        actorCard.errandIds = actor.errandIds;
+                        actorCard.actorId = actor.actorId;
+                    }
+
+                    lib.helpers.html.generateCard($('#cardParentContainer'), actorCard, index % 2 === 0 ? "cardLeft" : "cardRight", actor.userCreated);
                     window.location.hash = 'open-modal-errands-report';
-                    //perform actor errands concurrently per actor and render updates
                 }
             }
         },
         factory: {
+            eventListeners: function () {
+                $('#beginManufacturing').unbind().click(lib.views.factory.beginManufacturing);
+            },
             actorTypes: function () {
                 return ['robot', 'cyborg'];
             },
             beginManufacturing: function () {
                 //TODO: does too much, separate
+                $('.card').remove();
                 var requests = [];
 
                 setTimeout(function () {
                     $('#beginManufacturing').hide();
                     $('#factorySpinner').show();
                 }, 300);
-                var unitsToBuild = Math.floor(Math.random() * 21);
-                var numberOfTasksToRun = Math.floor(Math.random() * 11);
-                for (var i = 0; i < unitsToBuild; i++) {
+                //TODO: styling issue with cards if > 2 :(
+                for (var i = 0; i < 2; i++) {
                     var unitTypeToBuild = Math.floor(Math.random() * 2);
 
                     var genderOptions = $("#genderSelect > option");
@@ -267,12 +408,30 @@
                     }));
                 }
 
-                Promise.all(requests).then(function (data) {
-                    $('#beginManufacturing').show();
-                    $('#factorySpinner').hide();
-                    data.forEach(function (value, index, array) {
-                        //TODO: errands - numberOfTasksToRun
-                        value.json().then(res => res).then(response => console.log('Success:', JSON.stringify(response)));
+                Promise.all(requests).then(function (actors) {
+                    var count = 1;
+                    setTimeout(function () {
+                        $('#beginManufacturing').show();
+                        $('#factorySpinner').hide();
+                    }, 3000);
+
+                    actors.forEach(async function (actor, index, array) {
+                        actor.json().then(async function(res) {
+                            var tasks = [];
+                            var numberOfTasksToRun = Math.floor(Math.random() * 6);
+                            var taskOptions = $("#createActorErrandsModal > input");
+                            numberOfTasksToRun = numberOfTasksToRun === 0 ? 1 : numberOfTasksToRun;
+
+                            res.imageData = await lib.helpers.images.random('#actorImageErrands');
+                            await lib.controllers.images.post({ ActorId: res.id, ImageData: res.imageData.split(',')[1] });
+
+                            for (var i = 0; i < numberOfTasksToRun; i++) {
+                                tasks.push(taskOptions[Math.floor(Math.random() * taskOptions.length) === 0 ? 1 : Math.floor(Math.random() * taskOptions.length)].name)
+                            }
+                            res.errandIds = tasks;
+
+                            lib.views.index.errandReport.show(res, count++);
+                        });
                     });
                 });
             }

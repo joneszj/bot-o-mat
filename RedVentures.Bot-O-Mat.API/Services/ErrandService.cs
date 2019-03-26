@@ -40,14 +40,11 @@ namespace RedVentures.Bot_O_Mat.API.Services
             {
                 _stopwatch.Start();
                 Thread.Sleep((int)errandType / ((int)actor.ActorType + 1) + _randomGenerator.Next(1000));
-                if (_randomGenerator.Next(100) < 10)
-                {
-                    result.TerminatedActor =  await _battleService.KillAnotherActor(actor);
-                }
                 if (_randomGenerator.Next(100) < 20)
                 {
                     //actor destroyed the errand task!!!!
                     errand.Status = ErrandStatus.Failed;
+                    result.TerminatedActor = await _battleService.KillAnotherActor(actor);
                     break;
                 }
             }

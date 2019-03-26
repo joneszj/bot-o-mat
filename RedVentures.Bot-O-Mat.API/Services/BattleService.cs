@@ -30,7 +30,10 @@ namespace RedVentures.Bot_O_Mat.API.Services
             if (actor.ActorType == ActorType.Cyborg)
             {
                 var deadActorRange = await _robotService.GetRobotsBy(string.Empty, null);
-                var deadActor = await _robotService.GetRobot(_randomGenerator.Next(1, deadActorRange.Count()));
+
+                int toSkip = _randomGenerator.Next(0, deadActorRange.Count());
+                var deadActor = deadActorRange.Skip(toSkip).Take(1).First();
+
                 if (deadActor != null)
                 {
                     deadActor.IsActive = false;

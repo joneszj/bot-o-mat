@@ -8,10 +8,10 @@
         <a class="nav-link text-dark" asp-area="" asp-controller="Logs" asp-action="Index">Logs</a>
 
         <span class="right">
-            <!a class="nav-link text-dark" href="https://localhost:44308/healthchecks-ui">API Health-Check-UI</!a>
-            <!a class="nav-link text-dark" href="https://localhost:44308/swagger">API Swagger</!a>
-            <a class="nav-link text-dark" href="https://localhost:44308/whois">API WhoIs</a>
-            <a class="nav-link text-dark" href="https://localhost:44308/logs">API Logs</a>
+            <!a class="nav-link text-dark" href="@Model.HealthCheckUIAPI">API Health-Check-UI</!a>
+            <!a class="nav-link text-dark" href="@Model.SwaggerAPI">API Swagger</!a>
+            <a class="nav-link text-dark" href="@Model.WhoIsAPI.">API WhoIs</a>
+            <a class="nav-link text-dark" href="@Model.LogsAPI">API Logs</a>
         </span>
         <div class="clr"></div>
     </div>
@@ -20,6 +20,7 @@
         @await Html.PartialAsync("_CreateActorCTA")
         @await Html.PartialAsync("_CreateActorModal")
         @await Html.PartialAsync("_CreateActorErrandsModal")
+        @await Html.PartialAsync("_ErrandReportModal")
     </header>
 
     <div id="slider" class="sl-slider-wrapper">
@@ -45,7 +46,6 @@
             <div class="sl-slide" data-orientation="vertical" data-slice1-rotation="-5" data-slice2-rotation="25" data-slice1-scale="2" data-slice2-scale="1">
                 <div class="sl-slide-inner" style="padding-left: 15%;">
                     <partial name="_Factory" />
-                    <partial name="_ManufacturingReport" />
                 </div>
             </div>
         </div>

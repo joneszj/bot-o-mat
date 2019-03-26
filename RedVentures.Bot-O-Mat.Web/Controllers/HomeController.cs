@@ -27,7 +27,7 @@ namespace RedVentures.Bot_O_Mat.Web.Controllers
                 .Get<KillBoardViewModelDTO>($"{ _helpersManager.EnvironmentHelper.Configuration.GetSection("API-URIs")["StatisticsAPI"]}/KillBoard");
             var graveYardViewModelDTO = await _helpersManager.HttpHelper
                 .Get<GraveYardViewModelDTO>($"{ _helpersManager.EnvironmentHelper.Configuration.GetSection("API-URIs")["StatisticsAPI"]}/Graveyard");
-            return View(new AppViewModel(leaderBoardDto, killboardBoardDto, graveYardViewModelDTO));
+            return View(new AppViewModel(leaderBoardDto, killboardBoardDto, graveYardViewModelDTO, _helpersManager));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

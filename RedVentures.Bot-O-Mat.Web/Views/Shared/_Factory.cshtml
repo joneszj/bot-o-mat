@@ -2,7 +2,7 @@
 <div class="bg-img bg-img-4"></div>
 <h2>Unit Factory</h2>
 <blockquote>
-    The factory will allow you to quickly created a random number (limit 20) of units and assign them a random number (limit 10 each) of tasks. When completed, a report will be displayed.
+    The factory will allow you to quickly created two units which are assigned a random number (limit 5 each) of tasks.
     <br />
     @* open-modal-manufacturing-report *@
     <a id="beginManufacturing" href="#" data-toggle="modal" data-target="#modal-manufacturing-report" class="btn-big-red">Manufacture Units!</a>
@@ -10,7 +10,7 @@
 </blockquote>
 
 <script>
-    $('#beginManufacturing').click(lib.views.factory.beginManufacturing);
+    $(document).ready(lib.views.factory.eventListeners);
 </script>
 
 @* https://codepen.io/palimadra/pen/jHodC *@

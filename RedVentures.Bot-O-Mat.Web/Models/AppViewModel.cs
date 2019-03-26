@@ -1,4 +1,5 @@
-﻿using RedVentures.Bot_O_Mat.Web.DTOs;
+﻿using CommonPatterns.Helpers;
+using RedVentures.Bot_O_Mat.Web.DTOs;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -6,8 +7,12 @@ namespace RedVentures.Bot_O_Mat.Web.Models
 {
     public class AppViewModel
     {
-        public AppViewModel(LeaderBoardViewModelDTO leaderBoardDto, KillBoardViewModelDTO killboardBoardDto, GraveYardViewModelDTO graveYardViewModelDTO)
+        public AppViewModel(LeaderBoardViewModelDTO leaderBoardDto, KillBoardViewModelDTO killboardBoardDto, GraveYardViewModelDTO graveYardViewModelDTO, HelpersManager helpersManager)
         {
+            HealthCheckUIAPI = helpersManager.EnvironmentHelper.Configuration.GetSection("API-URIs")["Base"] + "healthchecks-ui";
+            SwaggerAPI = helpersManager.EnvironmentHelper.Configuration.GetSection("API-URIs")["Base"] + "swagger";
+            WhoIsAPI = helpersManager.EnvironmentHelper.Configuration.GetSection("API-URIs")["Base"] + "whois";
+            LogsAPI = helpersManager.EnvironmentHelper.Configuration.GetSection("API-URIs")["Base"] + "logs";
             LeaderBoardViewModel = new LeaderBoardViewModel
             {
                 Robots = leaderBoardDto.LeaderBoardRecord
@@ -31,5 +36,9 @@ namespace RedVentures.Bot_O_Mat.Web.Models
         public KillBoardViewModel KillBoardViewModel { get; set; }
         public IEnumerable<GraveyardViewModel> GraveyardViewModel { get; set; }
         public FactoryViewModel FactoryViewModel { get; set; }
+        public string HealthCheckUIAPI { get; }
+        public string SwaggerAPI { get; }
+        public string WhoIsAPI { get; }
+        public string LogsAPI { get; }
     }
 }

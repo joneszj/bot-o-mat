@@ -36,7 +36,7 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
             else throw new NotImplementedException();
         }
 
-        [HttpGet]
+        [HttpGet("{actorId}")]
         public async Task<string> GetBase64Image(int actorId)
         {
             var actor = await _botOMatContext.ErrandActors.FindAsync(actorId);

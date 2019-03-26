@@ -9,9 +9,9 @@
         <div>
             @* http://jsfiddle.net/barney/uxPjN/ *@
             <label class="fileContainer">
-                <span id="preview">Add an Image</span>
+                <span id="preview" title="A random image will be used if you don't add your own image">Add an Image</span>
                 <input name="image" type="file" id="actorPreviewFile" />
-                <img src="" id="actorPreview" height="200" alt="Image preview..." style="border-radius: 50%; display:none;">
+                <img src="" id="actorPreview" height="200" width="200" alt="Image preview..." style="border-radius: 50%; display:none;">
             </label>
             <br />
             <label class="fileContainer" id="previewRemove" style="display:none;">
@@ -21,7 +21,7 @@
         <br />
         <hr />
 
-        <form class="form-inline" id="createActorModal">
+        <form class="form-inline" id="createActorModal" action="#">
             <div id="createActorModalFormValidationSummary" style="display:none;">
                 <ul style="color:red;list-style: none;"></ul>
             </div>
@@ -54,7 +54,7 @@
             <button id="CTASubmit" class="CTASubmit">Create Unit</button>
         </form>
         <script>
-            $(document).ready(lib.views.index.createActorModal.eventListeners);
+            $(document).ready(lib.views.index.createActorErrandsModal.eventListeners);
         </script>
     </div>
 </div>

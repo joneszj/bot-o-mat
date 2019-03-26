@@ -12,5 +12,6 @@ namespace RedVentures.Bot_O_Mat.API.Data
         int Id { get; set; }
         ICollection<Errand> Errands { get; set; }
         ActorType ActorType { get; set; }
+        string Name { get; set; }
     }
 }
