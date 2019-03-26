@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using CommonPatterns.Filters;
 using CommonPatterns.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using RedVentures.Bot_O_Mat.API.Data.Enums;
+using RedVentures.Bot_O_Mat.API.Hubs;
 using RedVentures.Bot_O_Mat.API.Models;
 using RedVentures.Bot_O_Mat.API.Services;
 
@@ -21,12 +23,14 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
         private readonly HelpersManager _helpersManager;
         private readonly ICyborgService _cyborgService;
         private readonly IErrandService _errandService;
+        private readonly IHubContext<NotificationHub> _notificationHub;
 
-        public CyborgController(HelpersManager helperManager, ICyborgService cyborgService, IErrandService errandService)
+        public CyborgController(HelpersManager helperManager, ICyborgService cyborgService, IErrandService errandService, IHubContext<NotificationHub> notificationHub)
         {
             _helpersManager = helperManager;
             _cyborgService = cyborgService;
             _errandService = errandService;
+            _notificationHub = notificationHub;
         }
         #endregion
 
@@ -34,9 +38,10 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<CyborgViewModel>> Get(int id)
         {
+            await _notificationHub.Clients.All.SendAsync("Send", "hello from signalr!");
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            var robot = new CyborgViewModel(await _cyborgService.GetCyborg(id));
-            if (robot == null) return NotFound();
+            var cyborg = await _cyborgService.GetCyborg(id);
+            if (cyborg == null) return NotFound();
             return Ok(new CyborgViewModel(await _cyborgService.GetCyborg(id)));
         }
 

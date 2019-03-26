@@ -1,5 +1,4 @@
 using System;
-using System.Net;
 using CommonPatterns.Filters;
 using CommonPatterns.Helpers;
 using Microsoft.AspNetCore.Builder;
@@ -10,6 +9,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using RedVentures.Bot_O_Mat.API.Data;
+using RedVentures.Bot_O_Mat.API.Hubs;
 using RedVentures.Bot_O_Mat.API.Services;
 
 namespace RedVentures.Bot_O_Mat.API
@@ -17,12 +17,14 @@ namespace RedVentures.Bot_O_Mat.API
     public class Startup
     {
         private readonly ILogger<Startup> _logger;
+        private readonly IHostingEnvironment _env;
         private Guid _correlationId;
 
-        public Startup(IConfiguration configuration, ILogger<Startup> logger)
+        public Startup(IConfiguration configuration, IHostingEnvironment env, ILogger<Startup> logger)
         {
             Configuration = configuration;
             _logger = logger;
+            _env = env;
             _correlationId = Guid.NewGuid();
         }
 
@@ -44,8 +46,10 @@ namespace RedVentures.Bot_O_Mat.API
                 HealthCheckHelper.Configure(services);
                 BeatPulseHelper.Configure(services, Configuration);
                 WhoIsHelper.Configure(services);
-                ContextInjections(services);
 
+                ContextInjections(services, _env.ContentRootPath);
+
+                services.AddSignalR();
 
                 services.AddScoped<IRobotService, RobotService>();
                 services.AddScoped<ICyborgService, CyborgService>();
@@ -73,11 +77,15 @@ namespace RedVentures.Bot_O_Mat.API
                 app.UseHsts();
             }
 
+            app.UseCors(policy => policy.WithOrigins("https://localhost:44328").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
-            app.UseCors(policy => policy.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
+            app.UseSignalR(routes =>
+            {
+                routes.MapHub<NotificationHub>("/notification");
+            });
 
             HealthCheckHelper.Setup(app);
             BeatPulseHelper.Setup(app);
@@ -98,7 +106,7 @@ namespace RedVentures.Bot_O_Mat.API
             services.AddHttpClient();
         }
 
-        private void ContextInjections(IServiceCollection services) => services.AddDbContext<BotOMatContext>(options => options.UseSqlite("Data Source=BotOMatContext.db"));
+        private void ContextInjections(IServiceCollection services, string basePath) => services.AddDbContext<BotOMatContext>(options => options.UseSqlite($"Data Source={basePath}/BotOMatContext.db"));
         #endregion
     }
 }

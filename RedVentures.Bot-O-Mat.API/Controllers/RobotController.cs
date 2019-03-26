@@ -35,7 +35,7 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
         public async Task<ActionResult<RobotViewModel>> Get(int id)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            var robot = new RobotViewModel(await _robotService.GetRobot(id));
+            var robot = await _robotService.GetRobot(id);
             if (robot == null) return NotFound();
             return Ok(new RobotViewModel(await _robotService.GetRobot(id)));
         }

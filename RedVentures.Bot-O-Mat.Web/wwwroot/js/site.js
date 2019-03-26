@@ -438,6 +438,38 @@
         }
     };
 
+    var service = {
+        init: (function () {
+            document.addEventListener('DOMContentLoaded', function () {
+                var connection = new signalR.HubConnectionBuilder()
+                    .withUrl('https://localhost:44308/notification')
+                    .build();
+
+                // Create a function that the hub can call to broadcast messages.
+                connection.on('Send', function (message) {
+                    debugger;
+                });
+
+                // Transport fallback functionality is now built into start.
+                connection.start()
+                    .then(function () {
+                        console.log('connection started');
+                    })
+                    .catch(error => {
+                        console.error(error.message);
+                    });
+            });
+        })(),
+        notification: {
+            info: {
+
+            },
+            warn: {
+
+            }
+        }
+    };
+
     return {
         controllers: controllers,
         helpers: helpers,

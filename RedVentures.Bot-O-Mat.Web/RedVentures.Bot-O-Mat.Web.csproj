@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.2</TargetFramework>
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
     <RootNamespace>RedVentures.Bot_O_Mat.Web</RootNamespace>
+    <TypeScriptToolsVersion>3.3</TypeScriptToolsVersion>
   </PropertyGroup>
 
 
@@ -23,7 +24,7 @@
 
 
   <ItemGroup>
-    <Folder Include="wwwroot\lib\" />
+    <Folder Include="wwwroot\lib\%40aspnet\" />
   </ItemGroup>
 
 </Project>

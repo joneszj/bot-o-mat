@@ -1,5 +1,27 @@
 {
   "version": "1.0",
   "defaultProvider": "cdnjs",
-  "libraries": []
+  "libraries": [
+    {
+      "provider": "unpkg",
+      "library": "@aspnet/signalr@1.0.3",
+      "destination": "wwwroot/lib/@aspnet/signalr/"
+    },
+    {
+      "library": "signalr.js@2.4.0",
+      "destination": "wwwroot/lib/signalr.js/"
+    },
+    {
+      "library": "jquery@3.3.1",
+      "destination": "wwwroot/lib/jquery/"
+    },
+    {
+      "library": "axios@0.18.0",
+      "destination": "wwwroot/lib/axios/"
+    },
+    {
+      "library": "Faker@3.1.0",
+      "destination": "wwwroot/lib/Faker/"
+    }
+  ]
 }
