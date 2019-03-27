@@ -53,12 +53,12 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
 
         private async Task NotifyTaskCompleted(PerformErrandResult result)
         {
-            await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{result.PerformingActor.Name} ({Enum.GetName(typeof(ActorType), result.PerformingActor.ActorType)}) completed task { Enum.GetName(typeof(ErrandType), result.PerformedErrand.Type) }!", SeverityLevel.Success));
+            await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{result.PerformingActor.Name} ({Enum.GetName(typeof(ActorType), result.PerformingActor.ActorType)}) completed task: { Enum.GetName(typeof(ErrandType), result.PerformedErrand.Type) }!", SeverityLevel.Success));
         }
 
         private async Task NotifyFailedTask(PerformErrandResult result)
         {
-            await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{result.PerformingActor.Name} ({Enum.GetName(typeof(ActorType), result.PerformingActor.ActorType)}) failed task { Enum.GetName(typeof(ErrandType), result.PerformedErrand.Type) }!", SeverityLevel.Warn));
+            await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{result.PerformingActor.Name} ({Enum.GetName(typeof(ActorType), result.PerformingActor.ActorType)}) failed task: { Enum.GetName(typeof(ErrandType), result.PerformedErrand.Type) }!", SeverityLevel.Warn));
         }
 
         private async Task NotifyTerminatedUnit(PerformErrandResult result)
@@ -69,7 +69,7 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
 
         private async Task NotifyTaskStarted(Data.DbSets.ErrandActor actor, PerformErrandViewModel errand)
         {
-            await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{actor.Name} ({Enum.GetName(typeof(ActorType), actor.ActorType)}) has started { Enum.GetName(typeof(ErrandType), errand.ErrandType) }!", SeverityLevel.Info));
+            await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{actor.Name} ({Enum.GetName(typeof(ActorType), actor.ActorType)}) has started task: { Enum.GetName(typeof(ErrandType), errand.ErrandType) }!", SeverityLevel.Info));
         }
         #endregion
     }

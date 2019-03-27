@@ -362,7 +362,7 @@
     background-blend-mode: overlay;
 }
 .demo-2 .bg-img-2 {
-    background: linear-gradient( rgba(0, 0, 0, 0.45), rgba(255, 0, 0, 0.45) ), url(../images/terminator.png);
+    background: linear-gradient( rgba(0, 0, 0, 0.45), rgba(255, 0, 0, 0.45) ), url(../images/killcount.png);
     background-size: cover;
     background-position: center;
     background-blend-mode: color-burn;
