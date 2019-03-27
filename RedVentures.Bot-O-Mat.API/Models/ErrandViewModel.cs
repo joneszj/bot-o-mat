@@ -5,6 +5,7 @@ namespace RedVentures.Bot_O_Mat.API.Models
 {
     public class ErrandViewModel
     {
+        public ErrandViewModel() { }
         public ErrandViewModel(Errand errand)
         {
             ErrandType = errand.Type;

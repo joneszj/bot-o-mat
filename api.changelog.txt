@@ -65,3 +65,7 @@ simplified keys for caching
 added images controller and mapped to actors in db
 added missing next() on refreshfilters (was producing false positives with null responses)
 added errand ctrl and service
+added signalr for realtime messaging
+added notifications in top most layer (prevent dependancy of signalr in services)
+some minor cleanup
+moved interfaces into their own folder but intentionally lef the original namespace

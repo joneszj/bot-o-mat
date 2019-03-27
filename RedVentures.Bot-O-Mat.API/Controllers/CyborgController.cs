@@ -38,7 +38,6 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<CyborgViewModel>> Get(int id)
         {
-            await _notificationHub.Clients.All.SendAsync("Send", "hello from signalr!");
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var cyborg = await _cyborgService.GetCyborg(id);
             if (cyborg == null) return NotFound();
@@ -58,7 +57,10 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
         public async Task<ActionResult<CyborgViewModel>> Post([FromBody] CyborgViewModel cyborg)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            return Ok(new CyborgViewModel(await _cyborgService.CreateCyborg(cyborg.Name, cyborg.Gender)));
+            var newCyborg = await _cyborgService.CreateCyborg(cyborg.Name, cyborg.Gender);
+            await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{cyborg.Name} (Cyborg) created!", SeverityLevel.Success));
+            return Ok(new CyborgViewModel(newCyborg));
+
         }
 
         [ServiceFilter(typeof(RefreshCyborgCacheFilter))]
@@ -77,7 +79,8 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
         public async Task<ActionResult> Delete(int id)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            await _cyborgService.ScrapCyborg(id);
+            var cyborg = await _cyborgService.ScrapCyborg(id);
+            await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{cyborg.Name} deactivated!", SeverityLevel.Info));
             return Ok();
         }
         #endregion

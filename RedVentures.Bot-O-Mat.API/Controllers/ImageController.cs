@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using RedVentures.Bot_O_Mat.API.Data;
+using RedVentures.Bot_O_Mat.API.Hubs;
 using RedVentures.Bot_O_Mat.API.Models;
 
 namespace RedVentures.Bot_O_Mat.API.Controllers
@@ -13,13 +15,18 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
     [ApiController]
     public class ImageController : ControllerBase
     {
+        #region ctor && private
         private BotOMatContext _botOMatContext;
+        private readonly IHubContext<NotificationHub> _notificationHub;
 
-        public ImageController(BotOMatContext botOMatContext)
+        public ImageController(BotOMatContext botOMatContext, IHubContext<NotificationHub> notificationHub)
         {
             _botOMatContext = botOMatContext;
+            _notificationHub = notificationHub;
         }
+        #endregion
 
+        #region public
         [HttpPost]
         public async Task<FileContentResult> UploadImage([FromBody] ImageViewModel model)
         {
@@ -31,6 +38,8 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
             {
                 actor.Image = imageDataByteArray;
                 await _botOMatContext.SaveChangesAsync();
+                await NotifyImageUploaded();
+
                 return File(imageDataByteArray, "image/png");
             }
             else throw new NotImplementedException();
@@ -42,6 +51,14 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
             var actor = await _botOMatContext.ErrandActors.FindAsync(actorId);
             if (actor != null) return Convert.ToBase64String(actor.Image);
             else throw new NotImplementedException();
-        }
+        } 
+        #endregion
+
+        #region helpers
+        private async Task NotifyImageUploaded()
+        {
+            await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"Image uploaded!", SeverityLevel.Success));
+        } 
+        #endregion
     }
 }

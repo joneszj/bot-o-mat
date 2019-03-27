@@ -12,6 +12,7 @@ namespace RedVentures.Bot_O_Mat.API.Services
 {
     public class ErrandService : IErrandService
     {
+        #region ctor && private
         private readonly BotOMatContext _botOMatContext;
         private readonly IBattleService _battleService;
         private readonly Random _randomGenerator;
@@ -23,8 +24,10 @@ namespace RedVentures.Bot_O_Mat.API.Services
             _battleService = battleService;
             _randomGenerator = new Random();
             _stopwatch = new Stopwatch();
-        }
+        } 
+        #endregion
 
+        //TODO: cleanify
         public async Task<PerformErrandResult> PerformErrand(ICanPerformErrand actor, ErrandType errandType)
         {
             var errand = new Errand(actor, errandType) { Status = ErrandStatus.In_Progress };

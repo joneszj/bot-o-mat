@@ -23,11 +23,12 @@ namespace RedVentures.Bot_O_Mat.API.Services
             return newCyborg.Entity;
         }
 
-        public async Task ScrapCyborg(int Id)
+        public async Task<Cyborg> ScrapCyborg(int Id)
         {
             var cyborg = await GetCyborg(Id);
             cyborg.Scrap();
             await _botOMatContext.SaveChangesAsync();
+            return cyborg;
         }
 
         public async Task<Cyborg> GetCyborg(int Id) => await _botOMatContext.Cyborgs.FindAsync(Id);

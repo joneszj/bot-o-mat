@@ -12,6 +12,7 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
     [ApiController]
     public class StatisticsController : ControllerBase
     {
+        #region ctor && private
         private readonly ILeaderBoardService _leaderBoardService;
         private readonly IKillBoardService _killBoardService;
         private readonly IGraveyardService _graveyardService;
@@ -22,7 +23,9 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
             _killBoardService = killBoardService;
             _graveyardService = graveyardService;
         }
+        #endregion
 
+        #region public
         [Route("LeaderBoard")]
         [HttpGet]
         public async Task<ActionResult<LeaderBoardViewModel>> GetLeaderBoard() => Ok(await _leaderBoardService.GetLeaderBoard());
@@ -33,6 +36,7 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
 
         [Route("Graveyard")]
         [HttpGet]
-        public async Task<ActionResult<GraveyardViewModel>> GetGraveyard() => Ok(await _graveyardService.GetFallenActors());
+        public async Task<ActionResult<GraveyardViewModel>> GetGraveyard() => Ok(await _graveyardService.GetFallenActors()); 
+        #endregion
     }
 }

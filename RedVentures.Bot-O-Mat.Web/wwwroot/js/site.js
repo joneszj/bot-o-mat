@@ -371,11 +371,22 @@
         factory: {
             eventListeners: function () {
                 $('#beginManufacturing').unbind().click(lib.views.factory.beginManufacturing);
+                $('#beginUberManufacturing').unbind().click(lib.views.factory.beginUberManufacturing);
             },
             actorTypes: function () {
                 return ['robot', 'cyborg'];
             },
-            beginManufacturing: function () {
+            beginUberManufacturing: function () {
+                var response = prompt("WARNING! Uber Manufacturing allows you to created any number of units! The report modal will likely render buggy. To continue (at your own risk... turn back now), type a number for the unit creation count below and press Ok.")
+                if (response) {
+                    //interesting way to convert string to num https://stackoverflow.com/a/175787
+                    if (Number.isInteger(parseInt(response))) {
+                        lib.views.factory.beginManufacturing(Math.abs(response));
+                    }
+                    
+                }
+            },
+            beginManufacturing: function (count) {
                 //TODO: does too much, separate
                 $('.card').remove();
                 var requests = [];
@@ -385,7 +396,8 @@
                     $('#factorySpinner').show();
                 }, 300);
                 //TODO: styling issue with cards if > 2 :(
-                for (var i = 0; i < 2; i++) {
+                count = count || 2;
+                for (var i = 0; i < count; i++) {
                     var unitTypeToBuild = Math.floor(Math.random() * 2);
 
                     var genderOptions = $("#genderSelect > option");
@@ -426,7 +438,7 @@
                             await lib.controllers.images.post({ ActorId: res.id, ImageData: res.imageData.split(',')[1] });
 
                             for (var i = 0; i < numberOfTasksToRun; i++) {
-                                tasks.push(taskOptions[Math.floor(Math.random() * taskOptions.length) === 0 ? 1 : Math.floor(Math.random() * taskOptions.length)].name)
+                                tasks.push(taskOptions[Math.floor(Math.random() * taskOptions.length) === 0 ? 1 : Math.floor(Math.random() * taskOptions.length)].name);
                             }
                             res.errandIds = tasks;
 
@@ -438,7 +450,7 @@
         }
     };
 
-    var service = {
+    var services = {
         init: (function () {
             document.addEventListener('DOMContentLoaded', function () {
                 var connection = new signalR.HubConnectionBuilder()
@@ -446,8 +458,9 @@
                     .build();
 
                 // Create a function that the hub can call to broadcast messages.
-                connection.on('Send', function (message) {
+                connection.on('Notify', function (notification) {
                     debugger;
+                    lib.services.notification(notification.message, notification.severityLevel.toLowerCase());
                 });
 
                 // Transport fallback functionality is now built into start.
@@ -460,19 +473,15 @@
                     });
             });
         })(),
-        notification: {
-            info: {
-
-            },
-            warn: {
-
-            }
+        notification: function(message, type) {
+            $.notify(message, { className: type, globalPosition: 'bottom right' });
         }
     };
 
     return {
         controllers: controllers,
         helpers: helpers,
-        views: views
+        views: views,
+        services: services
     };
 })($, axios);

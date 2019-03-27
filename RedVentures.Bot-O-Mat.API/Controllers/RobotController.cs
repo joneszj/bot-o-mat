@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using CommonPatterns.Filters;
 using CommonPatterns.Helpers;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using RedVentures.Bot_O_Mat.API.Data.Enums;
+using RedVentures.Bot_O_Mat.API.Hubs;
 using RedVentures.Bot_O_Mat.API.Models;
 using RedVentures.Bot_O_Mat.API.Services;
 
@@ -21,12 +23,14 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
         private readonly HelpersManager _helpersManager;
         private readonly IErrandService _errandService;
         private readonly IRobotService _robotService;
+        private readonly IHubContext<NotificationHub> _notificationHub;
 
-        public RobotController(HelpersManager helperManager, IRobotService robotService, IErrandService errandService)
+        public RobotController(HelpersManager helperManager, IRobotService robotService, IErrandService errandService, IHubContext<NotificationHub> notificationHub)
         {
             _helpersManager = helperManager;
             _errandService = errandService;
             _robotService = robotService;
+            _notificationHub = notificationHub;
         }
         #endregion
 
@@ -53,7 +57,9 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
         public async Task<ActionResult<RobotViewModel>> Post([FromBody] RobotViewModel robot)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            return Ok(new RobotViewModel(await _robotService.CreateRobot(robot.Name, robot.Type)));
+            var newRobot = await _robotService.CreateRobot(robot.Name, robot.Type);
+            await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{robot.Name} (Robot) created!", SeverityLevel.Success));
+            return Ok(new RobotViewModel(newRobot));
         }
 
         [ServiceFilter(typeof(RefreshRobotCacheFilter))]
@@ -72,7 +78,8 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
         public async Task<ActionResult> Delete(int id)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            await _robotService.ScrapRobot(id);
+            var robot = await _robotService.ScrapRobot(id);
+            await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{robot.Name} deactivated!", SeverityLevel.Info));
             return Ok();
         }
         #endregion

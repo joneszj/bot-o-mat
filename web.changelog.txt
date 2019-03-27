@@ -25,3 +25,5 @@ bug: modal input-file is clickable when not displayed
 switched js to async model
 completed errands servicing
 beginning to feel fatigued >< sloppier coding 
+added uber manufacturing
+added notify service and notifyjs to handle signalr websocket messages

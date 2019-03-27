@@ -18,6 +18,7 @@ namespace CommonPatterns.Filters
         #region public
         public async override Task OnExceptionAsync(ExceptionContext context)
         {
+            //TODO: notify of error via signalr?
             await _helpersManager.Log.Fatal(context.Exception, $"Exception thrown! {context.Exception.Message}");
             throw context.Exception;
         }

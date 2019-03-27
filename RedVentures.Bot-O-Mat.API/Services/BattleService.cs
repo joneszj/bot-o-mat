@@ -25,6 +25,7 @@ namespace RedVentures.Bot_O_Mat.API.Services
         /// </summary>
         /// <param name="actor"></param>
         /// <returns></returns>
+        //TODO: cleanify
         public async Task<ICanPerformErrand> KillAnotherActor(ICanPerformErrand actor)
         {
             if (actor.ActorType == ActorType.Cyborg)

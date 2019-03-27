@@ -1,8 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using CommonPatterns.Filters;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using RedVentures.Bot_O_Mat.API.Data;
+using RedVentures.Bot_O_Mat.API.Data.Enums;
+using RedVentures.Bot_O_Mat.API.Hubs;
 using RedVentures.Bot_O_Mat.API.Models;
 using RedVentures.Bot_O_Mat.API.Services;
 
@@ -14,22 +18,56 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
     [ApiController]
     public class ErrandController : ControllerBase
     {
+        #region ctor && private
         private readonly BotOMatContext _botOMatContext;
         private readonly IErrandService _errandService;
+        private readonly IHubContext<NotificationHub> _notificationHub;
 
-        public ErrandController(BotOMatContext botOMatContext, IErrandService errandService)
+        public ErrandController(BotOMatContext botOMatContext, IErrandService errandService, IHubContext<NotificationHub> notificationHub)
         {
             _botOMatContext = botOMatContext;
             _errandService = errandService;
-        }
+            _notificationHub = notificationHub;
+        } 
+        #endregion
 
         [HttpPost]
         public async Task<ActionResult<PerformErrandResultViewModel>> Post([FromBody] PerformErrandViewModel performErrandViewModel)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            var actor = await _botOMatContext.ErrandActors.Include(e=>e.Errands).FirstOrDefaultAsync(e=>e.Id == performErrandViewModel.ActorId);
+            var actor = await _botOMatContext.ErrandActors.Include(e => e.Errands).FirstOrDefaultAsync(e => e.Id == performErrandViewModel.ActorId);
             if (actor == null) return NotFound();
-            return (new PerformErrandResultViewModel(await _errandService.PerformErrand(actor, performErrandViewModel.ErrandType)));
+            await NotifyTaskStarted(actor);
+            var result = await _errandService.PerformErrand(actor, performErrandViewModel.ErrandType);
+            await NotifyTaskCompletionStatus(result);
+            return new PerformErrandResultViewModel(result);
         }
+
+        #region helpers
+        private async Task NotifyTaskCompletionStatus(PerformErrandResult result)
+        {
+            if (result.PerformedErrand.Status == ErrandStatus.Completed) await NotifyTaskCompleted(result); else await NotifyFailedTask(result); if (result.TerminatedActor != null) await NotifyTerminatedUnit(result);
+        }
+
+        private async Task NotifyTaskCompleted(PerformErrandResult result)
+        {
+            await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{result.PerformingActor.Name} ({Enum.GetName(typeof(ActorType), result.PerformingActor.ActorType)}) completed a task!", SeverityLevel.Success));
+        }
+
+        private async Task NotifyFailedTask(PerformErrandResult result)
+        {
+            await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{result.PerformingActor.Name} ({Enum.GetName(typeof(ActorType), result.PerformingActor.ActorType)}) failed a task!", SeverityLevel.Warn));
+        }
+
+        private async Task NotifyTerminatedUnit(PerformErrandResult result)
+        {
+            await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{result.PerformingActor.Name} ({Enum.GetName(typeof(ActorType), result.PerformingActor.ActorType)}) has destroyed a unit ({result.TerminatedActor.Name})!", SeverityLevel.Error));
+        }
+
+        private async Task NotifyTaskStarted(Data.DbSets.ErrandActor actor)
+        {
+            await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{actor.Name} ({Enum.GetName(typeof(ActorType), actor.ActorType)}) has started a task!", SeverityLevel.Info));
+        } 
+        #endregion
     }
 }

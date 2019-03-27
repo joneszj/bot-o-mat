@@ -10,6 +10,7 @@ namespace CommonPatterns.Controllers
     [ServiceFilter(typeof(RequestResponseFilter))]
     public class LogsController : Controller
     {
+        #region ctor && private
         private string _filepath;
         private string _filepathCopy;
 
@@ -17,8 +18,9 @@ namespace CommonPatterns.Controllers
         [HttpGet]
         public IActionResult Index()
         {
-            return View(new LogsIndexViewModel { Files = System.IO.Directory.GetFiles("_Logs").OrderByDescending(e=>e).Take(100).ToArray() });
-        }
+            return View(new LogsIndexViewModel { Files = System.IO.Directory.GetFiles("_Logs").OrderByDescending(e => e).Take(100).ToArray() });
+        } 
+        #endregion
 
         /// <summary>
         /// yyyymmdd

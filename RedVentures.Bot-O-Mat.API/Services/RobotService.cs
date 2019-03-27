@@ -23,11 +23,12 @@ namespace RedVentures.Bot_O_Mat.API.Services
             return newRobot.Entity;
         }
 
-        public async Task ScrapRobot(int Id)
+        public async Task<Robot> ScrapRobot(int Id)
         {
             var robot = await GetRobot(Id);
             robot.Scrap();
             await _botOMatContext.SaveChangesAsync();
+            return robot;
         }
 
         public async Task<Robot> GetRobot(int Id) => await _botOMatContext.Robots.FindAsync(Id);
