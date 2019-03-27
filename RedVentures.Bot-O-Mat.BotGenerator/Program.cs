@@ -28,7 +28,7 @@ namespace RedVentures.Bot_O_Mat.BotGenerator
 
         private static void InParallel(Random _random, HttpClient _httpClient, BotGenerator _botGenerator)
         {
-            Parallel.For(_random.Next(0), 2, async (i) =>
+            Parallel.For(_random.Next(0), 4, async (i) =>
             {
                 if (_botGenerator.GetRandomActorType() == ActorType.Robot) await new ErrandGenerator(await _botGenerator.CreatRobot(), _random, _httpClient).DoRandomThingsRobot();
                 else await new ErrandGenerator(await _botGenerator.CreatCyborg(), _random, _httpClient).DoRandomThingsCyborg();
@@ -45,7 +45,7 @@ namespace RedVentures.Bot_O_Mat.BotGenerator
         private static async Task Asynchronously(Random _random, HttpClient _httpClient, BotGenerator _botGenerator)
         {
             var tasks = new List<Task>();
-            for (int i = 0; i < _random.Next(2); i++)
+            for (int i = 0; i < _random.Next(5); i++)
             {
                 if (_botGenerator.GetRandomActorType() == ActorType.Robot) tasks.Add(new ErrandGenerator(await _botGenerator.CreatRobot(), _random, _httpClient).DoRandomThingsRobot());
                 else tasks.Add(new ErrandGenerator(await _botGenerator.CreatCyborg(), _random, _httpClient).DoRandomThingsCyborg());
