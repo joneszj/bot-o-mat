@@ -396,7 +396,7 @@
                     $('#factorySpinner').show();
                 }, 300);
                 //TODO: styling issue with cards if > 2 :(
-                count = count || 2;
+                count = !isNaN(count) || 2;
                 for (var i = 0; i < count; i++) {
                     var unitTypeToBuild = Math.floor(Math.random() * 2);
 
