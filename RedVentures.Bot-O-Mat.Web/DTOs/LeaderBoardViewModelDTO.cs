@@ -9,6 +9,7 @@ namespace RedVentures.Bot_O_Mat.Web.DTOs
 
     public class LeaderBoardRecord
     {
+        public int Id { get; set; }
         public string Name { get; set; }
         public string ActorType { get; set; }
         public int CompletedErrandCount { get; set; }

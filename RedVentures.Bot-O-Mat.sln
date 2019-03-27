@@ -16,7 +16,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_documentation", "_document
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedVentures.Bot-O-Mat.Web", "RedVentures.Bot-O-Mat.Web\RedVentures.Bot-O-Mat.Web.csproj", "{402FA9E4-E89B-491F-B561-4FD0BBCC696C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedVentures.Bot-O-Mat.BotGenerator", "RedVentures.Bot-O-Mat.BotGenerator\RedVentures.Bot-O-Mat.BotGenerator.csproj", "{638AAE03-96FE-4A4C-AECD-5A97BF9898CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedVentures.Bot-O-Mat.BotGenerator", "RedVentures.Bot-O-Mat.BotGenerator\RedVentures.Bot-O-Mat.BotGenerator.csproj", "{638AAE03-96FE-4A4C-AECD-5A97BF9898CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

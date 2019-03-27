@@ -8,10 +8,12 @@ namespace RedVentures.Bot_O_Mat.Web.Models
         {
             CompletedErrandCount = leaderBoardRecord.CompletedErrandCount;
             Name = leaderBoardRecord.Name;
+            Id = leaderBoardRecord.Id;
         }
 
         public CyborgViewModel(KillBoardRecord killboardRecord) => Name = killboardRecord.Name;
 
+        public int Id { get; set; }
         public string Name { get; set; }
         public int CompletedErrandCount { get; set; }
     }

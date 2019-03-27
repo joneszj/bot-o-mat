@@ -28,7 +28,7 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
             _botOMatContext = botOMatContext;
             _errandService = errandService;
             _notificationHub = notificationHub;
-        } 
+        }
         #endregion
 
         [HttpPost]
@@ -37,7 +37,7 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var actor = await _botOMatContext.ErrandActors.Include(e => e.Errands).FirstOrDefaultAsync(e => e.Id == performErrandViewModel.ActorId);
             if (actor == null) return NotFound();
-            await NotifyTaskStarted(actor);
+            await NotifyTaskStarted(actor, performErrandViewModel);
             var result = await _errandService.PerformErrand(actor, performErrandViewModel.ErrandType);
             await NotifyTaskCompletionStatus(result);
             return new PerformErrandResultViewModel(result);
@@ -46,28 +46,31 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
         #region helpers
         private async Task NotifyTaskCompletionStatus(PerformErrandResult result)
         {
-            if (result.PerformedErrand.Status == ErrandStatus.Completed) await NotifyTaskCompleted(result); else await NotifyFailedTask(result); if (result.TerminatedActor != null) await NotifyTerminatedUnit(result);
+            if (result.PerformedErrand.Status == ErrandStatus.Completed) await NotifyTaskCompleted(result);
+            else await NotifyFailedTask(result);
+            if (result.TerminatedActor != null) await NotifyTerminatedUnit(result);
         }
 
         private async Task NotifyTaskCompleted(PerformErrandResult result)
         {
-            await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{result.PerformingActor.Name} ({Enum.GetName(typeof(ActorType), result.PerformingActor.ActorType)}) completed a task!", SeverityLevel.Success));
+            await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{result.PerformingActor.Name} ({Enum.GetName(typeof(ActorType), result.PerformingActor.ActorType)}) completed task { Enum.GetName(typeof(ErrandType), result.PerformedErrand.Type) }!", SeverityLevel.Success));
         }
 
         private async Task NotifyFailedTask(PerformErrandResult result)
         {
-            await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{result.PerformingActor.Name} ({Enum.GetName(typeof(ActorType), result.PerformingActor.ActorType)}) failed a task!", SeverityLevel.Warn));
+            await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{result.PerformingActor.Name} ({Enum.GetName(typeof(ActorType), result.PerformingActor.ActorType)}) failed task { Enum.GetName(typeof(ErrandType), result.PerformedErrand.Type) }!", SeverityLevel.Warn));
         }
 
         private async Task NotifyTerminatedUnit(PerformErrandResult result)
         {
-            await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{result.PerformingActor.Name} ({Enum.GetName(typeof(ActorType), result.PerformingActor.ActorType)}) has destroyed a unit ({result.TerminatedActor.Name})!", SeverityLevel.Error));
+            if (result.PerformingActor.Id == result.TerminatedActor.Id) await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{result.PerformingActor.Name} ({Enum.GetName(typeof(ActorType), result.PerformingActor.ActorType)}) has destroyed... itself!", SeverityLevel.Error));
+            else await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{result.PerformingActor.Name} ({Enum.GetName(typeof(ActorType), result.PerformingActor.ActorType)}) has destroyed a unit ({result.TerminatedActor.Name})!", SeverityLevel.Error));
         }
 
-        private async Task NotifyTaskStarted(Data.DbSets.ErrandActor actor)
+        private async Task NotifyTaskStarted(Data.DbSets.ErrandActor actor, PerformErrandViewModel errand)
         {
-            await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{actor.Name} ({Enum.GetName(typeof(ActorType), actor.ActorType)}) has started a task!", SeverityLevel.Info));
-        } 
+            await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{actor.Name} ({Enum.GetName(typeof(ActorType), actor.ActorType)}) has started { Enum.GetName(typeof(ErrandType), errand.ErrandType) }!", SeverityLevel.Info));
+        }
         #endregion
     }
 }

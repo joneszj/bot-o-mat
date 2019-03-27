@@ -182,6 +182,18 @@
                         throw e;
                     }
                 }
+            },
+            actor: {
+                get: async function (id) {
+                    try {
+                        var response = await axios.get(`${lib.controllers.apiHost}/actor/${id}`);
+                        lib.helpers.log(response);
+                        return response;
+                    } catch (e) {
+                        lib.helpers.log.error(e);
+                        throw e;
+                    }
+                }
             }
         },
         images: {
@@ -356,6 +368,47 @@
                 show: function (actor) {
                     window.location.hash = 'open-modal-errands';
                 }
+            },
+            showDetailModal: function () {
+                $('a[href="#open-modal-detail"]').click(async function () {
+                    //hide details, show spinner
+                    var actor = await lib.controllers.actors.actor.get($(this).data("id"));
+                    actor = actor.data;
+                    debugger;
+                    if (actor.image) {
+                        $('#detail_image').attr('src', "data:image/jpeg;base64," + actor.image).attr('height', 200).attr('width', 200).css('border-radius', '50%').show();
+                        $('#detail_no_image').attr('src', actor.image).hide();
+                    } else {
+                        $('#detail_no_image').attr('src', actor.image).show();
+                        $('#detail_image').hide();
+                    }
+                    $('#datail_name').html(`My name is ${actor.name}!`);
+                    $('#datail_type').html(`I'm a ${actor.type}!`);
+
+                    $('#detail_completed_tasks_div').show();
+                    $('#detail_completed_tasks').html('');
+                    if (!actor.completedErrands.length) {
+                        $('#detail_completed_tasks_div').hide();
+                    }
+                    actor.completedErrands.forEach(function (v, i, a) {
+                        $('#detail_completed_tasks').append(`<li>${v.errandTypeName} in ${v.timeToComplete} milliseconds!</li>`);
+                    });
+
+                    $('#detail_failed_tasks_div').show();
+                    $('#detail_failed_tasks').html('');
+                    if (!actor.failedErrands.length) {
+                        $('#detail_failed_tasks_div').hide();
+                    }
+                    actor.failedErrands.forEach(function (v, i, a) {
+                        $('#detail_failed_tasks').append(`<li>${v.errandTypeName} in ${v.timeToComplete} milliseconds!</li>`);
+                    });
+                    //load actor chat
+                    $('#details_chat').show().html('');
+                    if (!actor.active) {
+                        $('#detail_failed_tasks').hide();
+                    }
+                    //show details, hide spinner
+                });
             },
             errandReport: {
                 show: async function (actor, index) {
