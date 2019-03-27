@@ -459,7 +459,6 @@
 
                 // Create a function that the hub can call to broadcast messages.
                 connection.on('Notify', function (notification) {
-                    debugger;
                     lib.services.notification(notification.message, notification.severityLevel.toLowerCase());
                 });
 
