@@ -223,6 +223,10 @@
     //TODO: build services abstractions to reduce work done in views
     var views = {
         index: {
+            showBody: function () {
+                //body is hidden by default to hide html transformations
+                $('body').fadeIn();
+            },
             createActorModal: {
                 eventListeners: function () {
                     $("#CTASubmit").click(function (event) {
@@ -250,6 +254,13 @@
                         $("#previewRemove").hide();
                         $("#actorPreview")[0].src = "";
                         $("#actorPreview").hide();
+                    });
+
+                    $(document).keyup(function (e) {
+                        //https://stackoverflow.com/questions/3369593/how-to-detect-escape-key-press-with-pure-js-or-jquery
+                        if (e.key === "Escape") { 
+                            window.location.hash = "";
+                        }
                     });
                 },
                 validate: function (callback) {
@@ -393,10 +404,11 @@
 
                 setTimeout(function () {
                     $('#beginManufacturing').hide();
+                    $('#beginUberManufacturing').hide();
                     $('#factorySpinner').show();
                 }, 300);
                 //TODO: styling issue with cards if > 2 :(
-                count = !isNaN(count) || 2;
+                count = !isNaN(count) ? count : 2;
                 for (var i = 0; i < count; i++) {
                     var unitTypeToBuild = Math.floor(Math.random() * 2);
 
@@ -424,6 +436,7 @@
                     var count = 1;
                     setTimeout(function () {
                         $('#beginManufacturing').show();
+                        $('#beginUberManufacturing').show();
                         $('#factorySpinner').hide();
                     }, 3000);
 

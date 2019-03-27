@@ -22,7 +22,10 @@
     <script src="~/js/splitSlide/modernizr.custom.79639.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
 </head>
-<body>
+<body style="display:none">
     @RenderBody()
+    <script>
+        lib.views.index.showBody();
+    </script>
 </body>
 </html>
