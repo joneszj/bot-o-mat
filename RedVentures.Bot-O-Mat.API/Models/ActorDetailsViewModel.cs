@@ -1,7 +1,6 @@
 ﻿using RedVentures.Bot_O_Mat.API.Data.DbSets;
 using RedVentures.Bot_O_Mat.API.Data.Enums;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace RedVentures.Bot_O_Mat.API.Models

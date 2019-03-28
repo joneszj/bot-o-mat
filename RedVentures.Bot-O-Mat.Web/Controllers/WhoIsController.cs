@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using CommonPatterns.Filters;
 using CommonPatterns.Helpers;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,6 +12,7 @@ namespace CommonPatterns.Controllers
     [ApiController]
     public class WhoIsController : ControllerBase
     {
+        #region ctor && private
         private readonly IWhoIsHelper _whoIsHelper;
         private readonly IHostingEnvironment _hostingEnvironment;
 
@@ -20,7 +20,8 @@ namespace CommonPatterns.Controllers
         {
             _whoIsHelper = whoIsHelper;
             _hostingEnvironment = hostingEnvironment;
-        }
+        } 
+        #endregion
 
         [HttpGet]
         public async Task<ActionResult<WhoIsModel>> Index()

@@ -11,9 +11,11 @@ namespace CommonPatterns.Helpers
     /// </summary>
     public class EmailHelper : IEmailHelper
     {
+#pragma warning disable IDE0052 // Remove unread private members
         private Guid _correlationId;
+#pragma warning restore IDE0052 // Remove unread private members
         #region ctor && private
-        private SmtpClient _smtpClient;
+        private readonly SmtpClient _smtpClient;
 
         public EmailHelper(Guid correlationId, IConfiguration configuration)
         {

@@ -4,6 +4,11 @@ namespace RedVentures.Bot_O_Mat.API.Models
 {
     public class KillBoardViewModel
     {
+        #region ctor
+        public KillBoardViewModel() { }
+        public KillBoardViewModel(KillBoardRecord[] cachedKillers) => KillBoardRecord = cachedKillers; 
+        #endregion
+
         public IEnumerable<KillBoardRecord> KillBoardRecord { get; set; }
     }
 

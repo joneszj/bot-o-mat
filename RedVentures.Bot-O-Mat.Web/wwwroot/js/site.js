@@ -1,4 +1,10 @@
-﻿var lib = (function ($, axios) {
+﻿/*jshint esversion: 8 */
+/* globals faker, signalR, $, axios */
+
+//TODO: this lib can use some serious refactoring/testing tlc
+//TODO: recfactor in services object to managed updates requests by the views object
+//TODO: encapsulate lib features
+var lib = (function ($, axios) {
     window.location.hash = "";
 
     if (!$) {
@@ -29,7 +35,7 @@
                 var indexed_array = {};
 
                 $.map(unindexed_array, function (n, i) {
-                    indexed_array[n['name']] = n['value'];
+                    indexed_array[n.name] = n.name;
                 });
 
                 return indexed_array;
@@ -38,11 +44,13 @@
         query: (function getParameterByName() {
             var vars = [], hash;
             var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+
             for (var i = 0; i < hashes.length; i++) {
                 hash = hashes[i].split('=');
                 vars.push(hash[0]);
                 vars[hash[0]] = hash[1];
             }
+
             return vars;
         })(),
         images: {
@@ -66,9 +74,11 @@
                 //https://stackoverflow.com/a/20285053
                 return new Promise(async function (res, rej) {
                     var preview;
+
                     if (imageElement) {
                         preview = document.querySelector(imageElement);
                     }
+
                     const toDataURL = url => fetch(url)
                         .then(response => response.blob())
                         .then(blob => new Promise((resolve, reject) => {
@@ -81,20 +91,19 @@
                             reader.readAsDataURL(blob);
                         }));
 
-
                     res(toDataURL('https://picsum.photos/200/200/?random'));
-                    //.then(dataUrl => {
-                    //    console.log('RESULT:', dataUrl);
-                    //});
                 });
             }
         },
         html: {
+            //TODO: this may be better split into a single and a many 
+            //TODO: encapsulate into a service and correct the incomint param ooj props to be homogenous
+            //TODO: extract html built components into a resources object
             generateCard: function (container, cardObject, direction, isSingle) {
                 var parentContainer = $('<div>').addClass('card').addClass(direction);
                 var cardContainer = parentContainer.append($('<div>').addClass('card_container'));
                 if (cardObject.imageData) {
-                        cardContainer.append($('<img>').attr('src', cardObject.imageData).attr('height', 200).attr('width', 200).css('border-radius', '50%'));
+                    cardContainer.append($('<img>').attr('src', cardObject.imageData).attr('height', 200).attr('width', 200).css('border-radius', '50%'));
                 } else if ($('#actorImage').val()) {
                     cardContainer.append($('<img>').attr('src', $('#actorImage').val()).attr('height', 200).attr('width', 200).css('border-radius', '50%'));
                 }
@@ -141,6 +150,8 @@
         }
     };
 
+    //TODO: controllers doesn't feel like the best term to describe an object that is essentially a service boundary provider
+    //TODO: inject apiHost
     var controllers = {
         apiHost: "https://localhost:44308/api",
         actors: {
@@ -237,7 +248,8 @@
         }
     };
 
-    //TODO: build services abstractions to reduce work done in views
+    //TODO: break index into a partials object
+    //TODO: implement real time updates on the views
     var views = {
         index: {
             showBody: function () {
@@ -276,7 +288,7 @@
 
                     $(document).keyup(function (e) {
                         //https://stackoverflow.com/questions/3369593/how-to-detect-escape-key-press-with-pure-js-or-jquery
-                        if (e.key === "Escape") { 
+                        if (e.key === "Escape") {
                             window.location.hash = "";
                         }
                     });
@@ -435,7 +447,7 @@
                         name: actor.name,
                         imageData: actor.imageData
                     };
-                    if ((actor.userCreated === 'true' || actor.userCreated === true)) {
+                    if (actor.userCreated === 'true' || actor.userCreated === true) {
                         var response = await lib.controllers.actors[$('#actorType').val().toLowerCase()].get($('#actorId').val());
                         actorCard = response.data;
                         var image = await lib.controllers.images.get($('#actorId').val());
@@ -458,13 +470,13 @@
                 return ['robot', 'cyborg'];
             },
             beginUberManufacturing: function () {
-                var response = prompt("WARNING! Uber Manufacturing allows you to created any number of units! The report modal will likely render buggy. To continue (at your own risk... turn back now), type a number for the unit creation count below and press Ok.")
+                var response = prompt("WARNING! Uber Manufacturing allows you to created any number of units! The report modal will likely render buggy. To continue (at your own risk... turn back now), type a number for the unit creation count below and press Ok.");
                 if (response) {
                     //interesting way to convert string to num https://stackoverflow.com/a/175787
                     if (Number.isInteger(parseInt(response))) {
                         lib.views.factory.beginManufacturing(Math.abs(response));
                     }
-                    
+
                 }
             },
             beginManufacturing: function (count) {
@@ -511,7 +523,7 @@
                     }, 3000);
 
                     actors.forEach(async function (actor, index, array) {
-                        actor.json().then(async function(res) {
+                        actor.json().then(async function (res) {
                             var tasks = [];
                             var numberOfTasksToRun = Math.floor(Math.random() * 6);
                             var taskOptions = $("#createActorErrandsModal > input");
@@ -534,28 +546,28 @@
     };
 
     var services = {
-        signalrR_Init: (function () {
-            document.addEventListener('DOMContentLoaded', function () {
-                var connection = new signalR.HubConnectionBuilder()
-                    .withUrl('https://localhost:44308/notification')
-                    .build();
+        signalrR: {
+            Init: (function () {
+                document.addEventListener('DOMContentLoaded', function () {
+                    var connection = new signalR.HubConnectionBuilder()
+                        .withUrl('https://localhost:44308/notification')
+                        .build();
 
-                // Create a function that the hub can call to broadcast messages.
-                connection.on('Notify', function (notification) {
-                    lib.services.notification(notification.message, notification.severityLevel.toLowerCase());
-                });
-
-                // Transport fallback functionality is now built into start.
-                connection.start()
-                    .then(function () {
-                        console.log('connection started');
-                    })
-                    .catch(error => {
-                        console.error(error.message);
+                    connection.on('Notify', function (notification) {
+                        lib.services.notification(notification.message, notification.severityLevel.toLowerCase());
                     });
-            });
-        })(),
-        notification: function(message, type) {
+
+                    connection.start()
+                        .then(function () {
+                            console.log('connection started');
+                        })
+                        .catch(error => {
+                            console.error(error.message);
+                        });
+                });
+            })()
+        },
+        notification: function (message, type) {
             $.notify(message, { className: type, globalPosition: 'bottom right' });
         }
     };

@@ -1,10 +1,10 @@
-﻿@model IEnumerable<GraveyardViewModel>
+﻿@model GraveyardViewModel
 <div class="bg-img bg-img-3"></div>
 <h2>Graveyard</h2>
 <div >
     <blockquote>
         <p>Top 5 most destructive robots</p>
-        @foreach (var fallenActor in Model)
+        @foreach (var fallenActor in Model.GraveyardRecords)
         {
             <div><span class="detailsSpan" data-id="@fallenActor.Id"><strong>@fallenActor.Name</strong></span> was destroyed on <strong>@fallenActor.DeathDate.ToShortDateString()</strong> by <span class="detailsSpan" data-id="@fallenActor.KilledById"><strong>@fallenActor.KilledByName (@(fallenActor.KilledByType == "0" ? "Cyborg" : "Robot"))</strong></span>!</div>
         }

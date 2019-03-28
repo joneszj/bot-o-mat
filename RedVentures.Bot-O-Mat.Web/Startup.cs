@@ -12,6 +12,7 @@ namespace RedVentures.Bot_O_Mat.Web
 {
     public class Startup
     {
+        #region ctor && private
         private readonly ILogger<Startup> _logger;
         private Guid _correlationId;
 
@@ -20,26 +21,18 @@ namespace RedVentures.Bot_O_Mat.Web
             Configuration = configuration;
             _correlationId = Guid.NewGuid();
             _logger = logger;
-        }
+        } 
+        #endregion
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
             try
             {
                 services.AddHttpClient();
                 services.AddMemoryCache();
-
-                HelpersManager.Configure(_correlationId, services, Configuration);
-                CommonPatterns.Filters.ExceptionFilter.Configure(services);
-                CommonPatterns.Filters.RequestResponseFilter.Configure(services);
-                SwaggerHelper.Configure(services);
-                CacheHelper.Configure(services);
-                HealthCheckHelper.Configure(services);
-                BeatPulseHelper.Configure(services, Configuration);
-                WhoIsHelper.Configure(services);
+                ConfigureHelpers(services);
             }
             catch (Exception ex)
             {
@@ -47,26 +40,21 @@ namespace RedVentures.Bot_O_Mat.Web
                 throw;
             }
 
-
             services.Configure<CookiePolicyOptions>(options =>
             {
-                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (!env.IsProduction()) app.UseDeveloperExceptionPage();
             else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -85,5 +73,19 @@ namespace RedVentures.Bot_O_Mat.Web
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }
+
+        #region helpers
+        private void ConfigureHelpers(IServiceCollection services)
+        {
+            HelpersManager.Configure(_correlationId, services, Configuration);
+            CommonPatterns.Filters.ExceptionFilter.Configure(services);
+            CommonPatterns.Filters.RequestResponseFilter.Configure(services);
+            SwaggerHelper.Configure(services);
+            CacheHelper.Configure(services);
+            HealthCheckHelper.Configure(services);
+            BeatPulseHelper.Configure(services, Configuration);
+            WhoIsHelper.Configure(services);
+        }
+        #endregion
     }
 }

@@ -11,9 +11,10 @@ namespace CommonPatterns.HealthChecks
     /// </summary>
     public class BotOMatContextCheck : IHealthCheck
     {
-        private BotOMatContext _context;
-
-        public BotOMatContextCheck(BotOMatContext Context) => _context = Context;
+        #region ctor && private
+        private readonly BotOMatContext _context;
+        public BotOMatContextCheck(BotOMatContext Context) => _context = Context; 
+        #endregion
 
         public async Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
         {

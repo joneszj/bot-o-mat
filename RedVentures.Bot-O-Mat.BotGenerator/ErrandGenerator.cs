@@ -11,11 +11,12 @@ namespace RedVentures.Bot_O_Mat.BotGenerator
 {
     class ErrandGenerator
     {
+        #region ctor && private
         private readonly Random _random;
         private readonly HttpClient _httpClient;
-        private RobotViewModel _robot;
-        private CyborgViewModel _cyborg;
-        private Array _errands;
+        private readonly RobotViewModel _robot;
+        private readonly CyborgViewModel _cyborg;
+        private readonly Array _errands;
 
         public ErrandGenerator(Random random, HttpClient httpClient)
         {
@@ -23,10 +24,10 @@ namespace RedVentures.Bot_O_Mat.BotGenerator
             _httpClient = httpClient;
             _errands = Enum.GetValues(typeof(ErrandType));
         }
-
         public ErrandGenerator(RobotViewModel robotViewModel, Random random, HttpClient httpClient) : this(random, httpClient) => _robot = robotViewModel;
 
         public ErrandGenerator(CyborgViewModel cyborgViewModel, Random random, HttpClient httpClient) : this(random, httpClient) => _cyborg = cyborgViewModel;
+        #endregion
 
         public async Task DoRandomThingsRobot()
         {

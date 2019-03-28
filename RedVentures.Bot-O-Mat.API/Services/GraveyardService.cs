@@ -11,23 +11,22 @@ namespace RedVentures.Bot_O_Mat.API.Services
 {
     public class GraveyardService : IGraveyardService
     {
+        #region ctor && private
         private readonly HelpersManager _helpersManager;
         private readonly BotOMatContext _botOMatContext;
         public GraveyardService(HelpersManager helpersManager, BotOMatContext botOMatContext)
         {
             _botOMatContext = botOMatContext;
             _helpersManager = helpersManager;
-        }
+        } 
+        #endregion
 
         public async Task<GraveyardViewModel> GetFallenActors()
         {
             var cachedFallen = _helpersManager.Cache.TryGet<(DateTime, string), IEnumerable<GraveyardRecord>>(GetFallenKey(), out bool fallenFound);
             if (!fallenFound) cachedFallen = await RefreshFallenCache();
 
-            return new GraveyardViewModel
-            {
-                GraveyardRecords = cachedFallen
-            };
+            return new GraveyardViewModel(cachedFallen);
         }
 
         #region helpers

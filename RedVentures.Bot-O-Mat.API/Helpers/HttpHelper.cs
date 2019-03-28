@@ -14,7 +14,7 @@ namespace CommonPatterns.Helpers
     public class HttpHelper : IHttpHelper
     {
         #region ctor && private
-        private HttpClient _httpClient;
+        private readonly HttpClient _httpClient;
         private HttpResponseMessage _response;
         private string _responseBody;
 

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace CommonPatterns.Extensions
+﻿namespace CommonPatterns.Extensions
 {
     /// <summary>
     /// Will return null is string passed is empty. Usefull for null coallesence: https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/operators/null-coalescing-operator

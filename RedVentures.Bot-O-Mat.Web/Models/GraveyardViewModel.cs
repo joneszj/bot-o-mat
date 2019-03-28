@@ -1,11 +1,26 @@
 ﻿using RedVentures.Bot_O_Mat.Web.DTOs;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace RedVentures.Bot_O_Mat.Web.Models
 {
     public class GraveyardViewModel
     {
-        public GraveyardViewModel(GraveYardRecord graveYardRecord)
+        public GraveyardViewModel(GraveYardViewModelDTO graveYardViewModelDto)
+        {
+            GraveyardRecords = graveYardViewModelDto.GraveYardRecords
+                .Select(e => new GraveyardViewModelRecord(e))
+                .OrderByDescending(e => e.DeathDate)
+                .Take(5);
+        }
+
+        public IEnumerable<GraveyardViewModelRecord> GraveyardRecords { get; set; }
+    }
+
+    public class GraveyardViewModelRecord
+    {
+        public GraveyardViewModelRecord(GraveYardRecord graveYardRecord)
         {
             Id = graveYardRecord.Id;
             Name = graveYardRecord.Name;

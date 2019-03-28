@@ -11,6 +11,7 @@ namespace RedVentures.Bot_O_Mat.BotGenerator
 {
     class BotGenerator
     {
+        #region ctor && private
         private readonly Random _random;
         private readonly HttpClient _httpClient;
         private Array _actorTypes;
@@ -19,7 +20,8 @@ namespace RedVentures.Bot_O_Mat.BotGenerator
         {
             _random = random;
             _httpClient = httpClient;
-        }
+        } 
+        #endregion
 
         public ActorType GetRandomActorType()
         {

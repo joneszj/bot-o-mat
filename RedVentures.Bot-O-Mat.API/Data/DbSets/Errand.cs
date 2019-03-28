@@ -1,5 +1,4 @@
 ﻿using RedVentures.Bot_O_Mat.API.Data.Enums;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RedVentures.Bot_O_Mat.API.Data.DbSets
 {

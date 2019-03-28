@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using CommonPatterns.Filters;
-using CommonPatterns.Helpers;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RedVentures.Bot_O_Mat.API.Data;
@@ -18,16 +13,15 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
     [ApiController]
     public class ActorController : ControllerBase
     {
-        private readonly HelpersManager _helperManager;
+        #region ctor && private
         private readonly BotOMatContext _botOMatContext;
 
-        public ActorController(HelpersManager helperManager, BotOMatContext botOMatContext)
+        public ActorController(BotOMatContext botOMatContext)
         {
-            _helperManager = helperManager;
             _botOMatContext = botOMatContext;
-        }
+        } 
+        #endregion
 
-        // GET: api/Actor/5
         [HttpGet("{id}")]
         public async Task<ActionResult<ActorDetailsViewModel>> Get(int id)
         {

@@ -21,14 +21,12 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
     {
         #region constructor && private members
         private readonly HelpersManager _helpersManager;
-        private readonly IErrandService _errandService;
         private readonly IRobotService _robotService;
         private readonly IHubContext<NotificationHub> _notificationHub;
 
-        public RobotController(HelpersManager helperManager, IRobotService robotService, IErrandService errandService, IHubContext<NotificationHub> notificationHub)
+        public RobotController(HelpersManager helperManager, IRobotService robotService, IHubContext<NotificationHub> notificationHub)
         {
             _helpersManager = helperManager;
-            _errandService = errandService;
             _robotService = robotService;
             _notificationHub = notificationHub;
         }
@@ -60,17 +58,6 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
             var newRobot = await _robotService.CreateRobot(robot.Name, robot.Type);
             await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{robot.Name} (Robot) created!", SeverityLevel.Success));
             return Ok(new RobotViewModel(newRobot));
-        }
-
-        [ServiceFilter(typeof(RefreshRobotCacheFilter))]
-        [HttpPut]
-        public async Task<ActionResult<PerformErrandResult>> Put([FromBody] PerformErrandViewModel performErrandViewModel)
-        {
-            throw new NotImplementedException();
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-            var robot = await _robotService.GetRobot(performErrandViewModel.ActorId);
-            if (robot == null) return NotFound();
-            return Ok(await _errandService.PerformErrand(robot, performErrandViewModel.ErrandType));
         }
 
         [ServiceFilter(typeof(RefreshRobotCacheFilter))]

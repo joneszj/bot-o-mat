@@ -8,6 +8,7 @@ using RedVentures.Bot_O_Mat.API.Data.Enums;
 
 namespace RedVentures.Bot_O_Mat.API.Services
 {
+    //TODO: we can refactor to use the base ErrandActor
     public class CyborgService : ICyborgService
     {
         #region constructor && private members
@@ -16,6 +17,7 @@ namespace RedVentures.Bot_O_Mat.API.Services
         public CyborgService(BotOMatContext botOMatContext) => _botOMatContext = botOMatContext;
         #endregion
 
+        #region public
         public async Task<Cyborg> CreateCyborg(string Name, Gender Gender)
         {
             var newCyborg = _botOMatContext.Cyborgs.Add(new Cyborg { Name = Name, Gender = Gender });
@@ -36,13 +38,28 @@ namespace RedVentures.Bot_O_Mat.API.Services
         public async Task<IEnumerable<Cyborg>> GetCyborgsBy(string Name, Gender? Gender, int Skip = 0)
         {
             var filter = _botOMatContext.Cyborgs.AsQueryable();
-            if (!string.IsNullOrEmpty(Name)) filter = filter.Where(e => e.Name.Contains(Name)).AsQueryable();
-            if (Gender != null) filter = filter.Where(e => e.Gender == Gender).AsQueryable();
+            filter = FilterByName(Name, filter);
+            filter = FilterByGender(Gender, filter);
             return await filter
                 .OrderByDescending(cyborg => cyborg.Errands.Where(errand => errand.Status == ErrandStatus.Completed).Count())
-                .Include(e=>e.Errands)
+                .Include(e => e.Errands)
                 .Skip(Skip).Take(100)
                 .ToListAsync();
+        } 
+        #endregion
+
+        #region helpers
+        private static IQueryable<Cyborg> FilterByGender(Gender? Gender, IQueryable<Cyborg> filter)
+        {
+            if (Gender != null) filter = filter.Where(e => e.Gender == Gender).AsQueryable();
+            return filter;
         }
+
+        private static IQueryable<Cyborg> FilterByName(string Name, IQueryable<Cyborg> filter)
+        {
+            if (!string.IsNullOrEmpty(Name)) filter = filter.Where(e => e.Name.Contains(Name)).AsQueryable();
+            return filter;
+        } 
+        #endregion
     }
 }

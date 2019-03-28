@@ -8,9 +8,10 @@ namespace CommonPatterns.HealthChecks
 {
     public class CacheHealthCheck : IHealthCheck
     {
+        #region ctor && private
         private readonly ICacheHelper _cacheHelper;
-
-        public CacheHealthCheck(ICacheHelper cacheHelper) => _cacheHelper = cacheHelper;
+        public CacheHealthCheck(ICacheHelper cacheHelper) => _cacheHelper = cacheHelper; 
+        #endregion
         public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
         {
             try

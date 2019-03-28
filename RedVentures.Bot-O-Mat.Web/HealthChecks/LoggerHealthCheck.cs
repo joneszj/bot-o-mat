@@ -8,9 +8,10 @@ namespace CommonPatterns.HealthChecks
 {
     public class LoggerHealthCheck : IHealthCheck
     {
+        #region ctor && private
         private readonly ILoggerWrapper _logger;
-
-        public LoggerHealthCheck(ILoggerWrapper logger) => _logger = logger;
+        public LoggerHealthCheck(ILoggerWrapper logger) => _logger = logger; 
+        #endregion
         public Task<HealthCheckResult> CheckHealthAsync(HealthCheckContext context, CancellationToken cancellationToken = default)
         {
             try

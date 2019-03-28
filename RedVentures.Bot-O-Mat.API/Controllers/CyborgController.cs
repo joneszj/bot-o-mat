@@ -22,14 +22,12 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
         #region constructor && private members
         private readonly HelpersManager _helpersManager;
         private readonly ICyborgService _cyborgService;
-        private readonly IErrandService _errandService;
         private readonly IHubContext<NotificationHub> _notificationHub;
 
-        public CyborgController(HelpersManager helperManager, ICyborgService cyborgService, IErrandService errandService, IHubContext<NotificationHub> notificationHub)
+        public CyborgController(HelpersManager helperManager, ICyborgService cyborgService, IHubContext<NotificationHub> notificationHub)
         {
             _helpersManager = helperManager;
             _cyborgService = cyborgService;
-            _errandService = errandService;
             _notificationHub = notificationHub;
         }
         #endregion
@@ -61,17 +59,6 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
             await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{cyborg.Name} (Cyborg) created!", SeverityLevel.Success));
             return Ok(new CyborgViewModel(newCyborg));
 
-        }
-
-        [ServiceFilter(typeof(RefreshCyborgCacheFilter))]
-        [HttpPut]
-        public async Task<ActionResult<PerformErrandResult>> Put([FromBody] PerformErrandViewModel performErrandViewModel)
-        {
-            throw new NotImplementedException();
-            if (!ModelState.IsValid) return BadRequest(ModelState);
-            var cyborg = await _cyborgService.GetCyborg(performErrandViewModel.ActorId);
-            if (cyborg == null) return NotFound();
-            return Ok(await _errandService.PerformErrand(cyborg, performErrandViewModel.ErrandType));
         }
 
         [ServiceFilter(typeof(RefreshCyborgCacheFilter))]

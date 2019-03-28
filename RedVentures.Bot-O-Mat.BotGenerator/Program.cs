@@ -18,14 +18,18 @@ namespace RedVentures.Bot_O_Mat.BotGenerator
             var _random = new Random();
             var _httpClient = new HttpClient();
             var _botGenerator = new BotGenerator(_random, _httpClient);
-            while (true)
-            {
-                Thread.Sleep(_random.Next(5_000, 20_000));
-                if (_random.Next(3) != 1) await Asynchronously(_random, _httpClient, _botGenerator);
-                else InParallel(_random, _httpClient, _botGenerator);
-            }
+
+            while (true) await GenerateRandomBotsAtRandomIntervals(_random, _httpClient, _botGenerator);
         }
 
+        #region helpers
+        /// <summary>
+        /// for some randomness lets randomly simulate an influx of bot creations by creating them inparallel
+        /// </summary>
+        /// <param name="_random"></param>
+        /// <param name="_httpClient"></param>
+        /// <param name="_botGenerator"></param>
+        /// <returns></returns>
         private static void InParallel(Random _random, HttpClient _httpClient, BotGenerator _botGenerator)
         {
             Parallel.For(_random.Next(0), 4, async (i) =>
@@ -34,14 +38,7 @@ namespace RedVentures.Bot_O_Mat.BotGenerator
                 else await new ErrandGenerator(await _botGenerator.CreatCyborg(), _random, _httpClient).DoRandomThingsCyborg();
             });
         }
-
-        /// <summary>
-        /// for some randomness lets randomly simulate an influx of bot creations by creating them inparallel
-        /// </summary>
-        /// <param name="_random"></param>
-        /// <param name="_httpClient"></param>
-        /// <param name="_botGenerator"></param>
-        /// <returns></returns>
+        
         private static async Task Asynchronously(Random _random, HttpClient _httpClient, BotGenerator _botGenerator)
         {
             var tasks = new List<Task>();
@@ -52,5 +49,13 @@ namespace RedVentures.Bot_O_Mat.BotGenerator
             }
             await Task.WhenAll(tasks);
         }
+
+        private static async Task GenerateRandomBotsAtRandomIntervals(Random _random, HttpClient _httpClient, BotGenerator _botGenerator)
+        {
+            Thread.Sleep(_random.Next(5_000, 20_000));
+            if (_random.Next(3) != 1) await Asynchronously(_random, _httpClient, _botGenerator);
+            else InParallel(_random, _httpClient, _botGenerator);
+        }
+        #endregion
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Diagnostics;
+using System.Net.Http;
 using System.Threading.Tasks;
 using CommonPatterns.Filters;
 using CommonPatterns.Helpers;
@@ -12,22 +13,33 @@ namespace RedVentures.Bot_O_Mat.Web.Controllers
     [ServiceFilter(typeof(RequestResponseFilter))]
     public class HomeController : Controller
     {
+        #region ctor && private
+        private readonly HttpClient _httpClient;
         private readonly HelpersManager _helpersManager;
 
-        public HomeController(HelpersManager helpersManager)
+        public HomeController(HelpersManager helpersManager, IHttpClientFactory httpClientFactory)
         {
             _helpersManager = helpersManager;
-        }
+            _httpClient = httpClientFactory.CreateClient();
+        } 
+        #endregion
 
         public async Task<ActionResult<AppViewModel>> Index()
         {
-            var leaderBoardDto = await _helpersManager.HttpHelper
-                .Get<LeaderBoardViewModelDTO>($"{ _helpersManager.EnvironmentHelper.Configuration.GetSection("API-URIs")["StatisticsAPI"]}/LeaderBoard");
-            var killboardBoardDto = await _helpersManager.HttpHelper
-                .Get<KillBoardViewModelDTO>($"{ _helpersManager.EnvironmentHelper.Configuration.GetSection("API-URIs")["StatisticsAPI"]}/KillBoard");
-            var graveYardViewModelDTO = await _helpersManager.HttpHelper
-                .Get<GraveYardViewModelDTO>($"{ _helpersManager.EnvironmentHelper.Configuration.GetSection("API-URIs")["StatisticsAPI"]}/Graveyard");
-            return View(new AppViewModel(leaderBoardDto, killboardBoardDto, graveYardViewModelDTO, _helpersManager));
+            #region Task.WhenAll leaderBoard, killBoard, graveyard
+            var leaderBoardRequest = _httpClient.GetAsync($"{ _helpersManager.EnvironmentHelper.Configuration.GetSection("API-URIs")["StatisticsAPI"]}/LeaderBoard");
+            var killBoardRequest = _httpClient.GetAsync($"{ _helpersManager.EnvironmentHelper.Configuration.GetSection("API-URIs")["StatisticsAPI"]}/KillBoard");
+            var graveyardRequest = _httpClient.GetAsync($"{ _helpersManager.EnvironmentHelper.Configuration.GetSection("API-URIs")["StatisticsAPI"]}/Graveyard");
+            await Task.WhenAll(leaderBoardRequest, killBoardRequest, graveyardRequest);
+            var leaderBoardResponse = await leaderBoardRequest;
+            var killboardBoardResponse = await killBoardRequest;
+            var graveyardResponse = await graveyardRequest; 
+            #endregion
+
+            return View(new AppViewModel(await leaderBoardResponse.Content.ReadAsAsync<LeaderBoardViewModelDTO>(),
+                await killboardBoardResponse.Content.ReadAsAsync<KillBoardViewModelDTO>(),
+                await graveyardResponse.Content.ReadAsAsync<GraveYardViewModelDTO>(), 
+                _helpersManager));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

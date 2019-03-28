@@ -10,6 +10,8 @@ using RedVentures.Bot_O_Mat.API.Models;
 
 namespace RedVentures.Bot_O_Mat.API.Services
 {
+    //TODO: we can refactor to use the base ErrandActor
+    //TODO: calculate weighted augmentation preferences on robot type
     public class ErrandService : IErrandService
     {
         #region ctor && private
@@ -27,23 +29,39 @@ namespace RedVentures.Bot_O_Mat.API.Services
         } 
         #endregion
 
-        //TODO: cleanify
         public async Task<PerformErrandResult> PerformErrand(ICanPerformErrand actor, ErrandType errandType)
         {
-            var errand = new Errand(actor, errandType) { Status = ErrandStatus.In_Progress };
-            var result = new PerformErrandResult
-            {
-                PerformingActor = actor,
-                PerformedErrand = errand
-            };
+            var errandToExecute = new Errand(actor, errandType) { Status = ErrandStatus.In_Progress };
+            var performanceResult = new PerformErrandResult(actor, errandToExecute);
 
-            //TODO: calculate weighted augmentation preferences on robot type
+            await AttemptToFailErrand(actor, errandType, errandToExecute, performanceResult);
+            if (ErrandDidNotFail(errandToExecute)) errandToExecute.Status = ErrandStatus.Completed;
+            await CompleteErrand(actor, errandToExecute);
+
+            return performanceResult;
+        }
+
+        #region helpers
+        private async Task CompleteErrand(ICanPerformErrand actor, Errand errand)
+        {
+            errand.TimeToComplete = Convert.ToInt32(_stopwatch.ElapsedMilliseconds);
+            actor.Errands.Add(errand);
+            await _botOMatContext.SaveChangesAsync();
+        }
+
+        private static bool ErrandDidNotFail(Errand errand)
+        {
+            return errand.Status != ErrandStatus.Failed;
+        }
+
+        private async Task AttemptToFailErrand(ICanPerformErrand actor, ErrandType errandType, Errand errand, PerformErrandResult result)
+        {
             //higher actorTypes have extra chances to kill an opponent, but have extra 'dice rolls' to fail their task
             foreach (var item in Enumerable.Range(0, ((int)actor.ActorType) + 1))
             {
                 _stopwatch.Start();
                 Thread.Sleep((int)errandType / ((int)actor.ActorType + 1) + _randomGenerator.Next(1000));
-                if (_randomGenerator.Next(100) < 20)
+                if (TaskedFailedDiceRoll())
                 {
                     //actor destroyed the errand task!!!!
                     errand.Status = ErrandStatus.Failed;
@@ -51,12 +69,12 @@ namespace RedVentures.Bot_O_Mat.API.Services
                     break;
                 }
             }
-
-            if (errand.Status != ErrandStatus.Failed) errand.Status = ErrandStatus.Completed;
-            errand.TimeToComplete = Convert.ToInt32(_stopwatch.ElapsedMilliseconds);
-            actor.Errands.Add(errand);
-            await _botOMatContext.SaveChangesAsync();
-            return result;
         }
+
+        private bool TaskedFailedDiceRoll()
+        {
+            return _randomGenerator.Next(100) < 20;
+        } 
+        #endregion
     }
 }

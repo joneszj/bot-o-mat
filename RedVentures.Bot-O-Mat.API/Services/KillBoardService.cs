@@ -11,6 +11,7 @@ namespace RedVentures.Bot_O_Mat.API.Services
 {
     public class KillBoardService : IKillBoardService
     {
+        #region ctor && private
         private readonly HelpersManager _helpersManager;
         private readonly BotOMatContext _botOMatContext;
 
@@ -18,17 +19,15 @@ namespace RedVentures.Bot_O_Mat.API.Services
         {
             _helpersManager = helpersManager;
             _botOMatContext = botOMatContext;
-        }
+        } 
+        #endregion
 
         public async Task<KillBoardViewModel> GetKillCounts()
         {
             var cachedKillers = _helpersManager.Cache.TryGet<Tuple<DateTime, string>, KillBoardRecord[]>(new Tuple<DateTime, string>(DateTime.Today, "killers"), out bool killersFound);
             if (!killersFound) cachedKillers = await RefreshKillersCache();
 
-            return new KillBoardViewModel
-            {
-                KillBoardRecord = cachedKillers
-            };
+            return new KillBoardViewModel(cachedKillers);
         }
 
         #region helpers

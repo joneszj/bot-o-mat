@@ -16,7 +16,7 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
     public class ImageController : ControllerBase
     {
         #region ctor && private
-        private BotOMatContext _botOMatContext;
+        private readonly BotOMatContext _botOMatContext;
         private readonly IHubContext<NotificationHub> _notificationHub;
 
         public ImageController(BotOMatContext botOMatContext, IHubContext<NotificationHub> notificationHub)

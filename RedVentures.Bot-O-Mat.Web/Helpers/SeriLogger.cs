@@ -15,10 +15,11 @@ namespace CommonPatterns.Helpers
     public class SeriLogger : ILoggerWrapper
     {
         #region ctor && private
-        private ILogger _logger { get; set; }
+        //strange, c# complained _logger as 'unexpected' for this private member, renamed to Logger
+        private ILogger Logger { get; set; }
         private readonly string _outputTemplate;
         private readonly IConfiguration _configuration;
-        private IEmailHelper _emailHelper;
+        private readonly IEmailHelper _emailHelper;
         private readonly IHttpHelper _httpHelper;
         private readonly string _correlationId;
 
@@ -30,7 +31,7 @@ namespace CommonPatterns.Helpers
             _correlationId = correlationId.ToString();
             _outputTemplate = _configuration["SeriLogger:Template"];
 
-            _logger = new LoggerConfiguration()
+            Logger = new LoggerConfiguration()
                 .WriteTo.Console(outputTemplate: _outputTemplate)
                 .WriteTo.File(configuration["SeriLogger:LogsDirectory"],
                     rollingInterval: RollingInterval.Day,
@@ -42,8 +43,8 @@ namespace CommonPatterns.Helpers
         }
         #endregion
         #region public
-        public void Information(string message) => _logger.Information(message);
-        public void Error(string message) => _logger.Error(message);
+        public void Information(string message) => Logger.Information(message);
+        public void Error(string message) => Logger.Error(message);
         /// <summary>
         /// local file log, email notification, remote api 
         /// </summary>
@@ -54,9 +55,11 @@ namespace CommonPatterns.Helpers
         /// <returns></returns>
         public async Task Fatal<T>(Exception exception, string message, T RemoteLogPostBody) where T : class
         {
-            _logger.Fatal(exception, message);
+            Logger.Fatal(exception, message);
             await _emailHelper.SendEmail(new MailMessage());
+#pragma warning disable IDE0059 // Value assigned to symbol is never used
             var response = await _httpHelper.Post(_configuration["SeriLogger:RemoteLogAPI"], RemoteLogPostBody);
+#pragma warning restore IDE0059 // Value assigned to symbol is never used
         }
         /// <summary>
         /// local file log, email notification
@@ -65,7 +68,7 @@ namespace CommonPatterns.Helpers
         /// <param name="message"></param>
         public async Task Fatal(Exception exception, string message)
         {
-            _logger.Fatal(exception, message);
+            Logger.Fatal(exception, message);
             await _emailHelper.SendEmail(new MailMessage());
         }
         #endregion

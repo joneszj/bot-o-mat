@@ -9,6 +9,7 @@ namespace RedVentures.Bot_O_Mat.API.Services
 {
     public class LeaderBoardService : ILeaderBoardService
     {
+        #region ctor && private
         private readonly HelpersManager _helpersManager;
         private readonly IRobotService _robotService;
         private readonly ICyborgService _cyborgService;
@@ -18,7 +19,9 @@ namespace RedVentures.Bot_O_Mat.API.Services
             _helpersManager = helpersManager;
             _robotService = robotService;
             _cyborgService = cyborgService;
-        }
+        } 
+        #endregion
+
         public async Task<LeaderBoardViewModel> GetLeaderBoard()
         {
             var cachedRobots = _helpersManager.Cache.TryGet<(DateTime, ActorType), RobotViewModel[]>(GetLeaderBoardRobotKey(), out bool robotsFound);

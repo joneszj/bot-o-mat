@@ -9,9 +9,12 @@ namespace CommonPatterns.Helpers.Mocks
     /// </summary>
     public class EmailHelperMock : IEmailHelper
     {
+        #region ctor && private
+#pragma warning disable IDE0052 // Remove unread private members
         private readonly IConfiguration _configuration;
-
-        public EmailHelperMock(IConfiguration configuration) => _configuration = configuration;
+#pragma warning restore IDE0052 // Remove unread private members
+        public EmailHelperMock(IConfiguration configuration) => _configuration = configuration; 
+        #endregion
 
         public async Task SendEmail(MailMessage mailMessage) => await Task.CompletedTask;
     }
