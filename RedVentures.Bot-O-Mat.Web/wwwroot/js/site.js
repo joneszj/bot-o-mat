@@ -35,7 +35,7 @@ let lib = (function ($, axios) {
                 let indexed_array = {};
 
                 $.map(unindexed_array, function (n, i) {
-                    indexed_array[n.name] = n.name;
+                    indexed_array[n.name] = n.value;
                 });
 
                 return indexed_array;
