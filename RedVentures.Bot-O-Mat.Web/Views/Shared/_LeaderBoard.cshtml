@@ -7,7 +7,7 @@
         <ol>
             @foreach (var robot in Model.Robots)
             {
-                <li><a href="#open-modal-detail" data-id="@robot.Id"><strong>@robot.Name</strong></a> has completed <strong>@robot.CompletedErrandCount</strong> tasks</li>
+                <li><a href="#open-modal-detail" data-id="@robot.Id"><strong>@robot.Name</strong></a> has completed <strong id="@robot.Id">@robot.CompletedErrandCount</strong> tasks</li>
             }
         </ol>
     </blockquote>
@@ -18,7 +18,7 @@
         <ol>
             @foreach (var cyborg in Model.Cyborgs)
             {
-                <li><a href="#open-modal-detail" data-id="@cyborg.Id"><strong>@cyborg.Name</strong></a> has completed <strong>@cyborg.CompletedErrandCount</strong> tasks</li>
+                <li><a href="#open-modal-detail" data-id="@cyborg.Id"><strong>@cyborg.Name</strong></a> has completed <strong id="@cyborg.Id">@cyborg.CompletedErrandCount</strong> tasks</li>
             }
         </ol>
     </blockquote>

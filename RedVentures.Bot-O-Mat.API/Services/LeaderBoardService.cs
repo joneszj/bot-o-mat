@@ -41,14 +41,18 @@ namespace RedVentures.Bot_O_Mat.API.Services
         private async Task<RobotViewModel[]> RefreshRobotCache()
         {
             var robots = await _robotService.GetRobotsBy(string.Empty, null);
-            return _helpersManager.Cache.Set(GetLeaderBoardRobotKey(), robots.Select(e => new RobotViewModel(e)).ToArray());
+            return robots.Select(e => new RobotViewModel(e)).ToArray();
+            //TODO: determine better caching process, perhaps at the services layer instead the api boundary
+            //return _helpersManager.Cache.Set((DateTime.Today, ActorType.Cyborg), robots.Select(e => new CyborgViewModel(e)).ToArray());
         }
 
 
         private async Task<CyborgViewModel[]> RefreshCyborgCache()
         {
             var cyborgs = await _cyborgService.GetCyborgsBy(string.Empty, null);
-            return _helpersManager.Cache.Set(GetLeaderBoardCyborgKey(), cyborgs.Select(e => new CyborgViewModel(e)).ToArray());
+            return cyborgs.Select(e => new CyborgViewModel(e)).ToArray();
+            //TODO: determine better caching process, perhaps at the services layer instead the api boundary
+            //return _helpersManager.Cache.Set(GetLeaderBoardCyborgKey(), cyborgs.Select(e => new CyborgViewModel(e)).ToArray());
         }
 
         private static (DateTime Today, ActorType Robot) GetLeaderBoardRobotKey() => (DateTime.Today, ActorType.Robot);

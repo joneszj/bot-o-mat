@@ -34,7 +34,9 @@ namespace RedVentures.Bot_O_Mat.API.Services
         {
             var fallenActors = await _botOMatContext.ErrandActors.IgnoreQueryFilters().Where(e => e.KilledById != null)
                 .Join(_botOMatContext.ErrandActors, e => e.KilledById, i => i.Id, (e, i) => new GraveyardRecord(e, i)).ToArrayAsync();
-            return _helpersManager.Cache.Set(GetFallenKey(), (fallenActors));
+            return fallenActors;
+            //TODO: determine better caching process, perhaps at the services layer instead the api boundary
+            //return _helpersManager.Cache.Set(GetFallenKey(), fallenActors);
         }
 
         private static (DateTime Today, string) GetFallenKey() => (DateTime.Today, "fallen");

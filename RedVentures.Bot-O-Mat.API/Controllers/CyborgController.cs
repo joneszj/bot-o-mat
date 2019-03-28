@@ -50,7 +50,7 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
             else return Ok(await RefreshCache());
         }
 
-        [ServiceFilter(typeof(RefreshCyborgCacheFilter))]
+        //[ServiceFilter(typeof(RefreshCyborgCacheFilter))]
         [HttpPost]
         public async Task<ActionResult<CyborgViewModel>> Post([FromBody] CyborgViewModel cyborg)
         {
@@ -61,7 +61,7 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
 
         }
 
-        [ServiceFilter(typeof(RefreshCyborgCacheFilter))]
+        //[ServiceFilter(typeof(RefreshCyborgCacheFilter))]
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
@@ -75,8 +75,10 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
         #region helpers
         private async Task<CyborgViewModel[]> RefreshCache()
         {
-            var robots = await _cyborgService.GetCyborgsBy(string.Empty, null);
-            return _helpersManager.Cache.Set((DateTime.Today, ActorType.Cyborg), robots.Select(e => new CyborgViewModel(e)).ToArray());
+            var cyborgs = await _cyborgService.GetCyborgsBy(string.Empty, null);
+            return cyborgs.Select(e => new CyborgViewModel(e)).ToArray();
+            //TODO: determine better caching process, perhaps at the services layer instead the api boundary
+            //return _helpersManager.Cache.Set((DateTime.Today, ActorType.Cyborg), robots.Select(e => new CyborgViewModel(e)).ToArray());
         } 
         #endregion
     }

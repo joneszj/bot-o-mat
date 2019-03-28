@@ -8,6 +8,7 @@ using RedVentures.Bot_O_Mat.API.Data.Enums;
 
 namespace RedVentures.Bot_O_Mat.API.Services
 {
+    //TODO: we can refactor to use the base ErrandActor
     public class RobotService : IRobotService
     {
         #region constructor && private members
@@ -40,7 +41,7 @@ namespace RedVentures.Bot_O_Mat.API.Services
             return await filter
                 .OrderByDescending(robot => robot.Errands.Where(errand => errand.Status == ErrandStatus.Completed).Count())
                 .Include(e => e.Errands)
-                .Skip(Skip).Take(100)
+                .Skip(Skip).Take(20)
                 .ToListAsync();
         }
 

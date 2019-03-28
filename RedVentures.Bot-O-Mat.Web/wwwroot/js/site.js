@@ -4,7 +4,7 @@
 //TODO: this lib can use some serious refactoring/testing tlc
 //TODO: recfactor in services object to managed updates requests by the views object
 //TODO: encapsulate lib features
-var lib = (function ($, axios) {
+let lib = (function ($, axios) {
     window.location.hash = "";
 
     if (!$) {
@@ -14,7 +14,7 @@ var lib = (function ($, axios) {
         alert("axios not imported");
     }
 
-    var helpers = {
+    let helpers = {
         environment: {
             IsLocal: window.location.href.indexOf('localhost') > -1
         },
@@ -31,8 +31,8 @@ var lib = (function ($, axios) {
         },
         http: {
             JsonStringifyForm: function (form) {
-                var unindexed_array = form.serializeArray();
-                var indexed_array = {};
+                let unindexed_array = form.serializeArray();
+                let indexed_array = {};
 
                 $.map(unindexed_array, function (n, i) {
                     indexed_array[n.name] = n.name;
@@ -42,10 +42,10 @@ var lib = (function ($, axios) {
             }
         },
         query: (function getParameterByName() {
-            var vars = [], hash;
-            var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+            let vars = [], hash;
+            let hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
 
-            for (var i = 0; i < hashes.length; i++) {
+            for (let i = 0; i < hashes.length; i++) {
                 hash = hashes[i].split('=');
                 vars.push(hash[0]);
                 vars[hash[0]] = hash[1];
@@ -56,9 +56,9 @@ var lib = (function ($, axios) {
         images: {
             preview: function (imageElement, fileElement) {
                 return new Promise((res, rej) => {
-                    var preview = document.querySelector(imageElement);
-                    var file = document.querySelector(fileElement).files[0];
-                    var reader = new FileReader();
+                    let preview = document.querySelector(imageElement);
+                    let file = document.querySelector(fileElement).files[0];
+                    let reader = new FileReader();
 
                     reader.addEventListener("load", function () {
                         preview.src = reader.result;
@@ -73,7 +73,7 @@ var lib = (function ($, axios) {
             random: function (imageElement) {
                 //https://stackoverflow.com/a/20285053
                 return new Promise(async function (res, rej) {
-                    var preview;
+                    let preview;
 
                     if (imageElement) {
                         preview = document.querySelector(imageElement);
@@ -100,8 +100,8 @@ var lib = (function ($, axios) {
             //TODO: encapsulate into a service and correct the incomint param ooj props to be homogenous
             //TODO: extract html built components into a resources object
             generateCard: function (container, cardObject, direction, isSingle) {
-                var parentContainer = $('<div>').addClass('card').addClass(direction);
-                var cardContainer = parentContainer.append($('<div>').addClass('card_container'));
+                let parentContainer = $('<div>').addClass('card').addClass(direction);
+                let cardContainer = parentContainer.append($('<div>').addClass('card_container'));
                 if (cardObject.imageData) {
                     cardContainer.append($('<img>').attr('src', cardObject.imageData).attr('height', 200).attr('width', 200).css('border-radius', '50%'));
                 } else if ($('#actorImage').val()) {
@@ -119,9 +119,9 @@ var lib = (function ($, axios) {
                     //https://codeburst.io/javascript-async-await-with-foreach-b6ba62bbf404
                     const start = async () => {
                         await asyncForEach(tasks, async (task) => {
-                            var result = await lib.controllers.errands.post({ actorId: actorId, errandType: task });
+                            let result = await lib.controllers.errands.post({ actorId: actorId, errandType: task });
                             result = result.data;
-                            var success = result.completedSuccessfully === true ? '<b style="color:green;">successfully</b> performed task: ' : '<b style="color: red;">utterly failed</b> task: ';
+                            let success = result.completedSuccessfully === true ? '<b style="color:green;">successfully</b> performed task: ' : '<b style="color: red;">utterly failed</b> task: ';
                             $(`#cardTaskList_${actorId}`).append($('<p>').html(`${cardObject.name} ${success} <b>${result.errand}<b>!`));
                             if (result.terminatedActorId) {
                                 $(`#cardTaskList_${actorId}`).append($('<p>')).append($('<b>').css('color', 'red').text(`${cardObject.name} managed to destroy a unit (${result.terminatedActorName})!`));
@@ -152,13 +152,13 @@ var lib = (function ($, axios) {
 
     //TODO: controllers doesn't feel like the best term to describe an object that is essentially a service boundary provider
     //TODO: inject apiHost
-    var controllers = {
+    let controllers = {
         apiHost: "https://localhost:44308/api",
         actors: {
             robot: {
                 get: async function (id) {
                     try {
-                        var response = await axios.get(`${lib.controllers.apiHost}/robot/${id}`);
+                        let response = await axios.get(`${lib.controllers.apiHost}/robot/${id}`);
                         lib.helpers.log(response);
                         return response;
                     } catch (e) {
@@ -168,7 +168,7 @@ var lib = (function ($, axios) {
                 },
                 post: async function (body) {
                     try {
-                        var response = await axios.post(`${lib.controllers.apiHost}/robot`, body);
+                        let response = await axios.post(`${lib.controllers.apiHost}/robot`, body);
                         lib.helpers.log(response);
                         return response;
                     } catch (e) {
@@ -180,7 +180,7 @@ var lib = (function ($, axios) {
             cyborg: {
                 get: async function (id) {
                     try {
-                        var response = await axios.get(`${lib.controllers.apiHost}/cyborg/${id}`);
+                        let response = await axios.get(`${lib.controllers.apiHost}/cyborg/${id}`);
                         lib.helpers.log(response);
                         return response;
                     } catch (e) {
@@ -190,7 +190,7 @@ var lib = (function ($, axios) {
                 },
                 post: async function (body) {
                     try {
-                        var response = await axios.post(`${lib.controllers.apiHost}/cyborg`, body);
+                        let response = await axios.post(`${lib.controllers.apiHost}/cyborg`, body);
                         lib.helpers.log(response);
                         return response;
                     } catch (e) {
@@ -202,7 +202,7 @@ var lib = (function ($, axios) {
             actor: {
                 get: async function (id) {
                     try {
-                        var response = await axios.get(`${lib.controllers.apiHost}/actor/${id}`);
+                        let response = await axios.get(`${lib.controllers.apiHost}/actor/${id}`);
                         lib.helpers.log(response);
                         return response;
                     } catch (e) {
@@ -215,7 +215,7 @@ var lib = (function ($, axios) {
         images: {
             get: async function (actorId) {
                 try {
-                    var response = await axios.get(`${lib.controllers.apiHost}/image/${actorId}`);
+                    let response = await axios.get(`${lib.controllers.apiHost}/image/${actorId}`);
                     lib.helpers.log(response);
                     return response;
                 } catch (e) {
@@ -225,7 +225,7 @@ var lib = (function ($, axios) {
             },
             post: async function (body) {
                 try {
-                    var response = await axios.post(`${lib.controllers.apiHost}/image`, body);
+                    let response = await axios.post(`${lib.controllers.apiHost}/image`, body);
                     lib.helpers.log(response);
                     return response;
                 } catch (e) {
@@ -237,7 +237,7 @@ var lib = (function ($, axios) {
         errands: {
             post: async function (body) {
                 try {
-                    var response = await axios.post(`${lib.controllers.apiHost}/errand`, body);
+                    let response = await axios.post(`${lib.controllers.apiHost}/errand`, body);
                     lib.helpers.log(response);
                     return response;
                 } catch (e) {
@@ -250,7 +250,7 @@ var lib = (function ($, axios) {
 
     //TODO: break index into a partials object
     //TODO: implement real time updates on the views
-    var views = {
+    let views = {
         index: {
             showBody: function () {
                 //body is hidden by default to hide html transformations
@@ -294,7 +294,7 @@ var lib = (function ($, axios) {
                     });
                 },
                 validate: function (callback) {
-                    var isValid = true;
+                    let isValid = true;
                     $("#createActorModalFormValidationSummary").hide();
                     $("#createActorModalFormValidationSummary ul").html("");
 
@@ -321,7 +321,7 @@ var lib = (function ($, axios) {
                         .keyup(lib.views.index.createActorModal.validate);
                 },
                 submit: async function (body, type) {
-                    var response = await controllers.actors[type].post(body);
+                    let response = await controllers.actors[type].post(body);
                     await lib.views.index.createActorModal.handleResponse(response);
                 },
                 handleResponse: async function (response) {
@@ -359,7 +359,7 @@ var lib = (function ($, axios) {
                     $('input', $('#createActorErrandsModal')).click(lib.views.index.createActorErrandsModal.validate);
                 },
                 validate: function (callback) {
-                    var isValid = true;
+                    let isValid = true;
                     $("#createActorErrandsModalFormValidationSummary").hide();
                     $("#createActorErrandsModalFormValidationSummary ul").html("");
 
@@ -391,7 +391,7 @@ var lib = (function ($, axios) {
             showDetailModal: function () {
                 $('a[href="#open-modal-detail"]').click(async function () {
                     //hide details, show spinner
-                    var actor = await lib.controllers.actors.actor.get($(this).data("id"));
+                    let actor = await lib.controllers.actors.actor.get($(this).data("id"));
                     actor = actor.data;
                     $('#actorId').val(actor.id);
                     $('#actorType').val(actor.type);
@@ -441,16 +441,16 @@ var lib = (function ($, axios) {
             },
             errandReport: {
                 show: async function (actor, index) {
-                    var actorCard = {
+                    let actorCard = {
                         actorId: actor.id,
                         errandIds: actor.errandIds,
                         name: actor.name,
                         imageData: actor.imageData
                     };
                     if (actor.userCreated === 'true' || actor.userCreated === true) {
-                        var response = await lib.controllers.actors[$('#actorType').val().toLowerCase()].get($('#actorId').val());
+                        let response = await lib.controllers.actors[$('#actorType').val().toLowerCase()].get($('#actorId').val());
                         actorCard = response.data;
-                        var image = await lib.controllers.images.get($('#actorId').val());
+                        let image = await lib.controllers.images.get($('#actorId').val());
                         actorCard.imageData = "data:image/jpeg;base64," + image.data;
                         actorCard.errandIds = actor.errandIds;
                         actorCard.actorId = actor.id;
@@ -470,7 +470,7 @@ var lib = (function ($, axios) {
                 return ['robot', 'cyborg'];
             },
             beginUberManufacturing: function () {
-                var response = prompt("WARNING! Uber Manufacturing allows you to created any number of units! The report modal will likely render buggy. To continue (at your own risk... turn back now), type a number for the unit creation count below and press Ok.");
+                let response = prompt("WARNING! Uber Manufacturing allows you to created any number of units! The report modal will likely render buggy. To continue (at your own risk... turn back now), type a number for the unit creation count below and press Ok.");
                 if (response) {
                     //interesting way to convert string to num https://stackoverflow.com/a/175787
                     if (Number.isInteger(parseInt(response))) {
@@ -482,7 +482,7 @@ var lib = (function ($, axios) {
             beginManufacturing: function (count) {
                 //TODO: does too much, separate
                 $('.card').remove();
-                var requests = [];
+                let requests = [];
 
                 setTimeout(function () {
                     $('#beginManufacturing').hide();
@@ -491,15 +491,15 @@ var lib = (function ($, axios) {
                 }, 300);
                 //TODO: styling issue with cards if > 2 :(
                 count = !isNaN(count) ? count : 2;
-                for (var i = 0; i < count; i++) {
-                    var unitTypeToBuild = Math.floor(Math.random() * 2);
+                for (let i = 0; i < count; i++) {
+                    let unitTypeToBuild = Math.floor(Math.random() * 2);
 
-                    var genderOptions = $("#genderSelect > option");
-                    var randomGender = genderOptions[Math.floor(Math.random() * genderOptions.length) === 0 ? 1 : Math.floor(Math.random() * genderOptions.length)];
-                    var robotTypeOptions = $("#robotTypeSelect > option");
-                    var randomRobotType = robotTypeOptions[Math.floor(Math.random() * robotTypeOptions.length) === 0 ? 1 : Math.floor(Math.random() * robotTypeOptions.length)];
+                    let genderOptions = $("#genderSelect > option");
+                    let randomGender = genderOptions[Math.floor(Math.random() * genderOptions.length) === 0 ? 1 : Math.floor(Math.random() * genderOptions.length)];
+                    let robotTypeOptions = $("#robotTypeSelect > option");
+                    let randomRobotType = robotTypeOptions[Math.floor(Math.random() * robotTypeOptions.length) === 0 ? 1 : Math.floor(Math.random() * robotTypeOptions.length)];
 
-                    var body = {
+                    let body = {
                         name: faker.name.findName(),
                         gender: randomGender.value === "" ? 1 : randomGender.value,
                         type: randomRobotType.value === "" ? 1 : randomRobotType.value
@@ -515,7 +515,7 @@ var lib = (function ($, axios) {
                 }
 
                 Promise.all(requests).then(function (actors) {
-                    var count = 1;
+                    let count = 1;
                     setTimeout(function () {
                         $('#beginManufacturing').show();
                         $('#beginUberManufacturing').show();
@@ -524,15 +524,15 @@ var lib = (function ($, axios) {
 
                     actors.forEach(async function (actor, index, array) {
                         actor.json().then(async function (res) {
-                            var tasks = [];
-                            var numberOfTasksToRun = Math.floor(Math.random() * 6);
-                            var taskOptions = $("#createActorErrandsModal > input");
+                            let tasks = [];
+                            let numberOfTasksToRun = Math.floor(Math.random() * 6);
+                            let taskOptions = $("#createActorErrandsModal > input");
                             numberOfTasksToRun = numberOfTasksToRun === 0 ? 1 : numberOfTasksToRun;
 
                             res.imageData = await lib.helpers.images.random('#actorImageErrands');
                             await lib.controllers.images.post({ ActorId: res.id, ImageData: res.imageData.split(',')[1] });
 
-                            for (var i = 0; i < numberOfTasksToRun; i++) {
+                            for (let i = 0; i < numberOfTasksToRun; i++) {
                                 tasks.push(taskOptions[Math.floor(Math.random() * taskOptions.length) === 0 ? 1 : Math.floor(Math.random() * taskOptions.length)].name);
                             }
                             res.errandIds = tasks;
@@ -545,11 +545,11 @@ var lib = (function ($, axios) {
         }
     };
 
-    var services = {
+    let services = {
         signalrR: {
             Init: (function () {
                 document.addEventListener('DOMContentLoaded', function () {
-                    var connection = new signalR.HubConnectionBuilder()
+                    let connection = new signalR.HubConnectionBuilder()
                         .withUrl('https://localhost:44308/notification')
                         .build();
 
@@ -567,8 +567,40 @@ var lib = (function ($, axios) {
                 });
             })()
         },
-        notification: function (message, type) {
+        updateUI: function (output) {
+            if (output.terminatedActorId) {
+                let UIElementsToRemove = getActorUIElements(output.terminatedActorId);
+                removeElements(UIElementsToRemove);
+            }
+
+            if (output.completedSuccessfully) {
+                let UIElementsToUpdate = getActorTaskCountUIElements(output.performingActorId, $('#leaderBoardContainer'));
+                updateCount(UIElementsToUpdate);
+            }
+
+            function getActorUIElements(id, context) {
+                return $(`a[data-id="${id}"]`, context || window);
+            }
+
+            function getActorTaskCountUIElements(id, context) {
+                return $(`strong #${id}`, context || window);
+            }
+
+            function updateCount(elements) {
+                $.each(elements, function () { $(this).text(parseInt($(this).text() + 1)); });
+            }
+
+            function removeElements(elements) {
+                $.each(elements, function () { $(this).parent().slideUp(200, function () { $(this).remove(); }); });
+            }
+        },
+        notification: function (message, type, output) {
             $.notify(message, { className: type, globalPosition: 'bottom right' });
+            if (output || outputTyped) {
+                //TODO: output seems to be always undefined
+                debugger;
+                lib.services.updateUI(output);
+            }
         }
     };
 

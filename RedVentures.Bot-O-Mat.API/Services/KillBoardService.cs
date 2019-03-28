@@ -44,8 +44,10 @@ namespace RedVentures.Bot_O_Mat.API.Services
                     KillCount = killerIds.Where(i => i.Key.Value == e.Id).SelectMany(y => y).Count(),
                     ActorType = Enum.GetName(typeof(ActorType), e.ActorType)
                 })
-                .OrderByDescending(e => e.KillCount).Take(100).ToArrayAsync();
-            return _helpersManager.Cache.Set((DateTime.Today, "killers"), (killerActors));
+                .OrderByDescending(e => e.KillCount).Take(20).ToArrayAsync();
+            return killerActors;
+            //TODO: determine better caching process, perhaps at the services layer instead the api boundary
+            //return _helpersManager.Cache.Set((DateTime.Today, "killers"), killerActors);
         }
         #endregion
     }

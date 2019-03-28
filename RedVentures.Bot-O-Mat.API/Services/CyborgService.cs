@@ -43,7 +43,7 @@ namespace RedVentures.Bot_O_Mat.API.Services
             return await filter
                 .OrderByDescending(cyborg => cyborg.Errands.Where(errand => errand.Status == ErrandStatus.Completed).Count())
                 .Include(e => e.Errands)
-                .Skip(Skip).Take(100)
+                .Skip(Skip).Take(20)
                 .ToListAsync();
         } 
         #endregion
