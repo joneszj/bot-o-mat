@@ -11,7 +11,11 @@ namespace RedVentures.Bot_O_Mat.Web.Models
             Name = leaderBoardRecord.Name;
         }
 
-        public RobotViewModel(KillBoardRecord killboardRecord) => Name = killboardRecord.Name;
+        public RobotViewModel(KillBoardRecord killboardRecord)
+        {
+            Id = killboardRecord.Id;
+            Name = killboardRecord.Name;
+        }
 
         public int Id { get; set; }
         public string Name { get; set; }

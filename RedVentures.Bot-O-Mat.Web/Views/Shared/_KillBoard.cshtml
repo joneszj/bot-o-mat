@@ -1,13 +1,18 @@
 ﻿@model KillBoardViewModel
 <div class="bg-img bg-img-2"></div>
 <h2>Kill Count</h2>
+<div>
+    <blockquote>
+        (<a href="#open-modal-bugs">why are they attacking eachother?</a>)
+    </blockquote>
+</div>
 <div class="split left">
     <blockquote>
         <p>Top 5 most destructive robots</p>
         <ol>
             @foreach (var robot in Model.Robots)
             {
-                <li><strong>@robot.Name</strong> has destroyed <strong>@robot.KillCount</strong> units!</li>
+                <li><a href="#open-modal-detail" data-id="@robot.Id"><strong>@robot.Name</strong></a> has destroyed <strong>@robot.KillCount</strong> units!</li>
             }
         </ol>
     </blockquote>
@@ -18,8 +23,57 @@
         <ol>
             @foreach (var cyborg in Model.Cyborgs)
             {
-                <li><strong>@cyborg.Name</strong> has destroyed <strong>@cyborg.KillCount</strong> units!</li>
+                <li><a href="#open-modal-detail" data-id="@cyborg.Id"><strong>@cyborg.Name</strong></a> has destroyed <strong>@cyborg.KillCount</strong> units!</li>
             }
         </ol>
     </blockquote>
+</div>
+
+<div id="open-modal-bugs" class="modal-window" style="z-index: 1001;">
+    <div style="z-index: 1001;width: 60%;top: 40%;">
+        <a href="#" title="Close" class="modal-close">Close (esc)</a>
+
+        <div>
+            <p>So why are the robots attacking eachother from time to time? Well...</p>
+            <br />
+            <p>No one really knows for sure. Some say <a target="_blank" style="color: blue;" href="https://www.lifewire.com/thmb/3KHFRyRmvqVKURMwfA0Viii9LEg=/1600x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/aliens1-5ad5062f3037130037462d1c.jpg">aliens</a>...</p>
+            <br />
+            <p>
+                But we here at YourBestRoboticsCyborgsAndMoreManufacturingAndProgrammingNeedsForeverResolved.inc we believe its because of bugs.
+            </p>
+            <br />
+            <p>
+                A bug is a technical term in programaniese that expresses the idea of 'faulty code', or code that is a 'candidate for optimization', or simply an 'unexpected feature'!
+            </p>
+            <br />
+            <p>
+                We prefer the latter definition here at YourBestRoboticsCyborgsAndMoreManufacturingAndProgrammingNeedsForeverResolved.inc.
+            </p>
+            <br />
+            <p>
+                Sometimes the bot may... "misinterpret" your request. So instead of "Sweep the House!", it may prefer "Set the house on fire!".
+            </p>
+            <br />
+            <p>
+                Or, instead of "Wash the Car!", it may plant C4 in your neighbors car. In any case, other robots may be damaged in the process.
+            </p>
+            <br />
+            <p>
+                With the trillions of lines of code that goes into every made-with-love bot, its likely our sole developer missed a semicolon somewhere.
+            </p>
+            <br />
+            <p>
+                But worry not! Any damages occured will be billed to {place_fake_insurance_company_here} and covered by them!
+            </p>
+            <br />
+            <br />
+            <p>
+                Sincerely,
+            </p>
+            <br />
+            <p>
+                YourBestRoboticsCyborgsAndMoreManufacturingAndProgrammingNeedsForeverResolved.inc
+            </p>
+        </div>
+    </div>
 </div>

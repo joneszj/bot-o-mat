@@ -40,6 +40,7 @@ namespace RedVentures.Bot_O_Mat.API.Services
                 .Select(i => i.Key).Contains(killers.Id))
                 .Select(e => new KillBoardRecord
                 {
+                    Id = e.Id,
                     Name = e.Name,
                     KillCount = killerIds.Where(i => i.Key.Value == e.Id).SelectMany(y => y).Count(),
                     ActorType = Enum.GetName(typeof(ActorType), e.ActorType)

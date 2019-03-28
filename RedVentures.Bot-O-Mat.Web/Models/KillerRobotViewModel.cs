@@ -6,6 +6,7 @@ namespace RedVentures.Bot_O_Mat.Web.Models
     {
         public KillerRobotViewModel(KillBoardRecord killboardRecord) : base (killboardRecord)
         {
+            Id = killboardRecord.Id;
             KillCount = killboardRecord.KillCount;
         }
 

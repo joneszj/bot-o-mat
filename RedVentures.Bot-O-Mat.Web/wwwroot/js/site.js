@@ -94,7 +94,12 @@
                 var parentContainer = $('<div>').addClass('card').addClass(direction);
                 var cardContainer = parentContainer.append($('<div>').addClass('card_container'));
                 if (cardObject.imageData) {
-                    cardContainer.append($('<img>').attr('src', cardObject.imageData).attr('height', 200).attr('width', 200).css('border-radius', '50%'));
+                        cardContainer.append($('<img>').attr('src', cardObject.imageData).attr('height', 200).attr('width', 200).css('border-radius', '50%'));
+                } else if ($('#actorImage').val()) {
+                    cardContainer.append($('<img>').attr('src', $('#actorImage').val()).attr('height', 200).attr('width', 200).css('border-radius', '50%'));
+                }
+                if (!cardObject.name) {
+                    cardObject.name = $('#actorName').val();
                 }
                 cardContainer.append($('<h4>').append('<b>').attr('id', 'cardTaskName_' + cardObject.actorId).text(cardObject.name + " (still working)"));
                 cardContainer.append($('<div>').attr('id', 'cardTaskList_' + cardObject.actorId)).addClass('card_container');
@@ -245,6 +250,7 @@
                         event.preventDefault();
                         lib.views.index.createActorModal.validate(async function (result) {
                             if (result) {
+                                $('#userCreated').val(true);
                                 await lib.views.index.createActorModal.submit(
                                     lib.helpers.http.JsonStringifyForm($('#createActorModal')),
                                     $('#actorSelect').val().toLowerCase());
@@ -330,9 +336,10 @@
                         lib.views.index.createActorErrandsModal.validate(function (result) {
                             if (result) {
                                 lib.views.index.createActorErrandsModal.submit({
-                                    actorId: $('#actorId').val(),
-                                    userCreated: true,
-                                    errandIds: Array.from($('#createActorErrandsModal input:checked')).map(element => element.value)
+                                    id: $('#actorId').val(),
+                                    userCreated: $('#userCreated').val() || false,
+                                    errandIds: Array.from($('#createActorErrandsModal input:checked')).map(element => element.value),
+                                    renderSingleCard: true
                                 });
                             }
                         });
@@ -374,9 +381,15 @@
                     //hide details, show spinner
                     var actor = await lib.controllers.actors.actor.get($(this).data("id"));
                     actor = actor.data;
-                    debugger;
+                    $('#actorId').val(actor.id);
+                    $('#actorType').val(actor.type);
+                    if (actor.image) {
+                        $('#actorImage').val("data:image/jpeg;base64," + actor.image);
+                    }
+                    $('#actorName').val(actor.name);
                     if (actor.image) {
                         $('#detail_image').attr('src', "data:image/jpeg;base64," + actor.image).attr('height', 200).attr('width', 200).css('border-radius', '50%').show();
+                        $('#actorImageErrands').attr('src', "data:image/jpeg;base64," + actor.image).attr('height', 200).attr('width', 200).css('border-radius', '50%').show();
                         $('#detail_no_image').attr('src', actor.image).hide();
                     } else {
                         $('#detail_no_image').attr('src', actor.image).show();
@@ -409,6 +422,10 @@
                     }
                     //show details, hide spinner
                 });
+                $('#assignNewTasks').click(function () {
+                    $('#userCreated').val(false);
+                    lib.views.index.createActorErrandsModal.show();
+                });
             },
             errandReport: {
                 show: async function (actor, index) {
@@ -418,16 +435,16 @@
                         name: actor.name,
                         imageData: actor.imageData
                     };
-                    if (actor.userCreated) {
+                    if ((actor.userCreated === 'true' || actor.userCreated === true)) {
                         var response = await lib.controllers.actors[$('#actorType').val().toLowerCase()].get($('#actorId').val());
                         actorCard = response.data;
                         var image = await lib.controllers.images.get($('#actorId').val());
                         actorCard.imageData = "data:image/jpeg;base64," + image.data;
                         actorCard.errandIds = actor.errandIds;
-                        actorCard.actorId = actor.actorId;
+                        actorCard.actorId = actor.id;
                     }
 
-                    lib.helpers.html.generateCard($('#cardParentContainer'), actorCard, index % 2 === 0 ? "cardLeft" : "cardRight", actor.userCreated);
+                    lib.helpers.html.generateCard($('#cardParentContainer'), actorCard, index % 2 === 0 ? "cardLeft" : "cardRight", actor.renderSingleCard || false);
                     window.location.hash = 'open-modal-errands-report';
                 }
             }
@@ -517,7 +534,7 @@
     };
 
     var services = {
-        init: (function () {
+        signalrR_Init: (function () {
             document.addEventListener('DOMContentLoaded', function () {
                 var connection = new signalR.HubConnectionBuilder()
                     .withUrl('https://localhost:44308/notification')
