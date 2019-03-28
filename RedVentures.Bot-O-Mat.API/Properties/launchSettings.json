@@ -11,12 +11,11 @@
   "profiles": {
     "RedVentures.Bot_O_Mat.API": {
       "commandName": "Project",
-      "launchBrowser": false,
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
-      "applicationUrl": "https://localhost:44308"
+      "applicationUrl": "https://redventuresbot-o-matapi20190328104751.azurewebsites.net"
     }
   }
 }

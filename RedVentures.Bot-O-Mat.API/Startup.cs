@@ -23,11 +23,14 @@ namespace RedVentures.Bot_O_Mat.API
 
         public Startup(IConfiguration configuration, IHostingEnvironment env, ILogger<Startup> logger)
         {
+            Console.WriteLine("1");
             Configuration = configuration;
             _logger = logger;
             _env = env;
             _correlationId = Guid.NewGuid();
-        } 
+            Console.WriteLine(_correlationId.ToString());
+
+        }
         #endregion
 
         public IConfiguration Configuration { get; }
@@ -36,6 +39,10 @@ namespace RedVentures.Bot_O_Mat.API
         {
             try
             {
+                if (Configuration == null)
+                {
+                    throw new Exception("Configuration == null");
+                }
                 DefaultServices(services);
                 HelperInjections(services);
                 ContextInjections(services, _env.ContentRootPath);
@@ -50,14 +57,21 @@ namespace RedVentures.Bot_O_Mat.API
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (!env.IsProduction()) app.UseDeveloperExceptionPage();
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
+            //if (!env.IsProduction()) app.UseDeveloperExceptionPage();
+            //else
+            //{
+            app.UseDeveloperExceptionPage();
+                //app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
-            }
+            //}
 
-            app.UseCors(policy => policy.WithOrigins("https://localhost:44328").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+            //app.UseCors(policy => policy.WithOrigins("http://localhost:44328").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+
+            //app.UseCors(policy => policy.WithOrigins("https://redventuresbot-o-matweb20190328105343.azurewebsites.net/").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+            app.UseCors(policy => policy.WithOrigins("https://redventuresbot-o-matweb20190328105343.azurewebsites.net").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+
+        
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
@@ -110,7 +124,8 @@ namespace RedVentures.Bot_O_Mat.API
             services.AddSignalR();
         }
 
-        private void ContextInjections(IServiceCollection services, string basePath) => services.AddDbContext<BotOMatContext>(options => options.UseSqlite($"Data Source={basePath}/BotOMatContext.db"));
+        //private void ContextInjections(IServiceCollection services, string basePath) => services.AddDbContext<BotOMatContext>(options => options.UseSqlite($"Data Source={basePath}/BotOMatContext.db"));
+        private void ContextInjections(IServiceCollection services, string basePath) => services.AddDbContext<BotOMatContext>(options => options.UseSqlServer(Configuration.GetConnectionString("botomat")));
         #endregion
     }
 }

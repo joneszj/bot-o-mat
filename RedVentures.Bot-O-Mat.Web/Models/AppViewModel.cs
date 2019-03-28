@@ -1,13 +1,15 @@
 ﻿using CommonPatterns.Helpers;
+using Microsoft.Extensions.Configuration;
 using RedVentures.Bot_O_Mat.Web.DTOs;
 
 namespace RedVentures.Bot_O_Mat.Web.Models
 {
     public class AppViewModel
     {
-        public AppViewModel(LeaderBoardViewModelDTO leaderBoardDto, KillBoardViewModelDTO killboardBoardDto, GraveYardViewModelDTO graveYardViewModelDto, HelpersManager helpersManager)
+        public AppViewModel(LeaderBoardViewModelDTO leaderBoardDto, KillBoardViewModelDTO killboardBoardDto, GraveYardViewModelDTO graveYardViewModelDto, IConfiguration configuration)
         {
-            APINavLinkUrls = new APINavLinkUrls(helpersManager);
+            APINavLinkUrls = new APINavLinkUrls(configuration);
+            //APINavLinkUrls = new APINavLinkUrls(helpersManager);
             LeaderBoardViewModel = new LeaderBoardViewModel(leaderBoardDto);
             KillBoardViewModel = new KillBoardViewModel(killboardBoardDto);
             GraveyardViewModel = new GraveyardViewModel(graveYardViewModelDto);
@@ -22,6 +24,14 @@ namespace RedVentures.Bot_O_Mat.Web.Models
 
     public class APINavLinkUrls
     {
+        public APINavLinkUrls(IConfiguration configuration)
+        {
+            HealthCheckUIAPI = configuration.GetSection("API-URIs")["Base"] + "healthchecks-ui";
+            SwaggerAPI = configuration.GetSection("API-URIs")["Base"] + "swagger";
+            WhoIsAPI = configuration.GetSection("API-URIs")["Base"] + "whois";
+            LogsAPI = configuration.GetSection("API-URIs")["Base"] + "logs";
+        }
+
         public APINavLinkUrls(HelpersManager helpersManager)
         {
             HealthCheckUIAPI = helpersManager.EnvironmentHelper.Configuration.GetSection("API-URIs")["Base"] + "healthchecks-ui";

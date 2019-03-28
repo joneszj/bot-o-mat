@@ -31,7 +31,7 @@ namespace RedVentures.Bot_O_Mat.Web
             try
             {
                 services.AddHttpClient();
-                services.AddMemoryCache();
+                //services.AddMemoryCache();
                 ConfigureHelpers(services);
             }
             catch (Exception ex)
@@ -51,12 +51,13 @@ namespace RedVentures.Bot_O_Mat.Web
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (!env.IsProduction()) app.UseDeveloperExceptionPage();
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
+            //if (!env.IsProduction()) app.UseDeveloperExceptionPage();
+            //else
+            //{
+            app.UseDeveloperExceptionPage();
+                //app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
-            }
+            //}
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -78,8 +79,8 @@ namespace RedVentures.Bot_O_Mat.Web
         private void ConfigureHelpers(IServiceCollection services)
         {
             HelpersManager.Configure(_correlationId, services, Configuration);
-            CommonPatterns.Filters.ExceptionFilter.Configure(services);
-            CommonPatterns.Filters.RequestResponseFilter.Configure(services);
+            //CommonPatterns.Filters.ExceptionFilter.Configure(services);
+            //CommonPatterns.Filters.RequestResponseFilter.Configure(services);
             SwaggerHelper.Configure(services);
             CacheHelper.Configure(services);
             HealthCheckHelper.Configure(services);

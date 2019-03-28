@@ -153,7 +153,7 @@ let lib = (function ($, axios) {
     //TODO: controllers doesn't feel like the best term to describe an object that is essentially a service boundary provider
     //TODO: inject apiHost
     let controllers = {
-        apiHost: "https://localhost:44308/api",
+        apiHost: "https://redventuresbot-o-matapi20190328104751.azurewebsites.net/api",
         actors: {
             robot: {
                 get: async function (id) {
@@ -550,7 +550,7 @@ let lib = (function ($, axios) {
             Init: (function () {
                 document.addEventListener('DOMContentLoaded', function () {
                     let connection = new signalR.HubConnectionBuilder()
-                        .withUrl('https://localhost:44308/notification')
+                        .withUrl('https://redventuresbot-o-matapi20190328104751.azurewebsites.net/notification')
                         .build();
 
                     connection.on('Notify', function (notification) {

@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_documentation", "_document
 	ProjectSection(SolutionItems) = preProject
 		api.changelog.txt = api.changelog.txt
 		concept.txt = concept.txt
+		secrets.txt = secrets.txt
 		structure.txt = structure.txt
 		troubleshooting.txt = troubleshooting.txt
 		web.changelog.txt = web.changelog.txt

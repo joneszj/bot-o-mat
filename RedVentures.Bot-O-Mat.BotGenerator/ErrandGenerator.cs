@@ -35,7 +35,7 @@ namespace RedVentures.Bot_O_Mat.BotGenerator
             for (int i = 0; i < randomCount; i++)
             {
                 var randomErrand = (ErrandType)_errands.GetValue(_random.Next(_errands.Length));
-                await _httpClient.PostAsync("https://localhost:44308/api/errand", new StringContent(JsonConvert.SerializeObject(new PerformErrandViewModel { ActorId = _robot.Id, ErrandType = randomErrand }), Encoding.UTF8, ContentTypes.Json));
+                await _httpClient.PostAsync("https://redventuresbot-o-matapi20190328104751.azurewebsites.net/api/errand", new StringContent(JsonConvert.SerializeObject(new PerformErrandViewModel { ActorId = _robot.Id, ErrandType = randomErrand }), Encoding.UTF8, ContentTypes.Json));
             }
         }
 
@@ -45,7 +45,7 @@ namespace RedVentures.Bot_O_Mat.BotGenerator
             for (int i = 0; i < randomCount; i++)
             {
                 var randomErrand = (ErrandType)_errands.GetValue(_random.Next(_errands.Length));
-                await _httpClient.PostAsync("https://localhost:44308/api/errand", new StringContent(JsonConvert.SerializeObject(new PerformErrandViewModel { ActorId = _cyborg.Id, ErrandType = randomErrand }), Encoding.UTF8, ContentTypes.Json));
+                await _httpClient.PostAsync("https://redventuresbot-o-matapi20190328104751.azurewebsites.net/api/errand", new StringContent(JsonConvert.SerializeObject(new PerformErrandViewModel { ActorId = _cyborg.Id, ErrandType = randomErrand }), Encoding.UTF8, ContentTypes.Json));
             }
         }
     }

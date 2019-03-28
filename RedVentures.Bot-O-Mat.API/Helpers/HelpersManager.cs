@@ -41,7 +41,7 @@ namespace CommonPatterns.Helpers
 
         public static void Configure(Guid correlationId, IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<IEnvironmentHelper>(service => new EnvironmentHelper(correlationId, configuration));
+            services.AddScoped<IEnvironmentHelper>(service => new EnvironmentHelperMock());
             services.AddScoped<IEmailHelper>(service => new EmailHelperMock(configuration));
             services.AddSingleton<ICacheHelper>(service => new CacheHelper(_serviceProvider.GetService<IMemoryCache>()));
             services.AddScoped<IHttpHelper>(service => new HttpHelper(correlationId, _serviceProvider.GetService<IHttpClientFactory>()));

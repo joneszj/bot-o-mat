@@ -34,7 +34,7 @@ namespace RedVentures.Bot_O_Mat.BotGenerator
             var robotTypes = Enum.GetValues(typeof(RobotType));
             var randomRobotType = (RobotType)robotTypes.GetValue(_random.Next(robotTypes.Length));
 
-            var response = await _httpClient.PostAsync("https://localhost:44308/api/robot", new StringContent(JsonConvert.SerializeObject(new RobotViewModel { Name = Faker.Name.FullName(), Type = randomRobotType }), Encoding.UTF8, ContentTypes.Json));
+            var response = await _httpClient.PostAsync("https://redventuresbot-o-matapi20190328104751.azurewebsites.net/api/robot", new StringContent(JsonConvert.SerializeObject(new RobotViewModel { Name = Faker.Name.FullName(), Type = randomRobotType }), Encoding.UTF8, ContentTypes.Json));
             var data = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<RobotViewModel>(data);
         }
@@ -44,7 +44,7 @@ namespace RedVentures.Bot_O_Mat.BotGenerator
             var genderTypes = Enum.GetValues(typeof(Gender));
             var randomGenderType = (Gender)genderTypes.GetValue(_random.Next(genderTypes.Length));
 
-            var response = await _httpClient.PostAsync("https://localhost:44308/api/cyborg", new StringContent(JsonConvert.SerializeObject(new CyborgViewModel { Name = Faker.Name.FullName(), Gender = randomGenderType }), Encoding.UTF8, ContentTypes.Json));
+            var response = await _httpClient.PostAsync("https://redventuresbot-o-matapi20190328104751.azurewebsites.net/api/cyborg", new StringContent(JsonConvert.SerializeObject(new CyborgViewModel { Name = Faker.Name.FullName(), Gender = randomGenderType }), Encoding.UTF8, ContentTypes.Json));
             var data = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<CyborgViewModel>(data);
         }

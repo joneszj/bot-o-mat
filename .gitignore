@@ -343,3 +343,4 @@ healthchecksdb
 /RedVentures.Bot-O-Mat.API/_Logs
 *.db
 /RedVentures.Bot-O-Mat.Web/_Logs
+/secrets.txt
