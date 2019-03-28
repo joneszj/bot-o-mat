@@ -79,8 +79,8 @@ namespace RedVentures.Bot_O_Mat.Web
         private void ConfigureHelpers(IServiceCollection services)
         {
             HelpersManager.Configure(_correlationId, services, Configuration);
-            //CommonPatterns.Filters.ExceptionFilter.Configure(services);
-            //CommonPatterns.Filters.RequestResponseFilter.Configure(services);
+            CommonPatterns.Filters.ExceptionFilter.Configure(services);
+            CommonPatterns.Filters.RequestResponseFilter.Configure(services);
             SwaggerHelper.Configure(services);
             CacheHelper.Configure(services);
             HealthCheckHelper.Configure(services);

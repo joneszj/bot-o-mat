@@ -11,8 +11,8 @@ using RedVentures.Bot_O_Mat.Web.Models;
 
 namespace RedVentures.Bot_O_Mat.Web.Controllers
 {
-    //[ServiceFilter(typeof(ExceptionFilter))]
-    //[ServiceFilter(typeof(RequestResponseFilter))]
+    [ServiceFilter(typeof(ExceptionFilter))]
+    [ServiceFilter(typeof(RequestResponseFilter))]
     public class HomeController : Controller
     {
         #region ctor && private
