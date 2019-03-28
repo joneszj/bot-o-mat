@@ -596,11 +596,11 @@ let lib = (function ($, axios) {
         },
         notification: function (message, type, output) {
             $.notify(message, { className: type, globalPosition: 'bottom right' });
-            if (output || outputTyped) {
-                //TODO: output seems to be always undefined
-                debugger;
-                lib.services.updateUI(output);
-            }
+            //if (output || outputTyped) {
+            //    //TODO: output seems to be always undefined
+            //    debugger;
+            //    lib.services.updateUI(output);
+            //}
         }
     };
 

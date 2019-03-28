@@ -2,6 +2,8 @@
 using RedVentures.Bot_O_Mat.API.Data.DbSets;
 using RedVentures.Bot_O_Mat.API.Data.Enums;
 using System;
+using System.IO;
+using System.Reflection;
 
 namespace RedVentures.Bot_O_Mat.API.Data
 {
@@ -78,16 +80,30 @@ namespace RedVentures.Bot_O_Mat.API.Data
             Array ErrandTypevalues = Enum.GetValues(typeof(ErrandType));
             Array Gendervalues = Enum.GetValues(typeof(Gender));
 
-            while (actorId <= 300)
+            //https://stackoverflow.com/a/18190814
+            //if (!System.Diagnostics.Debugger.IsAttached) System.Diagnostics.Debugger.Launch();
+
+            //https://stackoverflow.com/a/3259597
+            //https://stackoverflow.com/a/30902714
+            //https://stackoverflow.com/a/6098286
+            //totally ulgy but it works...
+            string currentDirectory = Path.GetDirectoryName(System.AppContext.BaseDirectory);
+            string imagesSeedFolder = Path.Combine(Directory.GetParent(Directory.GetParent(Directory.GetParent(Directory.GetParent(AppContext.BaseDirectory).FullName).FullName).FullName).FullName, "Data", "SeedResources");
+            string[] files = Directory.GetFiles(imagesSeedFolder, "*.jpg");
+
+            while (actorId <= 100)
             {
                 actorId++;
                 var lastkillerId = actorId / 10;
                 if (lastkillerId == 0) lastkillerId = 1;
                 var errandcount = random.Next(1, 7);
+
+                var randomImageBytes = File.ReadAllBytes(files[random.Next(1, 5)]);
+
                 if (random.Next(1, 10) < 5)
                 {
-                    if (random.Next(1, 10) < 7) modelBuilder.Entity<Robot>().HasData(new Robot { ActorType = ActorType.Robot, Id = actorId, Name = Faker.Name.FullName(), Type = (RobotType)RobotTypevalues.GetValue(random.Next(RobotTypevalues.Length)) });
-                    else modelBuilder.Entity<Robot>().HasData(new Robot { ActorType = ActorType.Robot, Id = actorId, Name = Faker.Name.FullName(), Type = (RobotType)RobotTypevalues.GetValue(random.Next(RobotTypevalues.Length)), KilledById = lastkillerId, IsActive = false, ModifiedDate = DateTime.Today.AddDays(-random.Next(30)) });
+                    if (random.Next(1, 10) < 7) modelBuilder.Entity<Robot>().HasData(new Robot { ActorType = ActorType.Robot, Id = actorId, Name = Faker.Name.FullName(), Type = (RobotType)RobotTypevalues.GetValue(random.Next(RobotTypevalues.Length)), Image = randomImageBytes });
+                    else modelBuilder.Entity<Robot>().HasData(new Robot { ActorType = ActorType.Robot, Id = actorId, Name = Faker.Name.FullName(), Type = (RobotType)RobotTypevalues.GetValue(random.Next(RobotTypevalues.Length)), KilledById = lastkillerId, IsActive = false, ModifiedDate = DateTime.Today.AddDays(-random.Next(30)), Image = randomImageBytes });
                     for (int y = 0; y < errandcount; y++)
                     {
                         modelBuilder.Entity<Errand>().HasData(new Errand { ActorId = actorId, Id = ++errandId, Status = (ErrandStatus)ErrandStatusvalues.GetValue(random.Next(ErrandStatusvalues.Length)), Type = (ErrandType)ErrandTypevalues.GetValue(random.Next(ErrandTypevalues.Length)), TimeToComplete = random.Next(1000, 25000) });
@@ -95,8 +111,8 @@ namespace RedVentures.Bot_O_Mat.API.Data
                 }
                 else
                 {
-                    if (random.Next(1, 10) < 7) modelBuilder.Entity<Cyborg>().HasData(new Cyborg { ActorType = ActorType.Cyborg, Id = actorId, Name = Faker.Name.FullName(), Gender = (Gender)Gendervalues.GetValue(random.Next(Gendervalues.Length)) });
-                    else modelBuilder.Entity<Cyborg>().HasData(new Cyborg { ActorType = ActorType.Cyborg, Id = actorId, Name = Faker.Name.FullName(), Gender = (Gender)Gendervalues.GetValue(random.Next(Gendervalues.Length)), KilledById = lastkillerId, IsActive = false, ModifiedDate = DateTime.Today.AddDays(-random.Next(30)) });
+                    if (random.Next(1, 10) < 7) modelBuilder.Entity<Cyborg>().HasData(new Cyborg { ActorType = ActorType.Cyborg, Id = actorId, Name = Faker.Name.FullName(), Gender = (Gender)Gendervalues.GetValue(random.Next(Gendervalues.Length)), Image = randomImageBytes });
+                    else modelBuilder.Entity<Cyborg>().HasData(new Cyborg { ActorType = ActorType.Cyborg, Id = actorId, Name = Faker.Name.FullName(), Gender = (Gender)Gendervalues.GetValue(random.Next(Gendervalues.Length)), KilledById = lastkillerId, IsActive = false, ModifiedDate = DateTime.Today.AddDays(-random.Next(30)), Image = randomImageBytes });
                     for (int y = 0; y < errandcount; y++)
                     {
                         modelBuilder.Entity<Errand>().HasData(new Errand { ActorId = actorId, Id = ++errandId, Status = (ErrandStatus)ErrandStatusvalues.GetValue(random.Next(ErrandStatusvalues.Length)), Type = (ErrandType)ErrandTypevalues.GetValue(random.Next(ErrandTypevalues.Length)), TimeToComplete = random.Next(1000, 25000) });
