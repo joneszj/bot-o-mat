@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <RootNamespace>RedVentures.Bot_O_Mat.BotGenerator</RootNamespace>
   </PropertyGroup>
 
@@ -10,9 +10,5 @@
     <NoWarn>1701;1702;3277;MSB3277</NoWarn>
     <WarningsAsErrors>NU1605</WarningsAsErrors>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\RedVentures.Bot-O-Mat.API\RedVentures.Bot-O-Mat.API.csproj" />
-  </ItemGroup>
 
 </Project>

@@ -2,7 +2,6 @@
 using CommonPatterns.Filters;
 using Microsoft.AspNetCore.Mvc;
 using RedVentures.Bot_O_Mat.API.Models;
-using RedVentures.Bot_O_Mat.API.Services;
 
 namespace RedVentures.Bot_O_Mat.API.Controllers
 {

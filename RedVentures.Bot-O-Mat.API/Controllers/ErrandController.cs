@@ -4,11 +4,8 @@ using CommonPatterns.Filters;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
-using RedVentures.Bot_O_Mat.API.Data;
-using RedVentures.Bot_O_Mat.API.Data.Enums;
 using RedVentures.Bot_O_Mat.API.Hubs;
 using RedVentures.Bot_O_Mat.API.Models;
-using RedVentures.Bot_O_Mat.API.Services;
 
 namespace RedVentures.Bot_O_Mat.API.Controllers
 {
@@ -67,7 +64,7 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
             else await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{result.PerformingActor.Name} ({Enum.GetName(typeof(ActorType), result.PerformingActor.ActorType)}) has destroyed a unit ({result.TerminatedActor.Name})!", SeverityLevel.Error));
         }
 
-        private async Task NotifyTaskStarted(Data.DbSets.ErrandActor actor, PerformErrandViewModel errand)
+        private async Task NotifyTaskStarted(Data.DbSets.Actor actor, PerformErrandViewModel errand)
         {
             await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{actor.Name} ({Enum.GetName(typeof(ActorType), actor.ActorType)}) has started task: { Enum.GetName(typeof(ErrandType), errand.ErrandType) }!", SeverityLevel.Info));
         }

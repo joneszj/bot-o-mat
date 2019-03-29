@@ -13,7 +13,7 @@ namespace RedVentures.Bot_O_Mat.API.Models
             PerformedErrand = errand;
         }
         public ICanPerformErrand PerformingActor { get; set; }
-        public ICanPerformErrand TerminatedActor { get; set; }
+        public ICanBeDestroyed TerminatedActor { get; set; }
         public Errand PerformedErrand { get; set; }
     }
 }

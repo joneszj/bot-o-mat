@@ -8,7 +8,7 @@ namespace RedVentures.Bot_O_Mat.API.Models
     public class ActorDetailsViewModel
     {
         public ActorDetailsViewModel() { }
-        public ActorDetailsViewModel(ErrandActor errandActor)
+        public ActorDetailsViewModel(Actor errandActor)
         {
             Id = errandActor.Id;
             if (errandActor.Image != null) Image = Convert.ToBase64String(errandActor.Image);
@@ -16,7 +16,7 @@ namespace RedVentures.Bot_O_Mat.API.Models
             Active = errandActor.IsActive;
             CreatedDate = errandActor.CreatedDate.ToShortDateString();
             ModifiedDate = errandActor.ModifiedDate.ToShortDateString();
-            KilledById = errandActor.KilledById;
+            KilledById = errandActor.DestroyedById;
             CompletedErrands = errandActor.Errands.Where(e => e.Status == ErrandStatus.Completed).Select(e => new ErrandViewModel(e)).ToArray();
             FailedErrands = errandActor.Errands.Where(e => e.Status == ErrandStatus.Failed).Select(e => new ErrandViewModel(e)).ToArray();
             Type = Enum.GetName(typeof(ActorType), errandActor.ActorType);

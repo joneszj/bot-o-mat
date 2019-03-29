@@ -1,6 +1,4 @@
-﻿using CommonPatterns.Filters;
-using CommonPatterns.Helpers;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using RedVentures.Bot_O_Mat.API.Models;
 using System.Linq;
 

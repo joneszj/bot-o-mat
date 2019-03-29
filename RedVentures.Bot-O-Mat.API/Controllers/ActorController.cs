@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
 using CommonPatterns.Filters;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using RedVentures.Bot_O_Mat.API.Data;
 using RedVentures.Bot_O_Mat.API.Models;
+using RedVentures.Bot_O_Mat.BLL.Interfaces;
 
 namespace RedVentures.Bot_O_Mat.API.Controllers
 {
@@ -14,11 +13,11 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
     public class ActorController : ControllerBase
     {
         #region ctor && private
-        private readonly BotOMatContext _botOMatContext;
+        private readonly IActorService _actorService;
 
-        public ActorController(BotOMatContext botOMatContext)
+        public ActorController(IActorService actorService)
         {
-            _botOMatContext = botOMatContext;
+            _actorService = actorService;
         } 
         #endregion
 
@@ -26,7 +25,7 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
         public async Task<ActionResult<ActorDetailsViewModel>> Get(int id)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            var actor = await _botOMatContext.ErrandActors.Include(e=>e.Errands).FirstOrDefaultAsync(e=>e.Id == id);
+            var actor = await _actorService.GetActor(id);
             if (actor == null) return NotFound();
             else return Ok(new ActorDetailsViewModel(actor));
         }

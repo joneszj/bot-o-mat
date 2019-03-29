@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+    <RootNamespace>RedVentures.Bot_O_Mat.BLL</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RedVentures.Bot-O-Mat.Cache\RedVentures.Bot-O-Mat.Cache.csproj" />
+    <ProjectReference Include="..\RedVentures.Bot-O-Mat.DAL\RedVentures.Bot-O-Mat.DAL.csproj" />
+  </ItemGroup>
+
+</Project>

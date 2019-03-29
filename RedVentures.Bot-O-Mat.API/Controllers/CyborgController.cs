@@ -3,13 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CommonPatterns.Filters;
-using CommonPatterns.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
-using RedVentures.Bot_O_Mat.API.Data.Enums;
 using RedVentures.Bot_O_Mat.API.Hubs;
 using RedVentures.Bot_O_Mat.API.Models;
-using RedVentures.Bot_O_Mat.API.Services;
 
 namespace RedVentures.Bot_O_Mat.API.Controllers
 {
@@ -37,9 +34,9 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
         public async Task<ActionResult<CyborgViewModel>> Get(int id)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            var cyborg = await _cyborgService.GetCyborg(id);
-            if (cyborg == null) return NotFound();
-            return Ok(new CyborgViewModel(await _cyborgService.GetCyborg(id)));
+            var actor = await _cyborgService.GetActor(id);
+            if (actor == null) return NotFound();
+            return Ok(new CyborgViewModel((Cyborg)actor));
         }
 
         [HttpGet]
@@ -55,9 +52,9 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
         public async Task<ActionResult<CyborgViewModel>> Post([FromBody] CyborgViewModel cyborg)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            var newCyborg = await _cyborgService.CreateCyborg(cyborg.Name, cyborg.Gender);
+            await _cyborgService.CreateCyborg(cyborg);
             await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{cyborg.Name} (Cyborg) created!", SeverityLevel.Success));
-            return Ok(new CyborgViewModel(newCyborg));
+            return Ok(cyborg);
 
         }
 
@@ -66,7 +63,7 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
         public async Task<ActionResult> Delete(int id)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            var cyborg = await _cyborgService.ScrapCyborg(id);
+            var cyborg = await _cyborgService.DestroyActor(id);
             await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{cyborg.Name} deactivated!", SeverityLevel.Info));
             return Ok();
         }

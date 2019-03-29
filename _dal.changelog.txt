@@ -1,0 +1,1 @@
+implemented generic repository pattern : https://github.com/Ibro/GenericRepositorySimple

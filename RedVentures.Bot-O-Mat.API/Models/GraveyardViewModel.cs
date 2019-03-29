@@ -18,7 +18,7 @@ namespace RedVentures.Bot_O_Mat.API.Models
     public class GraveyardRecord
     {
         #region ctor
-        public GraveyardRecord(ErrandActor actor, ErrandActor killerActor)
+        public GraveyardRecord(Actor actor, Actor killerActor)
         {
             Id = actor.Id;
             Name = actor.Name;

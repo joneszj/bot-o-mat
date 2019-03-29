@@ -7,16 +7,27 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedVentures.Bot-O-Mat.API",
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_documentation", "_documentation", "{114AB981-C5C8-4A01-A3B5-08F18D2E8B77}"
 	ProjectSection(SolutionItems) = preProject
-		api.changelog.txt = api.changelog.txt
+		_api.changelog.txt = _api.changelog.txt
+		_dal.changelog.txt = _dal.changelog.txt
+		_web.changelog.txt = _web.changelog.txt
 		concept.txt = concept.txt
 		structure.txt = structure.txt
 		troubleshooting.txt = troubleshooting.txt
-		web.changelog.txt = web.changelog.txt
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedVentures.Bot-O-Mat.Web", "RedVentures.Bot-O-Mat.Web\RedVentures.Bot-O-Mat.Web.csproj", "{402FA9E4-E89B-491F-B561-4FD0BBCC696C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedVentures.Bot-O-Mat.BotGenerator", "RedVentures.Bot-O-Mat.BotGenerator\RedVentures.Bot-O-Mat.BotGenerator.csproj", "{638AAE03-96FE-4A4C-AECD-5A97BF9898CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedVentures.Bot-O-Mat.BLL", "RedVentures.Bot-O-Mat.BLL\RedVentures.Bot-O-Mat.BLL.csproj", "{6C8272ED-30CF-4A14-89A5-FA5814477BB2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedVentures.Bot-O-Mat.DAL", "RedVentures.Bot-O-Mat.DAL\RedVentures.Bot-O-Mat.DAL.csproj", "{3F04D20C-2B24-4413-8FD8-15D2D4F2E031}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedVentures.Bot-O-Mat.Common", "RedVentures.Bot-O-Mat.Common\RedVentures.Bot-O-Mat.Common.csproj", "{BFB88A6A-767C-47C9-B06E-6F63506D96A0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedVentures.Bot-O-Mat.SignalR", "RedVentures.Bot-O-Mat.SignalR\RedVentures.Bot-O-Mat.SignalR.csproj", "{2668E8F1-469D-4088-9B83-4933563338FA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RedVentures.Bot-O-Mat.Cache", "RedVentures.Bot-O-Mat.Cache\RedVentures.Bot-O-Mat.Cache.csproj", "{548471B3-804D-450B-BA82-9E662216DDF0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,6 +47,26 @@ Global
 		{638AAE03-96FE-4A4C-AECD-5A97BF9898CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{638AAE03-96FE-4A4C-AECD-5A97BF9898CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{638AAE03-96FE-4A4C-AECD-5A97BF9898CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C8272ED-30CF-4A14-89A5-FA5814477BB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C8272ED-30CF-4A14-89A5-FA5814477BB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C8272ED-30CF-4A14-89A5-FA5814477BB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C8272ED-30CF-4A14-89A5-FA5814477BB2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3F04D20C-2B24-4413-8FD8-15D2D4F2E031}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F04D20C-2B24-4413-8FD8-15D2D4F2E031}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3F04D20C-2B24-4413-8FD8-15D2D4F2E031}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F04D20C-2B24-4413-8FD8-15D2D4F2E031}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BFB88A6A-767C-47C9-B06E-6F63506D96A0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BFB88A6A-767C-47C9-B06E-6F63506D96A0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BFB88A6A-767C-47C9-B06E-6F63506D96A0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BFB88A6A-767C-47C9-B06E-6F63506D96A0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2668E8F1-469D-4088-9B83-4933563338FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2668E8F1-469D-4088-9B83-4933563338FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2668E8F1-469D-4088-9B83-4933563338FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2668E8F1-469D-4088-9B83-4933563338FA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{548471B3-804D-450B-BA82-9E662216DDF0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{548471B3-804D-450B-BA82-9E662216DDF0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{548471B3-804D-450B-BA82-9E662216DDF0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{548471B3-804D-450B-BA82-9E662216DDF0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
