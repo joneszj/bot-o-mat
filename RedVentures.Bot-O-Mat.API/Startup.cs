@@ -14,9 +14,6 @@ using RedVentures.Bot_O_Mat.API.Services;
 
 namespace RedVentures.Bot_O_Mat.API
 {
-    /// <summary>
-    /// composition root - https://blog.ploeh.dk/2011/07/28/CompositionRoot/
-    /// </summary>
     public class Startup
     {
         #region ctor && private
@@ -99,7 +96,7 @@ namespace RedVentures.Bot_O_Mat.API
         private static void ServiceInjections(IServiceCollection services)
         {
             services.AddScoped<IRobotService, RobotService>();
-            services.AddScoped<ICybordService, CyborgService>();
+            services.AddScoped<ICyborgService, CyborgService>();
             services.AddScoped<IBattleService, BattleService>();
             services.AddScoped<IErrandService, ErrandService>();
             services.AddScoped<IKillBoardService, KillBoardService>();

@@ -18,8 +18,8 @@ namespace CommonPatterns.Filters
     {
         #region ctor && private
         private readonly HelpersManager _helpersManager;
-        readonly ICybordService _cyborgService;
-        public RefreshCyborgCacheFilter(HelpersManager helpersManager, ICybordService cyborgService)
+        readonly ICyborgService _cyborgService;
+        public RefreshCyborgCacheFilter(HelpersManager helpersManager, ICyborgService cyborgService)
         {
             _helpersManager = helpersManager;
             _cyborgService = cyborgService;

@@ -18,8 +18,14 @@
     <PackageReference Include="AspNetCore.HealthChecks.SqlServer" Version="2.2.0" />
     <PackageReference Include="AspNetCore.HealthChecks.System" Version="2.2.1" />
     <PackageReference Include="AspNetCore.HealthChecks.UI" Version="2.2.17" />
+    <PackageReference Include="faker.netcore" Version="1.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="Microsoft.AspNetCore.Razor.Design" Version="2.2.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="2.2.2" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="2.2.3">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.2" />
     <PackageReference Include="Serilog" Version="2.8.0" />
     <PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
@@ -29,11 +35,6 @@
 
   <ItemGroup>
     <Folder Include="Views\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\RedVentures.Bot-O-Mat.BLL\RedVentures.Bot-O-Mat.BLL.csproj" />
-    <ProjectReference Include="..\RedVentures.Bot-O-Mat.Common\RedVentures.Bot-O-Mat.Common.csproj" />
   </ItemGroup>
 
 </Project>

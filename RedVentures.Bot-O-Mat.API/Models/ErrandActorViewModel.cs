@@ -5,7 +5,7 @@ namespace RedVentures.Bot_O_Mat.API.Models
 {
     public class ErrandActorViewModel
     {
-        public ErrandActorViewModel(Actor actor)
+        public ErrandActorViewModel(ErrandActor actor)
         {
             Id = actor.Id;
             Name = actor.Name;

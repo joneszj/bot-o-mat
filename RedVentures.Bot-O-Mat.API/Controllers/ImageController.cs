@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
+using RedVentures.Bot_O_Mat.API.Data;
 using RedVentures.Bot_O_Mat.API.Hubs;
 using RedVentures.Bot_O_Mat.API.Models;
 

@@ -1,4 +1,6 @@
 ﻿using System.Threading.Tasks;
+using CommonPatterns.Filters;
+using CommonPatterns.Helpers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 
