@@ -18,6 +18,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedVentures.Bot-O-Mat.Web",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedVentures.Bot-O-Mat.BotGenerator", "RedVentures.Bot-O-Mat.BotGenerator\RedVentures.Bot-O-Mat.BotGenerator.csproj", "{638AAE03-96FE-4A4C-AECD-5A97BF9898CF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bot-O-Mat.Web.Angular", "Bot-O-Mat.Web.Angular\Bot-O-Mat.Web.Angular.csproj", "{97F754D4-C616-4659-BE4D-32B50C4C4412}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,6 +38,10 @@ Global
 		{638AAE03-96FE-4A4C-AECD-5A97BF9898CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{638AAE03-96FE-4A4C-AECD-5A97BF9898CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{638AAE03-96FE-4A4C-AECD-5A97BF9898CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{97F754D4-C616-4659-BE4D-32B50C4C4412}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{97F754D4-C616-4659-BE4D-32B50C4C4412}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{97F754D4-C616-4659-BE4D-32B50C4C4412}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{97F754D4-C616-4659-BE4D-32B50C4C4412}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
