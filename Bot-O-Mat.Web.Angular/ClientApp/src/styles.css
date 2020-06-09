@@ -14,3 +14,19 @@ code {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
+/* A https://stackoverflow.com/questions/32862394/bootstrap-modals-keep-adding-padding-right-to-body-after-closed */
+
+.modal {
+  padding-right: 0px !important;
+}
+
+.modal-open {
+  padding-right: 0px !important;
+}
+
+body {
+  padding-right: 0 !important
+}
+
+/* end A */

@@ -1,0 +1,54 @@
+<form>
+  <div class="modal fade" id="createBotModal" tabindex="-1" role="dialog" aria-labelledby="createBotModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="createBotModalLabel">Create A Robot or Cyborg</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <!-- Image -->
+          <div class="form-group">
+            <label for="botImageUpload">Bot Image Upload (If empty, a random image will be used)</label>
+            <input type="file" class="form-control-file" id="botImageUpload">
+          </div>
+          <!-- Bot Type -->
+          <div class="form-group">
+            <label for="botTypeUpload">Bot Type:</label>
+            <select class="form-control" id="botTypeUpload">
+              <option selected="selected" disabled="disabled">Select Bot Type</option>
+              <option *ngFor="let type of actorTypes" value="{{type.id}}">{{type.type}}</option>
+            </select>
+          </div>
+          <!-- Bot Name -->
+          <div class="form-group">
+            <label for="botNameUpload">Bot Name:</label>
+            <input class="form-control" type="text" placeholder="Bot Name" id="botNameUpload">
+          </div>
+          <!-- Robot Bot Options -->
+          <div class="form-group">
+            <label for="robotTypeUpload">Robot Type:</label>
+            <select class="form-control" id="robotTypeUpload">
+              <option selected="selected" disabled="disabled">Select Robot Type</option>
+              <option *ngFor="let robotType of robotTypes" value="{{robotType.id}}">{{robotType.type}}</option>
+            </select>
+          </div>
+          <!-- Cyborg Bot Options -->
+          <div class="form-group">
+            <label for="cyborgGenderUpload">Cyborg Gender:</label>
+            <select class="form-control" id="cyborgGenderUpload">
+              <option selected="selected" disabled="disabled">Select Gender</option>
+              <option *ngFor="let cyborgGender of robotTypes" value="{{cyborgGender.id}}">{{cyborgGender.gender}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-primary">Create</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

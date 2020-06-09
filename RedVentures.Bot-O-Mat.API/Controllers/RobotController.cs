@@ -32,6 +32,9 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
         }
         #endregion
 
+        [HttpGet("types")]
+        public ActionResult GetTypes() => Ok(Enum.GetValues(typeof(RobotType)).Cast<RobotType>().Select(e => new { name = e.ToString(), id = (int)e }));
+
         #region public members
         [HttpGet("{id}")]
         public async Task<ActionResult<RobotViewModel>> Get(int id)

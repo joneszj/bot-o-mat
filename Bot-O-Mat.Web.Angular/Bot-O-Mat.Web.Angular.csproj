@@ -25,14 +25,30 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="ClientApp\src\app\components\home\about.component.ts" />
+    <None Remove="ClientApp\src\app\components\home\cta.component.ts" />
+    <None Remove="ClientApp\src\app\components\modals\createBot\createBot.component.ts" />
+    <None Remove="ClientApp\src\app\models\actorType.ts" />
+    <None Remove="ClientApp\src\app\models\Gender.ts" />
     <None Remove="ClientApp\src\app\models\link.ts" />
+    <None Remove="ClientApp\src\app\models\robotType.ts" />
+    <None Remove="ClientApp\src\app\models\selectItem.ts" />
+    <None Remove="ClientApp\src\app\services\actorService.service.ts" />
     <None Remove="ClientApp\src\app\services\APIService.service.ts" />
     <None Remove="ClientApp\src\app\services\navBarService.service.ts" />
     <None Remove="ClientApp\src\app\services\toolsService.service.ts" />
   </ItemGroup>
 
   <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\components\home\about.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\home\cta.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\modals\createBot\createBot.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\actorType.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\gender.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\link.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\robotType.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\selectItem.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\actorService.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\APIService.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\navBarService.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\toolsService.service.ts" />
