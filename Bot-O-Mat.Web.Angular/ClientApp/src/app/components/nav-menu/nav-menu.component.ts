@@ -18,7 +18,9 @@ export class NavMenuComponent {
     navBarService: NavBarService,
     toolsService: ToolsService
   ) {
-    this.appLinks = toolsService.sortOnPropertyValue<Link>(Object.values(navBarService), 'Order').filter(e => Link.isLink(e));
-    this.apiLinks = toolsService.sortOnPropertyValue<Link>(Object.values(apiService), 'Label').filter(e => Link.isLink(e));
+    this.appLinks = toolsService.sortOnPropertyValue<Link>(this.onlyLinkPropertyTypes(navBarService), 'Order');
+    this.apiLinks = toolsService.sortOnPropertyValue<Link>(this.onlyLinkPropertyTypes(apiService), 'Label');
   }
+
+  onlyLinkPropertyTypes = (obj: NavBarService | APIService) => Object.values(obj).filter(e => Link.isLink(e));
 }
