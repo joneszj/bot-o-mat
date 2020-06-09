@@ -12,12 +12,12 @@
           <!-- Image -->
           <div class="form-group">
             <label for="botImageUpload">Bot Image Upload (If empty, a random image will be used)</label>
-            <input type="file" class="form-control-file" id="botImageUpload">
+            <input type="file" class="form-control-file" id="botImageUpload" name="botImageUpload">
           </div>
           <!-- Bot Type -->
           <div class="form-group">
             <label for="botTypeUpload">Bot Type:</label>
-            <select class="form-control" id="botTypeUpload">
+            <select [(ngModel)]="actorTypeSelection" class="form-control" id="botTypeUpload" name="botTypeUpload">
               <option selected="selected" disabled="disabled">Select Bot Type</option>
               <option *ngFor="let type of actorTypes" value="{{type.id}}">{{type.type}}</option>
             </select>
@@ -25,24 +25,34 @@
           <!-- Bot Name -->
           <div class="form-group">
             <label for="botNameUpload">Bot Name:</label>
-            <input class="form-control" type="text" placeholder="Bot Name" id="botNameUpload">
+            <input class="form-control" type="text" placeholder="Bot Name" id="botNameUpload" name="botNameUpload">
           </div>
-          <!-- Robot Bot Options -->
-          <div class="form-group">
-            <label for="robotTypeUpload">Robot Type:</label>
-            <select class="form-control" id="robotTypeUpload">
-              <option selected="selected" disabled="disabled">Select Robot Type</option>
-              <option *ngFor="let robotType of robotTypes" value="{{robotType.id}}">{{robotType.type}}</option>
-            </select>
+          <!-- ngSwitch -->
+          <div class="animate-switch-container" [ngSwitch]="actorTypeSelection">
+            <!-- Robot Bot Options -->
+            <div class="animate-switch" *ngSwitchCase="0">
+              <div class="form-group">
+                <label for="robotTypeUpload">Robot Type:</label>
+                <select class="form-control" id="robotTypeUpload" name="robotTypeUpload">
+                  <option selected="selected" disabled="disabled">Select Robot Type</option>
+                  <option *ngFor="let robotType of robotTypes" value="{{robotType.id}}">{{robotType.name}}</option>
+                </select>
+              </div>
+            </div>
+            <!-- Cyborg Bot Options -->
+            <div class="animate-switch" *ngSwitchCase="1">
+              <div class="form-group">
+                <label for="cyborgGenderUpload">Cyborg Gender:</label>
+                <select class="form-control" id="cyborgGenderUpload" name="cyborgGenderUpload">
+                  <option selected="selected" disabled="disabled">Select Gender</option>
+                  <option *ngFor="let cyborgGender of cyborGenders" value="{{cyborgGender.id}}">{{cyborgGender.gender}}</option>
+                </select>
+              </div>
+            </div>
+            <!-- Default -->
+            <div class="animate-switch" *ngSwitchDefault>...Select Bot Type</div>
           </div>
-          <!-- Cyborg Bot Options -->
-          <div class="form-group">
-            <label for="cyborgGenderUpload">Cyborg Gender:</label>
-            <select class="form-control" id="cyborgGenderUpload">
-              <option selected="selected" disabled="disabled">Select Gender</option>
-              <option *ngFor="let cyborgGender of robotTypes" value="{{cyborgGender.id}}">{{cyborgGender.gender}}</option>
-            </select>
-          </div>
+          <!-- / ngSwitch -->
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

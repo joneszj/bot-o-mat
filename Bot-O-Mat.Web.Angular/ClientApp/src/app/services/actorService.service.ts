@@ -10,9 +10,11 @@ import { APIService } from './APIService.service';
   providedIn: 'root'
 })
 export class ActorService extends APIService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    super();
+  }
 
-  GetActorTypes = (): Observable<ActorType[]> => this.http.get<ActorType[]>(`${this.fullApiPath}/actors/types`);
-  GetRobotTypes = (): Observable<RobotType[]> => this.http.get<RobotType[]>(`${this.fullApiPath}/robots/types`);
-  GetCyborgGenders = (): Observable<Gender[]> => this.http.get<Gender[]>(`${this.fullApiPath}/cyborgs/genders`);
+  GetActorTypes = (): Observable<ActorType[]> => this.http.get<ActorType[]>(`${this.fullApiPath}/actor/types`);
+  GetRobotTypes = (): Observable<RobotType[]> => this.http.get<RobotType[]>(`${this.fullApiPath}/robot/types`);
+  GetCyborgGenders = (): Observable<Gender[]> => this.http.get<Gender[]>(`${this.fullApiPath}/cyborg/genders`);
 }

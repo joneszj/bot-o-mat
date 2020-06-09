@@ -1,4 +1,4 @@
 export class RobotType {
-  type: string;
+  name: string;
   id: number;
 }
