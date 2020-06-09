@@ -1,4 +1,8 @@
 import { Component } from '@angular/core';
+import { APIService } from '../../services/APIService.service';
+import { Link } from '../../models/link';
+import { NavBarService } from '../../services/navBarService.service';
+import { ToolsService } from '../../services/toolsService.service';
 
 @Component({
   selector: 'app-nav-menu',
@@ -6,13 +10,15 @@ import { Component } from '@angular/core';
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
-  isExpanded = false;
+  appLinks: Link[];
+  apiLinks: Link[];
 
-  collapse() {
-    this.isExpanded = false;
-  }
-
-  toggle() {
-    this.isExpanded = !this.isExpanded;
+  constructor(
+    apiService: APIService,
+    navBarService: NavBarService,
+    toolsService: ToolsService
+  ) {
+    this.appLinks = toolsService.sortOnPropertyValue<Link>(Object.values(navBarService), 'Order').filter(e => Link.isLink(e));
+    this.apiLinks = toolsService.sortOnPropertyValue<Link>(Object.values(apiService), 'Label').filter(e => Link.isLink(e));
   }
 }

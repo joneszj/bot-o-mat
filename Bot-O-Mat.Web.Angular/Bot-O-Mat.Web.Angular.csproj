@@ -25,7 +25,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ClientApp\src\app\services\" />
+    <None Remove="ClientApp\src\app\models\link.ts" />
+    <None Remove="ClientApp\src\app\services\APIService.service.ts" />
+    <None Remove="ClientApp\src\app\services\navBarService.service.ts" />
+    <None Remove="ClientApp\src\app\services\toolsService.service.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\models\link.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\APIService.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\navBarService.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\toolsService.service.ts" />
   </ItemGroup>
 
   <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
