@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using CommonPatterns.Filters;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ using RedVentures.Bot_O_Mat.API.Data.Enums;
 using RedVentures.Bot_O_Mat.API.Hubs;
 using RedVentures.Bot_O_Mat.API.Models;
 using RedVentures.Bot_O_Mat.API.Services;
+using System.Globalization;
 
 namespace RedVentures.Bot_O_Mat.API.Controllers
 {
@@ -30,6 +32,11 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
             _notificationHub = notificationHub;
         }
         #endregion
+
+        [HttpGet]
+        public ActionResult GetErrands() => Ok(Enum.GetValues(typeof(ErrandType)).Cast<ErrandType>().Select(e => 
+            new { errand = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(e.ToString().Replace('_', ' ')), value = (int)e })
+        );
 
         [HttpPost]
         public async Task<ActionResult<PerformErrandResultViewModel>> Post([FromBody] PerformErrandViewModel performErrandViewModel)

@@ -8,6 +8,8 @@ import { RouterModule } from '@angular/router';
 import { APIService } from './services/APIService.service';
 import { NavBarService } from './services/navBarService.service';
 import { ToolsService } from './services/toolsService.service';
+import { ActorService } from './services/actorService.service';
+import { ErrandService } from './services/errandService.service';
 
 // Components
 import { AppComponent } from './app.component';
@@ -17,7 +19,7 @@ import { CTAComponent } from './components/home/cta.component';
 import { AboutComponent } from './components/home/about.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CreateBotComponent } from './components/modals/createBot/createBot.component';
-import { ActorService } from './services/actorService.service';
+import { ErrandListCheckboxesComponent } from './components/modals/errands/listErrandCheckboxes.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { ActorService } from './services/actorService.service';
     CTAComponent,
     AboutComponent,
     FooterComponent,
-    CreateBotComponent
+    CreateBotComponent,
+    ErrandListCheckboxesComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -37,7 +40,7 @@ import { ActorService } from './services/actorService.service';
       { path: '', component: HomeComponent, pathMatch: 'full' }
     ])
   ],
-  providers: [ToolsService, APIService, NavBarService, ActorService],
+  providers: [ToolsService, APIService, NavBarService, ActorService, ErrandService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -17,7 +17,7 @@
           <!-- Bot Type -->
           <div class="form-group">
             <label for="botTypeUpload">Bot Type:</label>
-            <select [(ngModel)]="actorTypeSelection" class="form-control" id="botTypeUpload" name="botTypeUpload">
+            <select [(ngModel)]="actorTypeSelection" (change)="botTypeSelected = false" class="form-control" id="botTypeUpload" name="botTypeUpload">
               <option selected="selected" disabled="disabled">Select Bot Type</option>
               <option *ngFor="let type of actorTypes" value="{{type.id}}">{{type.type}}</option>
             </select>
@@ -33,7 +33,7 @@
             <div class="animate-switch" *ngSwitchCase="0">
               <div class="form-group">
                 <label for="robotTypeUpload">Robot Type:</label>
-                <select class="form-control" id="robotTypeUpload" name="robotTypeUpload">
+                <select (change)="botTypeSelected = true" class="form-control" id="robotTypeUpload" name="robotTypeUpload">
                   <option selected="selected" disabled="disabled">Select Robot Type</option>
                   <option *ngFor="let robotType of robotTypes" value="{{robotType.id}}">{{robotType.name}}</option>
                 </select>
@@ -43,7 +43,7 @@
             <div class="animate-switch" *ngSwitchCase="1">
               <div class="form-group">
                 <label for="cyborgGenderUpload">Cyborg Gender:</label>
-                <select class="form-control" id="cyborgGenderUpload" name="cyborgGenderUpload">
+                <select (change)="botTypeSelected = true" class="form-control" id="cyborgGenderUpload" name="cyborgGenderUpload">
                   <option selected="selected" disabled="disabled">Select Gender</option>
                   <option *ngFor="let cyborgGender of cyborGenders" value="{{cyborgGender.id}}">{{cyborgGender.gender}}</option>
                 </select>
@@ -53,6 +53,7 @@
             <div class="animate-switch" *ngSwitchDefault>...Select Bot Type</div>
           </div>
           <!-- / ngSwitch -->
+          <app-errand-checklist [botTypeSelected]="botTypeSelected"></app-errand-checklist>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>

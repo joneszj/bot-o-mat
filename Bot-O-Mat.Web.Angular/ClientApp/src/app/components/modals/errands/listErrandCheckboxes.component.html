@@ -1,0 +1,12 @@
+<div *ngIf="botTypeSelected">
+  <p>
+    Select some tasks for your bot to accomplish:
+  </p>
+  <div *ngFor="let errand of errands" class="input-group mb-3">
+    <div class="form-check ">
+      <label class="form-check-label">
+        <input type="checkbox" value="{{errand.value}}"> {{errand.errand}}
+      </label>
+    </div>
+  </div>
+</div>

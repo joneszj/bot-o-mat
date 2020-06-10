@@ -14,6 +14,7 @@ export class CreateBotComponent {
   actorTypes: ActorType[];
   cyborGenders: Gender[];
   robotTypes: RobotType[];
+  botTypeSelected: false;
 
   constructor(private actorService: ActorService) { }
 
