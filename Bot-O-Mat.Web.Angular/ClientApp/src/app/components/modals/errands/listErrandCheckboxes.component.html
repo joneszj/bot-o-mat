@@ -1,11 +1,17 @@
-<div *ngIf="botTypeSelected">
+<div *ngIf="botTypeSelected" [formGroup]="formGroup">
   <p>
-    Select some tasks for your bot to accomplish:
+    Select some errands for {{botName}} bot to accomplish:
   </p>
-  <div *ngFor="let errand of errands" class="input-group mb-3">
-    <div class="form-check ">
+  <div *ngIf="formGroup.errors?.invalidMinimum" class="invalid-feedback">
+    <div>Atleast one errand is required</div>
+  </div>
+  <div *ngFor="let errand of errands; index as i;" class="input-group mb-3">
+    <div class="form-check "
+         formArrayName="errandTasks">
       <label class="form-check-label">
-        <input type="checkbox" value="{{errand.value}}"> {{errand.errand}}
+        <input type="checkbox" value="{{errand.value}}"
+               [formControlName]="i"> {{errand.errand}}
+        <!-- [ngClass]="{'is-invalid':errandTasks.touched && errandTasks.invalid}" -->
       </label>
     </div>
   </div>

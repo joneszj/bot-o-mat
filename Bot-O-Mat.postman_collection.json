@@ -1,0 +1,94 @@
+{
+	"info": {
+		"_postman_id": "cca942f3-0e3e-46c0-a8c1-9dc3a6fb7ca9",
+		"name": "Bot-O-Mat",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get Actor Types",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44308/api/actor/types",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44308",
+					"path": [
+						"api",
+						"actor",
+						"types"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Robot Types",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44308/api/robot/types",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44308",
+					"path": [
+						"api",
+						"robot",
+						"types"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Cyborg Types",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44308/api/cyborg/genders",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44308",
+					"path": [
+						"api",
+						"cyborg",
+						"genders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Errands",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44308/api/errand/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44308",
+					"path": [
+						"api",
+						"errand",
+						""
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

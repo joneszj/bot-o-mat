@@ -21,7 +21,7 @@
                     formControlName="botTypeSelect"
                     (change)="botTypeSelected = false"
                     [ngClass]="{'is-invalid':createBotFormGroup.get('botTypeSelect').touched && createBotFormGroup.get('botTypeSelect').invalid}">
-              <!-- TODO: Why does this loose its selected status but the other selects work as expected? -->
+              <!-- TODO: Why does this loose its selected status but the other selects work as expected? try ngIf -->
               <option selected="selected" disabled="disabled">Select Bot Type</option>
               <option *ngFor="let type of actorTypes"
                       value="{{type.id}}">
@@ -37,7 +37,6 @@
             <label for="botNameInput">Bot Name:</label>
             <input class="form-control" type="text" placeholder="Bot Name" id="botNameInput"
                    formControlName="botNameInput"
-                   (keyup)="test()"
                    [ngClass]="{'is-invalid':createBotFormGroup.get('botNameInput').touched && createBotFormGroup.get('botNameInput').invalid}">
             <div class="invalid-feedback">
               <div>Bot Name is required and less than 20 characters</div>
@@ -48,42 +47,56 @@
             <!-- Robot Bot Options -->
             <div class="animate-switch" *ngSwitchCase="0">
               <div class="form-group">
-                <label for="robotTypeUpload">Robot Type:</label>
-                <select class="form-control" id="robotTypeUpload" name="robotTypeUpload"
-                        (change)="botTypeSelected = true">
+                <label for="robotTypeSelect">Robot Type:</label>
+                <select class="form-control" id="robotTypeSelect"
+                        formControlName="robotTypeSelect"
+                        (change)="botTypeSelected = true"
+                        [ngClass]="{'is-invalid':createBotFormGroup.get('robotTypeSelect').touched && createBotFormGroup.errors?.invalidRobotType}">
                   <option selected="selected" disabled="disabled">Select Robot Type</option>
                   <option *ngFor="let robotType of robotTypes"
                           value="{{robotType.id}}">
                     {{robotType.name}}
                   </option>
                 </select>
+                <div class="invalid-feedback">
+                  <div>Robot Type is required</div>
+                </div>
               </div>
             </div>
             <!-- Cyborg Bot Options -->
             <div class="animate-switch" *ngSwitchCase="1">
               <div class="form-group">
-                <label for="cyborgGenderUpload">Cyborg Gender:</label>
-                <select class="form-control" id="cyborgGenderUpload" name="cyborgGenderUpload"
-                        (change)="botTypeSelected = true">
+                <label for="cyborgGenderSelect">Cyborg Gender:</label>
+                <select class="form-control" id="cyborgGenderSelect"
+                        formControlName="cyborgGenderSelect"
+                        (change)="botTypeSelected = true"
+                        [ngClass]="{'is-invalid':createBotFormGroup.get('cyborgGenderSelect').touched && createBotFormGroup.errors?.invalidCyborgGender}">
                   <option selected="selected" disabled="disabled">Select Gender</option>
                   <option *ngFor="let cyborgGender of cyborGenders"
                           value="{{cyborgGender.id}}">
                     {{cyborgGender.gender}}
                   </option>
                 </select>
+                <div class="invalid-feedback">
+                  <div>Cyborg Gender is required</div>
+                </div>
               </div>
             </div>
             <!-- Default -->
             <div class="animate-switch" *ngSwitchDefault></div>
           </div>
           <!-- / ngSwitch -->
-          <app-errand-checklist [botTypeSelected]="botTypeSelected"></app-errand-checklist>
+          <app-errand-checklist
+              [botTypeSelected]="botTypeSelected"
+              [botName]="createBotFormGroup.get('botNameInput').value"
+              [formGroup]="createBotFormGroup"></app-errand-checklist>
         </div>
         <!-- form controls -->
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
           <button type="button" class="btn btn-primary"
-                  [disabled]="createBotFormGroup.invalid">
+                  [disabled]="createBotFormGroup.invalid"
+                  *ngIf="!createBotFormGroup.invalid">
             Create
           </button>
         </div>

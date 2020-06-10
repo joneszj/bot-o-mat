@@ -6,4 +6,4 @@ var ActorType = /** @class */ (function () {
     return ActorType;
 }());
 exports.ActorType = ActorType;
-//# sourceMappingURL=actorTypes.js.map
+//# sourceMappingURL=actorType.js.map

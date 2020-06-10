@@ -3,7 +3,9 @@ import { ActorService } from '../../../services/actorService.service';
 import { ActorType } from '../../../models/actorType';
 import { Gender } from '../../../models/Gender';
 import { RobotType } from '../../../models/robotType';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
+import { robotOrCyborgValidator } from '../../../validators/robotOrCyborgValidator.validator';
+import { minSelectedCheckboxes } from '../../../validators/minSelectedCheckboxes.validaotor';
 
 @Component({
   selector: 'app-create-bot',
@@ -31,12 +33,11 @@ export class CreateBotComponent {
     this.createBotFormGroup = new FormGroup({
       // TODO: optional property ?. breaks compilation
       botTypeSelect: new FormControl(null, Validators.required),
-      botNameInput: new FormControl(null, [Validators.required, Validators.maxLength(20)])
-    });
-    this.createBotFormGroup.valueChanges.subscribe(v => console.log(v))
-  }
-
-  test = () => {
-    console.log(this.createBotFormGroup.getRawValue());
+      botNameInput: new FormControl(null, [Validators.required, Validators.maxLength(20)]),
+      robotTypeSelect: new FormControl(null),
+      cyborgGenderSelect: new FormControl(null),
+      // https://coryrylan.com/blog/creating-a-dynamic-checkbox-list-in-angular
+      errandTasks: new FormArray([], minSelectedCheckboxes())
+    }, { validators: robotOrCyborgValidator });
   }
 }

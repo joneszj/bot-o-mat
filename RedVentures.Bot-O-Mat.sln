@@ -18,7 +18,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedVentures.Bot-O-Mat.Web",
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedVentures.Bot-O-Mat.BotGenerator", "RedVentures.Bot-O-Mat.BotGenerator\RedVentures.Bot-O-Mat.BotGenerator.csproj", "{638AAE03-96FE-4A4C-AECD-5A97BF9898CF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bot-O-Mat.Web.Angular", "Bot-O-Mat.Web.Angular\Bot-O-Mat.Web.Angular.csproj", "{97F754D4-C616-4659-BE4D-32B50C4C4412}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bot-O-Mat.Web.Angular", "Bot-O-Mat.Web.Angular\Bot-O-Mat.Web.Angular.csproj", "{97F754D4-C616-4659-BE4D-32B50C4C4412}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "postman_collection", "postman_collection", "{B0E370A8-4A59-4658-A748-7323893D7849}"
+	ProjectSection(SolutionItems) = preProject
+		Bot-O-Mat.postman_collection.json = Bot-O-Mat.postman_collection.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
