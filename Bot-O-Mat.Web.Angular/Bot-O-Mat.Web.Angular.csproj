@@ -34,6 +34,9 @@
     <None Remove="ClientApp\src\app\models\errand.ts" />
     <None Remove="ClientApp\src\app\models\Gender.ts" />
     <None Remove="ClientApp\src\app\models\link.ts" />
+    <None Remove="ClientApp\src\app\models\postCyborg.ts" />
+    <None Remove="ClientApp\src\app\models\postErrand.ts" />
+    <None Remove="ClientApp\src\app\models\postRobot.ts" />
     <None Remove="ClientApp\src\app\models\robotType.ts" />
     <None Remove="ClientApp\src\app\models\selectItem.ts" />
     <None Remove="ClientApp\src\app\services\actorService.service.ts" />
@@ -57,6 +60,9 @@
     <TypeScriptCompile Include="ClientApp\src\app\models\errand.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\gender.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\link.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\postCyborg.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\postErrand.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\postRobot.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\robotType.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\actorService.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\APIService.service.ts" />

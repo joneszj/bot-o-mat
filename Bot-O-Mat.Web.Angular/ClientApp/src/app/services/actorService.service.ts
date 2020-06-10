@@ -5,6 +5,8 @@ import { ActorType } from '../models/actorType';
 import { RobotType } from '../models/robotType';
 import { Gender } from '../models/Gender';
 import { APIService } from './APIService.service';
+import { PostCyborgRequest, PostCyborgResponse } from '../models/postCyborg';
+import { PostRobotRequest, PostRobotResponse } from '../models/postRobot';
 
 @Injectable({
   providedIn: 'root'
@@ -17,4 +19,6 @@ export class ActorService extends APIService {
   GetActorTypes = (): Observable<ActorType[]> => this.http.get<ActorType[]>(`${this.fullApiPath}/actor/types`);
   GetRobotTypes = (): Observable<RobotType[]> => this.http.get<RobotType[]>(`${this.fullApiPath}/robot/types`);
   GetCyborgGenders = (): Observable<Gender[]> => this.http.get<Gender[]>(`${this.fullApiPath}/cyborg/genders`);
+  PostCyborg = (newCyborg: PostCyborgRequest): Observable<PostCyborgResponse> => this.http.post<PostCyborgResponse>(`${this.fullApiPath}/cyborg`, newCyborg);
+  PostRobot = (newRobot: PostRobotRequest): Observable<PostRobotResponse> => this.http.post<PostRobotResponse>(`${this.fullApiPath}/robot`, newRobot);
 }
