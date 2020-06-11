@@ -1,5 +1,5 @@
 <form (ngSubmit)="onSubmit()" [formGroup]="createBotFormGroup">
-  <div class="modal fade" id="createBotModal" tabindex="-1" role="dialog" aria-labelledby="createBotModalLabel" aria-hidden="true">
+  <div class="modal" id="createBotModal" tabindex="-1" role="dialog" aria-labelledby="createBotModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
@@ -86,17 +86,19 @@
             <div class="animate-switch" *ngSwitchDefault></div>
           </div>
           <!-- / ngSwitch -->
-          <app-errand-checklist
-              [botTypeSelected]="botTypeSelected"
-              [botName]="createBotFormGroup.get('botNameInput').value"
-              [formGroup]="createBotFormGroup"></app-errand-checklist>
+          <app-errand-checklist [botTypeSelected]="botTypeSelected"
+                                [botName]="createBotFormGroup.get('botNameInput').value"
+                                [formGroup]="createBotFormGroup"></app-errand-checklist>
         </div>
         <!-- form controls -->
         <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+          <button id="closeModal" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
           <button type="submit" class="btn btn-primary"
                   [disabled]="createBotFormGroup.invalid"
                   *ngIf="!createBotFormGroup.invalid">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+                  *ngIf="isWorking"
+                  ></span>
             Create
           </button>
         </div>

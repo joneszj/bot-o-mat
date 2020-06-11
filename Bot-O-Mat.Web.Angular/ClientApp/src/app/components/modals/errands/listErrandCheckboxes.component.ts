@@ -27,7 +27,7 @@ export class ErrandListCheckboxesComponent {
 
   selectedErrands() {
     return this.formGroup.value.errandTasks
-      .map((v, i) => (v ? this.errands[i] : null))
+      .map((v, i) => (v ? this.errands[i].value : null))
       .filter(v => v !== null);
   }
 }

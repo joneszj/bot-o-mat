@@ -6,12 +6,13 @@ import { RobotType } from '../../../models/robotType';
 import { FormGroup, FormControl, Validators, FormArray } from '@angular/forms';
 import { robotOrCyborgValidator } from '../../../validators/robotOrCyborgValidator.validator';
 import { minSelectedCheckboxes } from '../../../validators/minSelectedCheckboxes.validaotor';
-import { PostCyborgRequest } from '../../../models/postCyborg';
+import { PostCyborgRequest, PostCyborgResponse } from '../../../models/postCyborg';
 import { BotTypeEnum } from '../../../enums/botTypes.enum';
-import { PostRobotRequest } from '../../../models/postRobot';
+import { PostRobotRequest, PostRobotResponse } from '../../../models/postRobot';
 import { ErrandService } from '../../../services/errandService.service';
 import { ErrandListCheckboxesComponent } from '../errands/listErrandCheckboxes.component';
 import { PostErrandRequest } from '../../../models/postErrand';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-create-bot',
@@ -29,16 +30,16 @@ export class CreateBotComponent {
   robotTypes: RobotType[];
   botTypeSelected: false;
   createBotFormGroup: FormGroup;
-
+  isWorking = true;
   constructor(
-    private actorService: ActorService,
-    private errandService: ErrandService
+    private _actorService: ActorService,
+    private _router: Router
   ) { }
 
   ngOnInit() {
-    this.actorService.GetActorTypes().subscribe(actorTypes => this.actorTypes = actorTypes);
-    this.actorService.GetRobotTypes().subscribe(robotTypes => this.robotTypes = robotTypes);
-    this.actorService.GetCyborgGenders().subscribe(genders => this.cyborGenders = genders);
+    this._actorService.GetActorTypes().subscribe(actorTypes => this.actorTypes = actorTypes);
+    this._actorService.GetRobotTypes().subscribe(robotTypes => this.robotTypes = robotTypes);
+    this._actorService.GetCyborgGenders().subscribe(genders => this.cyborGenders = genders);
 
     // note: https://stackoverflow.com/a/51343849
     // formGroups are not designed to be bound to component models
@@ -52,27 +53,25 @@ export class CreateBotComponent {
       // https://coryrylan.com/blog/creating-a-dynamic-checkbox-list-in-angular
       errandTasks: new FormArray([], minSelectedCheckboxes())
     }, { validators: robotOrCyborgValidator });
+
+    this.isWorking = false;
   }
 
   async onSubmit() {
-    if (Number(this.createBotFormGroup.get('botTypeSelect').value) === this.botTypeEnum.Robot) {
-      const body = new PostRobotRequest(this.createBotFormGroup.get('botNameInput').value, this.createBotFormGroup.get("robotTypeSelect").value)
-      this.actorService.PostRobot(body).subscribe(async newRobot => {
-        await this.executeErrands(newRobot.id, this.errandList.selectedErrands());
-      });
+    if (this.isRobot()) {
+      this.isWorking = true;
+      const newRobot = await this.buildRobot(this.createBotFormGroup.get('botNameInput').value, this.createBotFormGroup.get("robotTypeSelect").value);
+      document.getElementById('closeModal').click();
+      await this._router.navigate(['bot', newRobot.id], { queryParams: { errands: this.errandList.selectedErrands() } });
     } else {
-      const body = new PostCyborgRequest(this.createBotFormGroup.get('botNameInput').value, this.createBotFormGroup.get("cyborgGenderSelect").value)
-      this.actorService.PostCyborg(body).subscribe(async newCyborg => {
-        await this.executeErrands(newCyborg.id, this.errandList.selectedErrands());
-      });
+      this.isWorking = true;
+      const newCyborg = await this.buildCyborg(this.createBotFormGroup.get('botNameInput').value, this.createBotFormGroup.get("cyborgGenderSelect").value);
+      document.getElementById('closeModal').click();
+      await this._router.navigate(['bot', newCyborg.id], { queryParams: { errands: this.errandList.selectedErrands() } });
     }
   }
 
-  private executeErrands = async (botId, errands) => {
-    return new Promise((res, rej) => {
-      this.errandService.PostErrands(errands.map(e => new PostErrandRequest(botId, e.value))).subscribe(errandStatus => {
-        res(console.log(errandStatus));
-      });
-    })
-  };
+  private isRobot = () => Number(this.createBotFormGroup.get('botTypeSelect').value) === this.botTypeEnum.Robot;
+  private buildRobot = (name: string, type: RobotType): Promise<PostRobotResponse> => new Promise((res, rej) => this._actorService.PostRobot(new PostRobotRequest(name, type)).subscribe(newRobot => res(newRobot)))
+  private buildCyborg = (name: string, gender: Gender): Promise<PostCyborgResponse> => new Promise((res, rej) => this._actorService.PostCyborg(new PostCyborgRequest(name, gender)).subscribe(newCyborg => res(newCyborg)))
 }
