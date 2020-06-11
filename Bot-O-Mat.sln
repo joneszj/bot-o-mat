@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.28714.193
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedVentures.Bot-O-Mat.API", "RedVentures.Bot-O-Mat.API\RedVentures.Bot-O-Mat.API.csproj", "{F4785A44-F4F4-40B8-931B-883F7169441F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bot-O-Mat.API", "RedVentures.Bot-O-Mat.API\Bot-O-Mat.API.csproj", "{F4785A44-F4F4-40B8-931B-883F7169441F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_documentation", "_documentation", "{114AB981-C5C8-4A01-A3B5-08F18D2E8B77}"
 	ProjectSection(SolutionItems) = preProject
@@ -14,9 +14,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_documentation", "_document
 		web.changelog.txt = web.changelog.txt
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedVentures.Bot-O-Mat.Web", "RedVentures.Bot-O-Mat.Web\RedVentures.Bot-O-Mat.Web.csproj", "{402FA9E4-E89B-491F-B561-4FD0BBCC696C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bot-O-Mat.Web", "RedVentures.Bot-O-Mat.Web\Bot-O-Mat.Web.csproj", "{402FA9E4-E89B-491F-B561-4FD0BBCC696C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RedVentures.Bot-O-Mat.BotGenerator", "RedVentures.Bot-O-Mat.BotGenerator\RedVentures.Bot-O-Mat.BotGenerator.csproj", "{638AAE03-96FE-4A4C-AECD-5A97BF9898CF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bot-O-Mat.BotGenerator", "RedVentures.Bot-O-Mat.BotGenerator\Bot-O-Mat.BotGenerator.csproj", "{638AAE03-96FE-4A4C-AECD-5A97BF9898CF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bot-O-Mat.Web.Angular", "Bot-O-Mat.Web.Angular\Bot-O-Mat.Web.Angular.csproj", "{97F754D4-C616-4659-BE4D-32B50C4C4412}"
 EndProject

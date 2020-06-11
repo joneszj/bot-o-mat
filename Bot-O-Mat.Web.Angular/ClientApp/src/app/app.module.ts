@@ -20,6 +20,7 @@ import { AboutComponent } from './components/home/about.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { CreateBotComponent } from './components/modals/createBot/createBot.component';
 import { ErrandListCheckboxesComponent } from './components/modals/errands/listErrandCheckboxes.component';
+import { BotComponent } from './components/bot/bot.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { ErrandListCheckboxesComponent } from './components/modals/errands/listE
     AboutComponent,
     FooterComponent,
     CreateBotComponent,
-    ErrandListCheckboxesComponent
+    ErrandListCheckboxesComponent,
+    BotComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -38,7 +40,8 @@ import { ErrandListCheckboxesComponent } from './components/modals/errands/listE
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' }
+      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'bot/:id', component: BotComponent, pathMatch: 'full' }
     ])
   ],
   providers: [ToolsService, APIService, NavBarService, ActorService, ErrandService],

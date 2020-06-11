@@ -12,7 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\RedVentures.Bot-O-Mat.API\RedVentures.Bot-O-Mat.API.csproj" />
+    <ProjectReference Include="..\RedVentures.Bot-O-Mat.API\Bot-O-Mat.API.csproj" />
   </ItemGroup>
 
 </Project>
