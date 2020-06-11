@@ -50,7 +50,7 @@ import { SignalRNotificationComponent } from './components/signalR/signalR.compo
       { path: 'killcount', component: ConstructionComponent, pathMatch: 'full' },
       { path: 'graveyard', component: ConstructionComponent, pathMatch: 'full' },
       { path: 'factory', component: ConstructionComponent, pathMatch: 'full' },
-      { path: 'bot/:id', component: BotComponent, pathMatch: 'full' }
+      { path: 'bot/:id', component: BotComponent, pathMatch: 'full' } 
     ])
   ],
   providers: [
