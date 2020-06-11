@@ -88,6 +88,68 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Post Cybort",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Name\": \"Test\",\r\n    \"Gender\": 0\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44308/api/cyborg/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44308",
+					"path": [
+						"api",
+						"cyborg",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Actor",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44308/api/actor/1118",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44308",
+					"path": [
+						"api",
+						"actor",
+						"1118"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Post Errand",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
 		}
 	],
 	"protocolProfileBehavior": {}

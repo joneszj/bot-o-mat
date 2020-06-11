@@ -1,6 +1,6 @@
 # Bot-O-Mat!
 
-A simple application to create bots and assign them tasks, with a twist!
+A simple application to create bots and assign them tasks, with a twist (if a bot fails a task, it has a chance to destroy another bot!
 
 ## Requirements
  - C# 7.1+
@@ -15,7 +15,7 @@ A simple application to create bots and assign them tasks, with a twist!
 	 *	l-click Restore Nuget Packages
  2. Restore Client-Side Libraries in Bot-O-Mat.Web
 	 * (open) Bot-O-Mat.Web > libman.json 
-	 * Save (ctrl + s) 
+	 * Save (ctrl + s) (ignore typescript update install notificaiton if prompted)
  3. Perform Database Migrations
 	 * Set Bot-O-Mat.API as Startup Project
 		 * r-click Bot-O-Mat.API
@@ -23,7 +23,7 @@ A simple application to create bots and assign them tasks, with a twist!
 	 * Open Package Manager
 		 * View > Other Windows > Package Manager Console (or alt + t + n + o)
 		 * run "update-database -c botomatcontext -p bot-o-mat.api"
-			 * This takes about a minute
+			 * This takes a few minutes to complete db seed
  4. Set Startup Projects
 	 * r-click Solution
 	 * l-click Set Startup Projects
