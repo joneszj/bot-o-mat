@@ -21,6 +21,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { CreateBotComponent } from './components/modals/createBot/createBot.component';
 import { ErrandListCheckboxesComponent } from './components/modals/errands/listErrandCheckboxes.component';
 import { BotComponent } from './components/bot/bot.component';
+import { ConstructionComponent } from './components/other/underConstruction.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { BotComponent } from './components/bot/bot.component';
     FooterComponent,
     CreateBotComponent,
     ErrandListCheckboxesComponent,
-    BotComponent
+    BotComponent,
+    ConstructionComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -41,6 +43,10 @@ import { BotComponent } from './components/bot/bot.component';
     ReactiveFormsModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: 'leaderboard', component: ConstructionComponent, pathMatch: 'full' },
+      { path: 'killcount', component: ConstructionComponent, pathMatch: 'full' },
+      { path: 'graveyard', component: ConstructionComponent, pathMatch: 'full' },
+      { path: 'factory', component: ConstructionComponent, pathMatch: 'full' },
       { path: 'bot/:id', component: BotComponent, pathMatch: 'full' }
     ])
   ],

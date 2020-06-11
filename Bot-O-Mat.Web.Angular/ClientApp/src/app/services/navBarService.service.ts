@@ -6,7 +6,7 @@ import { Link } from '../models/link';
 })
 export class NavBarService {
   readonly ErrandLeaderboardLink: Link = {
-    URL: "/errand-leaderboard",
+    URL: "/leaderboard",
     Label: "Errand Leaderboard",
     Order: 0
   }
