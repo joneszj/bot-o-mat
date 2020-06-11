@@ -1,6 +1,7 @@
 ﻿using RedVentures.Bot_O_Mat.API.Data.DbSets;
 using RedVentures.Bot_O_Mat.API.Data.Enums;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace RedVentures.Bot_O_Mat.API.Models
@@ -22,6 +23,11 @@ namespace RedVentures.Bot_O_Mat.API.Models
             Type = Enum.GetName(typeof(ActorType), errandActor.ActorType);
         }
 
+        public ActorDetailsViewModel(ErrandActor errandActor, ErrandActor[] killedActorsByActor) : this(errandActor)
+        {
+            KilledActorsByActor = killedActorsByActor;
+        }
+
         public int Id { get; }
         public string Image { get; }
         public string Name { get; }
@@ -32,5 +38,6 @@ namespace RedVentures.Bot_O_Mat.API.Models
         public ErrandViewModel[] CompletedErrands { get; }
         public ErrandViewModel[] FailedErrands { get; }
         public string Type { get; }
+        public ErrandActor[] KilledActorsByActor;
     }
 }

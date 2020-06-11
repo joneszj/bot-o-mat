@@ -9,7 +9,7 @@ export class PostRobotRequest {
   nype: RobotType;
 }
 
-export class PostRobotResponse {
+export interface PostRobotResponse {
   id: number;
   name: string;
   actorType: string;

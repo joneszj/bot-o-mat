@@ -9,9 +9,7 @@ import { minSelectedCheckboxes } from '../../../validators/minSelectedCheckboxes
 import { PostCyborgRequest, PostCyborgResponse } from '../../../models/postCyborg';
 import { BotTypeEnum } from '../../../enums/botTypes.enum';
 import { PostRobotRequest, PostRobotResponse } from '../../../models/postRobot';
-import { ErrandService } from '../../../services/errandService.service';
 import { ErrandListCheckboxesComponent } from '../errands/listErrandCheckboxes.component';
-import { PostErrandRequest } from '../../../models/postErrand';
 import { Router } from '@angular/router';
 
 @Component({

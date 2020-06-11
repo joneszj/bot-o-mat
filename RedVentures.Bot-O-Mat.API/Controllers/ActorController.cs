@@ -34,7 +34,10 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
             if (!ModelState.IsValid) return BadRequest(ModelState);
             var actor = await _botOMatContext.ErrandActors.Include(e=>e.Errands).FirstOrDefaultAsync(e=>e.Id == id);
             if (actor == null) return NotFound();
-            else return Ok(new ActorDetailsViewModel(actor));
+            else { 
+                var killedActorsByActor = await _botOMatContext.ErrandActors.Where(e => e.KilledById == actor.Id).ToArrayAsync();
+                return Ok(new ActorDetailsViewModel(actor, killedActorsByActor));
+            }
         }
     }
 }

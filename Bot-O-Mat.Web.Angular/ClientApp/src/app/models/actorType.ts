@@ -1,4 +1,4 @@
-export class ActorType {
+export interface ActorType {
   type: string;
   id: number;
 }

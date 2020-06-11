@@ -31,7 +31,7 @@ namespace RedVentures.Bot_O_Mat.API.Services
             return robot;
         }
 
-        public async Task<Robot> GetRobot(int Id) => await _botOMatContext.Robots.FindAsync(Id);
+        public async Task<Robot> GetRobot(int Id) => await _botOMatContext.Robots.FirstOrDefaultAsync(e=>e.Id == Id);
 
         public async Task<IEnumerable<Robot>> GetRobotsBy(string Name, RobotType? Type, int Skip = 0)
         {

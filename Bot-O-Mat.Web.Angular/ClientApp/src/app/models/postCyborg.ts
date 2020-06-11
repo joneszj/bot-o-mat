@@ -9,7 +9,7 @@ export class PostCyborgRequest {
   gender: Gender;
 }
 
-export class PostCyborgResponse {
+export interface PostCyborgResponse {
   id: number;
   name: string;
   actorType: string;

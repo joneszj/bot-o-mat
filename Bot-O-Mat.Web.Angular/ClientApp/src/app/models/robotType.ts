@@ -1,4 +1,4 @@
-export class RobotType {
+export interface RobotType {
   name: string;
   id: number;
 }

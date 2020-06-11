@@ -14,7 +14,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_documentation", "_document
 		web.changelog.txt = web.changelog.txt
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bot-O-Mat.Web", "RedVentures.Bot-O-Mat.Web\Bot-O-Mat.Web.csproj", "{402FA9E4-E89B-491F-B561-4FD0BBCC696C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bot-O-Mat.Web.Razor", "RedVentures.Bot-O-Mat.Web\Bot-O-Mat.Web.Razor.csproj", "{402FA9E4-E89B-491F-B561-4FD0BBCC696C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bot-O-Mat.BotGenerator", "RedVentures.Bot-O-Mat.BotGenerator\Bot-O-Mat.BotGenerator.csproj", "{638AAE03-96FE-4A4C-AECD-5A97BF9898CF}"
 EndProject

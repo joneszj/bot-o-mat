@@ -33,7 +33,7 @@ namespace RedVentures.Bot_O_Mat.API.Services
             return cyborg;
         }
 
-        public async Task<Cyborg> GetCyborg(int Id) => await _botOMatContext.Cyborgs.FindAsync(Id);
+        public async Task<Cyborg> GetCyborg(int Id) => await _botOMatContext.Cyborgs.Include(e => e.Errands).FirstOrDefaultAsync(e=>e.Id == Id);
 
         public async Task<IEnumerable<Cyborg>> GetCyborgsBy(string Name, Gender? Gender, int Skip = 0)
         {
