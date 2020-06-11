@@ -30,6 +30,7 @@
     <None Remove="ClientApp\src\app\components\modals\createBot\createBot.component.ts" />
     <None Remove="ClientApp\src\app\components\modals\errands\listErrandCheckboxes.component.ts" />
     <None Remove="ClientApp\src\app\components\other\underConstruction.component.ts" />
+    <None Remove="ClientApp\src\app\components\signalR\signalR.component.ts" />
     <None Remove="ClientApp\src\app\enums\botTypes.enum.ts" />
     <None Remove="ClientApp\src\app\models\actor.ts" />
     <None Remove="ClientApp\src\app\models\actorType.ts" />
@@ -47,6 +48,7 @@
     <None Remove="ClientApp\src\app\services\errandService.service.ts" />
     <None Remove="ClientApp\src\app\services\navBarService.service.ts" />
     <None Remove="ClientApp\src\app\services\toolsService.service.ts" />
+    <None Remove="ClientApp\src\app\signalR\hub.ts" />
     <None Remove="ClientApp\src\app\validators\minSelectedCheckboxes.validaotor.ts" />
     <None Remove="ClientApp\src\app\validators\robotOrCyborgValidator.validator.ts" />
   </ItemGroup>
@@ -59,6 +61,7 @@
       <SubType>Code</SubType>
     </TypeScriptCompile>
     <TypeScriptCompile Include="ClientApp\src\app\components\other\underConstruction.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\signalR\signalR.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\enums\botTypes.enum.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\actor.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\models\actorType.ts" />
@@ -75,6 +78,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\services\errandService.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\navBarService.service.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\services\toolsService.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\signalR\hub.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\validators\minSelectedCheckboxes.validaotor.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\validators\robotOrCyborgValidator.validator.ts" />
   </ItemGroup>

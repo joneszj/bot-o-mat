@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  baseAPIURL: 'https://localhost:44308'
+  baseAPIURL: 'https://localhost:44308',
+  signalRHubURL: 'https://localhost:44308/notification'
 };
 
 /*

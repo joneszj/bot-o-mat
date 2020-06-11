@@ -1,6 +1,6 @@
 # Bot-O-Mat!
 
-A simple application to create bots and assign them tasks, with a twist (if a bot fails a task, it has a chance to destroy another bot!
+A simple application to create bots and assign them tasks, with a twist (if a bot fails a task, it has a chance to destroy another bot!)
 
 ## Requirements
  - C# 7.1+
@@ -29,6 +29,7 @@ A simple application to create bots and assign them tasks, with a twist (if a bo
 	 * l-click Set Startup Projects
 	 * l-click Multiple Startup Projects
 	 * Set "Start" for projects: (Bot-O-Mat.API, Bot-O-Mat.Web.Angular)
+	 * Include Bot-O-Mat.Generator to simulate real-time traffic & communications via SignalR
  5. Rebuild Projects
 	 * ctrl + shift + b
 
@@ -58,5 +59,4 @@ A simple application to create bots and assign them tasks, with a twist (if a bo
 - UI can use a CSS touchup 
 - Take advantage of the ErrandActor base class to remove some of the duplication code of its derived classes
 - Angular:
-- Setup SignalR integration with Angular project
 - Add more views (matching .Razor proj)

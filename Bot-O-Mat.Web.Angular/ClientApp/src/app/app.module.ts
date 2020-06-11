@@ -22,6 +22,8 @@ import { CreateBotComponent } from './components/modals/createBot/createBot.comp
 import { ErrandListCheckboxesComponent } from './components/modals/errands/listErrandCheckboxes.component';
 import { BotComponent } from './components/bot/bot.component';
 import { ConstructionComponent } from './components/other/underConstruction.component';
+import { SignalRNotificationService } from './signalR/hub';
+import { SignalRNotificationComponent } from './components/signalR/signalR.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { ConstructionComponent } from './components/other/underConstruction.comp
     CreateBotComponent,
     ErrandListCheckboxesComponent,
     BotComponent,
-    ConstructionComponent
+    ConstructionComponent,
+    SignalRNotificationComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -50,7 +53,14 @@ import { ConstructionComponent } from './components/other/underConstruction.comp
       { path: 'bot/:id', component: BotComponent, pathMatch: 'full' }
     ])
   ],
-  providers: [ToolsService, APIService, NavBarService, ActorService, ErrandService],
+  providers: [
+    ToolsService,
+    APIService,
+    NavBarService,
+    ActorService,
+    ErrandService,
+    SignalRNotificationService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
