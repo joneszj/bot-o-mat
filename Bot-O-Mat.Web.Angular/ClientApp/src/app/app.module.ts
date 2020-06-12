@@ -47,10 +47,10 @@ import { StatisticsComponent } from './components/statistics/statistics.componen
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' }, 
+      { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'statistics', component: StatisticsComponent, pathMatch: 'full' },
       { path: 'factory', component: ConstructionComponent, pathMatch: 'full' },
-      { path: 'bot/:id', component: BotComponent, pathMatch: 'full' } 
+      { path: 'bot/:id', component: BotComponent, pathMatch: 'full' }
     ])
   ],
   providers: [

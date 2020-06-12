@@ -6,6 +6,7 @@ import { forkJoin } from "rxjs";
 import { GraveyardRecord } from "../../models/graveyard";
 
 // TODO: make count and color pallettes dynamic
+// TODO: make counts dynamic
 const count = 5;
 const colors = ['#2287e6', '#6022e6', '#e622d2', '#e62222', '#f2c46d'];
 const colors2 = ['#e62222', '#e67a22', '#dfe622', '#36e622', '#22e6df'];
@@ -36,7 +37,6 @@ export class StatisticsComponent {
     if (obj.leaderBoardRecord && obj.leaderBoardRecord.length > count) obj.leaderBoardRecord = obj.leaderBoardRecord.slice(0, count);
     if (this.currentLeaderboard !== JSON.stringify(obj.leaderBoardRecord)) {
       this.currentLeaderboard = JSON.stringify(obj.leaderBoardRecord);
-      // donut 1
       new Chart(document.getElementById("chDonut1"), {
         type: 'doughnut',
         data: {

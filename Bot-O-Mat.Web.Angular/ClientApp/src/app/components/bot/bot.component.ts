@@ -11,8 +11,6 @@ import { ActorViewModel, CompletedErrand, FailedErrand } from '../../models/acto
   selector: 'app-bot',
   templateUrl: './bot.component.html',
 })
-
-// TODO: signalR integration
 export class BotComponent {
   errandTypes: Errand[];
   bot: ActorViewModel;

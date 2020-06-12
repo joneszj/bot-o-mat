@@ -1,6 +1,5 @@
-<div class="container"
-     *ngIf="bot.completedErrands.length">
-  <div *ngIf="!bot.completedErrands.length">
+<div class="container">
+  <div *ngIf="!bot">
     <div class="spinner-grow text-primary" role="status">
       <span class="sr-only">Loading...</span>
     </div>
@@ -8,67 +7,81 @@
       Retrieving Data...
     </p>
   </div>
+  <div *ngIf="bot">
+    <!-- Completed -->
+    <h2>Completed Errands ({{bot.completedErrands.length || 0}})</h2>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th>Errand</th>
+          <th>Time To Complete</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let botErrand of bot.completedErrands">
+          <td>{{botErrand.errandTypeName}}</td>
+          <td>{{botErrand.timeToComplete}}</td>
+          <td>Success</td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- Failed -->
+    <h2>Failed Errands ({{bot.failedErrands.length || 0}})</h2>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th>Errand</th>
+          <th>Time To Complete</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let botErrand of bot.failedErrands">
+          <td>{{botErrand.errandTypeName}}</td>
+          <td>{{botErrand.timeToComplete}}</td>
+          <td>Failed</td>
+        </tr>
+      </tbody>
+    </table>
+    <span *ngIf="bot.self.isActive">
+      <!-- Queued -->
+      <button type="button" class="btn btn-primary m-3 p-3" data-toggle="modal" data-target="#createBotModal"
+              *ngIf="queuedErrands.length === 0">
+        Assign More Errands!
+      </button>
+      <div
+           *ngIf="queuedErrands.length">
+        <h2>Queued Errands ({{queuedErrands.length || 0}})</h2>
+        <table class="table"
+               *ngIf="queuedErrands.length">
+          <thead class="thead-light">
+            <tr>
+              <th>Errand</th>
+              <th>Estimated Time of Completion</th>
+              <th>In Progress/Queue Position</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of queuedErrands; index as i;">
+              <td>{{item.errand}}</td>
+              <td>{{item.value}}</td>
+              <td>
+                <div *ngIf="i === 0" class="spinner-border text-info" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+                <div *ngIf="i > 0" class="text-info" role="status">
+                  <span>Queue Position: {{i+1}}</span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </span>
+    <span *ngIf="!bot.self.isActive">
+      Bot has been destroyed by another bot!
+    </span>
+  </div>
 </div>
-<div class="container">
-  <!-- Completed -->
-  <h2>Completed Errands</h2>
-  <table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th>Errand</th>
-        <th>Time To Complete</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let botErrand of bot.completedErrands">
-        <td>{{botErrand.errandTypeName}}</td>
-        <td>{{botErrand.timeToComplete}}</td>
-        <td>Success</td>
-      </tr>
-    </tbody>
-  </table>
-  <!-- Failed -->
-  <h2>Failed Errands</h2>
-  <table class="table">
-    <thead class="thead-dark">
-      <tr>
-        <th>Errand</th>
-        <th>Time To Complete</th>
-        <th>Status</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let botErrand of bot.failedErrands">
-        <td>{{botErrand.errandTypeName}}</td>
-        <td>{{botErrand.timeToComplete}}</td>
-        <td>Failed</td>
-      </tr>
-    </tbody>
-  </table>
-  <!-- Queued -->
-  <h2>Queued Errands</h2>
-  <table class="table">
-    <thead class="thead-light">
-      <tr>
-        <th>Errand</th>
-        <th>Estimated Time of Completion</th>
-        <th>In Progress/Queue Position</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let item of queuedErrands; index as i;">
-        <td>{{item.errand}}</td>
-        <td>{{item.value}}</td>
-        <td>
-          <div *ngIf="i === 0" class="spinner-border text-info" role="status">
-            <span class="sr-only">Loading...</span>
-          </div>
-          <div *ngIf="i > 0" class="text-info" role="status">
-            <span>Queue Position: {{i+1}}</span>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<app-create-bot></app-create-bot>
