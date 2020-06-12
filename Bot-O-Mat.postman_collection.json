@@ -125,7 +125,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "https://localhost:44308/api/actor/1118",
+					"raw": "https://localhost:44308/api/actor/1120",
 					"protocol": "https",
 					"host": [
 						"localhost"
@@ -134,7 +134,7 @@
 					"path": [
 						"api",
 						"actor",
-						"1118"
+						"1120"
 					]
 				}
 			},
@@ -143,10 +143,92 @@
 		{
 			"name": "Post Errand",
 			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"ActorId\":1138,\r\n    \"ErrandType\": 1000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://localhost:44308/api/errand/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44308",
+					"path": [
+						"api",
+						"errand",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Leaderboard Statistic",
+			"request": {
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": ""
+					"raw": "https://localhost:44308/api/statistics/leaderboard",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44308",
+					"path": [
+						"api",
+						"statistics",
+						"leaderboard"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Killcounts Statistic",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44308/api/statistics/killboard",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44308",
+					"path": [
+						"api",
+						"statistics",
+						"killboard"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Graveyard Statistics",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://localhost:44308/api/statistics/graveyard",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "44308",
+					"path": [
+						"api",
+						"statistics",
+						"graveyard"
+					]
 				}
 			},
 			"response": []

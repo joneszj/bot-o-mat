@@ -22,4 +22,24 @@
       </div>
     </div>
   </div>
+  <div class="row py-2">
+    <!-- Failed -->
+    <h2>Recently destroyed Bots ;(</h2>
+    <table class="table">
+      <thead class="thead-dark">
+        <tr>
+          <th>Bot Name</th>
+          <th>Destroyed By</th>
+          <th>Death Date</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let deadBot of graveyardTable">
+          <td><a class="nav-link" [routerLink]="['/bot', deadBot.botId]" routerLinkActive="active">{{deadBot.botName}}</a></td>
+          <td><a class="nav-link" [routerLink]="['/bot', deadBot.destroyedById]" routerLinkActive="active">{{deadBot.destroyedBy}}</a></td>
+          <td>{{deadBot.destroyedDate}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>

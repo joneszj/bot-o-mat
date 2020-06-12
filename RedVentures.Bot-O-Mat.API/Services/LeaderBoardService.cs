@@ -33,7 +33,7 @@ namespace RedVentures.Bot_O_Mat.API.Services
             {
                 LeaderBoardRecord = cachedRobots.Select(e => new LeaderBoardRecord(e) )
                     .Union(cachedCyborgs.Select(e => new LeaderBoardRecord(e)))
-                    .OrderByDescending(e => e.CompletedErrandCount)
+                    .OrderByDescending(e => e.CompletedErrandCount).Take(100)
             };
         }
 

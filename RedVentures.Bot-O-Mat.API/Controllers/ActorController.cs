@@ -32,7 +32,7 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
         public async Task<ActionResult<ActorDetailsViewModel>> Get(int id)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            var actor = await _botOMatContext.ErrandActors.Include(e=>e.Errands).FirstOrDefaultAsync(e=>e.Id == id);
+            var actor = await _botOMatContext.ErrandActors.IgnoreQueryFilters().Include(e=>e.Errands).FirstOrDefaultAsync(e=>e.Id == id);
             if (actor == null) return NotFound();
             else { 
                 var killedActorsByActor = await _botOMatContext.ErrandActors.Where(e => e.KilledById == actor.Id).ToArrayAsync();
