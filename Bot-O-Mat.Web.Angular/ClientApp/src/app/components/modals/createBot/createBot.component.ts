@@ -74,7 +74,7 @@ export class CreateBotComponent {
     this.createBotFormGroup = new FormGroup({
       // TODO: optional property ?. breaks compilation
       botTypeSelect: new FormControl({
-        value: actor === null ? null : actor.self.actorType,
+        value: actor === null ? -1 : actor.self.actorType,
         disabled: actor !== null
       }, Validators.required),
       botNameInput: new FormControl({
@@ -82,11 +82,11 @@ export class CreateBotComponent {
         disabled: actor !== null
       }, [Validators.required, Validators.maxLength(20)]),
       robotTypeSelect: new FormControl({
-        value: actor === null ? null : actor.self.actorType === BotTypeEnum.Robot ? actor.self.type : actor.self.type,
+        value: actor === null ? -1 : actor.self.actorType === BotTypeEnum.Robot ? actor.self.type : actor.self.type,
         disabled: actor !== null
       }),
       cyborgGenderSelect: new FormControl({
-        value: actor === null ? null : actor.self.actorType === BotTypeEnum.Cyborg ? actor.self.gender : actor.self.gender,
+        value: actor === null ? -1 : actor.self.actorType === BotTypeEnum.Cyborg ? actor.self.gender : actor.self.gender,
         disabled: actor !== null
       }),
       // https://coryrylan.com/blog/creating-a-dynamic-checkbox-list-in-angular
@@ -111,7 +111,7 @@ export class CreateBotComponent {
     } else {
       // existing actor
       this.closeModal();
-      // TODO: dirty hack
+      // TODO: dirty hack, determine better means to refresh component
       await this._router.navigateByUrl('/', { skipLocationChange: true });
       await this._router.navigate(['bot', this.actor.id], { queryParams: { errands: this._errandList.selectedErrands() } });
       this.isWorking = false;

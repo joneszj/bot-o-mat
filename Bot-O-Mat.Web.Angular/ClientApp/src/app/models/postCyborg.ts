@@ -15,5 +15,5 @@ export interface PostCyborgResponse {
   actorType: string;
   gender: Gender;
   // TODO: create type
-  errands
+  errands;
 }

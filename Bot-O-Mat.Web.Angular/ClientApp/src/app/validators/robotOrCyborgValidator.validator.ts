@@ -9,8 +9,8 @@ export const robotOrCyborgValidator: ValidatorFn = (formGroup: FormGroup): Valid
   const botType = formGroup.get('botTypeSelect');
   const robotType = formGroup.get('robotTypeSelect');
   const cyborgGender = formGroup.get('cyborgGenderSelect');
-  if (isRobot(botType) && robotType.value !== null) return null;
-  else if (isRobot(botType) && !robotType.value !== null) return { invalidRobotType: true };
-  else if (isCyborg(botType) && cyborgGender.value !== null) return null;
+  if (isRobot(botType) && robotType.value !== -1) return null;
+  else if (isRobot(botType) && Number(robotType.value) === -1) return { invalidRobotType: true };
+  else if (isCyborg(botType) && Number(cyborgGender.value) !== -1) return null;
   else return { invalidCyborgGender: true }
 };

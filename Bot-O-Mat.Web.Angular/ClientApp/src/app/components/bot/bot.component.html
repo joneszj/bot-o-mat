@@ -44,39 +44,44 @@
         </tr>
       </tbody>
     </table>
-    <div *ngIf="bot.self.isActive">
+    <span *ngIf="bot.self.isActive">
       <!-- Queued -->
-      <button type="button" class="btn btn-primary m-3 p-3" data-toggle="modal" data-target="#createBotModal">
-        Assign Tasks!
+      <button type="button" class="btn btn-primary m-3 p-3" data-toggle="modal" data-target="#createBotModal"
+              *ngIf="queuedErrands.length === 0">
+        Assign More Errands!
       </button>
-      <h2>Queued Errands ({{queuedErrands.length || 0}})</h2>
-      <table class="table">
-        <thead class="thead-light">
-          <tr>
-            <th>Errand</th>
-            <th>Estimated Time of Completion</th>
-            <th>In Progress/Queue Position</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of queuedErrands; index as i;">
-            <td>{{item.errand}}</td>
-            <td>{{item.value}}</td>
-            <td>
-              <div *ngIf="i === 0" class="spinner-border text-info" role="status">
-                <span class="sr-only">Loading...</span>
-              </div>
-              <div *ngIf="i > 0" class="text-info" role="status">
-                <span>Queue Position: {{i+1}}</span>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div *ngIf="!bot.self.isActive">
+      <div
+           *ngIf="queuedErrands.length">
+        <h2>Queued Errands ({{queuedErrands.length || 0}})</h2>
+        <table class="table"
+               *ngIf="queuedErrands.length">
+          <thead class="thead-light">
+            <tr>
+              <th>Errand</th>
+              <th>Estimated Time of Completion</th>
+              <th>In Progress/Queue Position</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of queuedErrands; index as i;">
+              <td>{{item.errand}}</td>
+              <td>{{item.value}}</td>
+              <td>
+                <div *ngIf="i === 0" class="spinner-border text-info" role="status">
+                  <span class="sr-only">Loading...</span>
+                </div>
+                <div *ngIf="i > 0" class="text-info" role="status">
+                  <span>Queue Position: {{i+1}}</span>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </span>
+    <span *ngIf="!bot.self.isActive">
       Bot has been destroyed by another bot!
-    </div>
+    </span>
   </div>
 </div>
 <app-create-bot></app-create-bot>

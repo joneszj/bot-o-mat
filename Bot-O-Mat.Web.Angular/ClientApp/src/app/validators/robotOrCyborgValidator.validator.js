@@ -8,11 +8,11 @@ exports.robotOrCyborgValidator = function (formGroup) {
     var botType = formGroup.get('botTypeSelect');
     var robotType = formGroup.get('robotTypeSelect');
     var cyborgGender = formGroup.get('cyborgGenderSelect');
-    if (isRobot(botType) && robotType.value !== null)
+    if (isRobot(botType) && robotType.value !== -1)
         return null;
-    else if (isRobot(botType) && !robotType.value !== null)
+    else if (isRobot(botType) && Number(robotType.value) === -1)
         return { invalidRobotType: true };
-    else if (isCyborg(botType) && cyborgGender.value !== null)
+    else if (isCyborg(botType) && Number(cyborgGender.value) !== -1)
         return null;
     else
         return { invalidCyborgGender: true };

@@ -24,8 +24,7 @@
                       formControlName="botTypeSelect"
                       (change)="botTypeSelected = false"
                       [ngClass]="{'is-invalid':createBotFormGroup.get('botTypeSelect').touched && createBotFormGroup.get('botTypeSelect').invalid}">
-                <!-- TODO: Why does this loose its selected status but the other selects work as expected? try ngIf -->
-                <option selected="selected" disabled="disabled">Select Bot Type</option>
+                <option selected="selected" disabled="disabled" value="-1">Select Bot Type</option>
                 <option *ngFor="let type of actorTypes"
                         value="{{type.id}}">
                   {{type.type}}
@@ -55,7 +54,7 @@
                           formControlName="robotTypeSelect"
                           (change)="botTypeSelected = true"
                           [ngClass]="{'is-invalid':createBotFormGroup.get('robotTypeSelect').touched && createBotFormGroup.errors?.invalidRobotType}">
-                    <option selected="selected" disabled="disabled">Select Robot Type</option>
+                    <option selected="selected" disabled="disabled" value="-1">Select Robot Type</option>
                     <option *ngFor="let robotType of robotTypes"
                             value="{{robotType.id}}">
                       {{robotType.name}}
@@ -74,7 +73,7 @@
                           formControlName="cyborgGenderSelect"
                           (change)="botTypeSelected = true"
                           [ngClass]="{'is-invalid':createBotFormGroup.get('cyborgGenderSelect').touched && createBotFormGroup.errors?.invalidCyborgGender}">
-                    <option selected="selected" disabled="disabled">Select Gender</option>
+                    <option selected="selected" disabled="disabled" value="-1">Select Gender</option>
                     <option *ngFor="let cyborgGender of cyborGenders"
                             value="{{cyborgGender.id}}">
                       {{cyborgGender.gender}}

@@ -20,7 +20,7 @@ export class ErrandListCheckboxesComponent {
     this.errandService.GetErrands().subscribe(errands => {
       this.errands = errands;
       // TODO: I dont like how this inputs the parent formGroup as a dependancy. it makes it too coupled
-      // TODO: perhaps set as output, and register in parent so that this coupling is loose
+      // perhaps set as output, and register in parent so that this coupling is loose
       this.errands.forEach((e, i) => (this.formGroup.controls.errandTasks as FormArray).push(new FormControl(false)));
     });
   }
