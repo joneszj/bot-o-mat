@@ -5,11 +5,11 @@ import { Link } from '../models/link';
   providedIn: 'root'
 })
 export class NavBarService {
-  //readonly ErrandLeaderboardLink: Link = {
-  //  URL: "/leaderboard",
-  //  Label: "Errand Leaderboard",
-  //  Order: 0
-  //}
+  readonly ErrandLeaderboardLink: Link = {
+    URL: "/statistics",
+    Label: "Bot Statistics",
+    Order: 0
+  }
   //readonly KillCountLeaderboardLink: Link = {
   //  URL: "/killcount",
   //  Label: "Kill Count Leaderboard",

@@ -24,6 +24,7 @@ import { BotComponent } from './components/bot/bot.component';
 import { ConstructionComponent } from './components/other/underConstruction.component';
 import { SignalRNotificationService } from './signalR/hub';
 import { SignalRNotificationComponent } from './components/signalR/signalR.component';
+import { StatisticsComponent } from './components/statistics/statistics.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { SignalRNotificationComponent } from './components/signalR/signalR.compo
     ErrandListCheckboxesComponent,
     BotComponent,
     ConstructionComponent,
-    SignalRNotificationComponent
+    SignalRNotificationComponent,
+    StatisticsComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -45,10 +47,8 @@ import { SignalRNotificationComponent } from './components/signalR/signalR.compo
     FormsModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
-      { path: 'leaderboard', component: ConstructionComponent, pathMatch: 'full' },
-      { path: 'killcount', component: ConstructionComponent, pathMatch: 'full' },
-      { path: 'graveyard', component: ConstructionComponent, pathMatch: 'full' },
+      { path: '', component: HomeComponent, pathMatch: 'full' }, 
+      { path: 'statistics', component: StatisticsComponent, pathMatch: 'full' },
       { path: 'factory', component: ConstructionComponent, pathMatch: 'full' },
       { path: 'bot/:id', component: BotComponent, pathMatch: 'full' } 
     ])
