@@ -1,0 +1,119 @@
+<div *ngIf="ngOnInitComplete">
+  <form (ngSubmit)="onSubmit()"
+        [formGroup]="createBotFormGroup">
+    <div class="modal" id="createBotModal" tabindex="-1" role="dialog" aria-labelledby="createBotModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="createBotModalLabel">Create A Robot or Cyborg</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <!-- Bot Image -->
+            <!-- TODO: base64 incoming image, stoare as string, or use pic generator if empty -->
+            <!--<div class="form-group">
+              <label for="botImageUpload">Bot Image Upload (If empty, a random image will be used)</label>
+              <input type="file" class="form-control-file" id="botImageUpload" name="botImageUpload">
+            </div>-->
+            <!-- Bot Type -->
+            <div class="form-group">
+              <label for="botTypeUpload">Bot Type:</label>
+              <select class="form-control" id="botTypeSelect"
+                      formControlName="botTypeSelect"
+                      (change)="botTypeSelected = false"
+                      [ngClass]="{'is-invalid':createBotFormGroup.get('botTypeSelect').touched && createBotFormGroup.get('botTypeSelect').invalid}">
+                <option selected="selected" disabled="disabled" value="-1">Select Bot Type</option>
+                <option *ngFor="let type of actorTypes"
+                        value="{{type.id}}">
+                  {{type.type}}
+                </option>
+              </select>
+              <div class="invalid-feedback">
+                <div>Bot Type is required</div>
+              </div>
+            </div>
+            <!-- Bot Name -->
+            <div class="form-group">
+              <label for="botNameInput">Bot Name:</label>
+              <input class="form-control" type="text" placeholder="Bot Name" id="botNameInput"
+                     formControlName="botNameInput"
+                     [ngClass]="{'is-invalid':createBotFormGroup.get('botNameInput').touched && createBotFormGroup.get('botNameInput').invalid}">
+              <div class="invalid-feedback">
+                <div>Bot Name is required and less than 20 characters</div>
+              </div>
+            </div>
+            <!-- ngSwitch -->
+            <div class="animate-switch-container" [ngSwitch]="createBotFormGroup.get('botTypeSelect').value">
+              <!-- Robot Bot Options -->
+              <div class="animate-switch" *ngSwitchCase="0">
+                <div class="form-group">
+                  <label for="robotTypeSelect">Robot Type:</label>
+                  <select class="form-control" id="robotTypeSelect"
+                          formControlName="robotTypeSelect"
+                          (change)="botTypeSelected = true"
+                          [ngClass]="{'is-invalid':createBotFormGroup.get('robotTypeSelect').touched && createBotFormGroup.errors?.invalidRobotType}">
+                    <option selected="selected" disabled="disabled" value="-1">Select Robot Type</option>
+                    <option *ngFor="let robotType of robotTypes"
+                            value="{{robotType.id}}">
+                      {{robotType.name}}
+                    </option>
+                  </select>
+                  <div class="invalid-feedback">
+                    <div>Robot Type is required</div>
+                  </div>
+                </div>
+              </div>
+              <!-- Cyborg Bot Options -->
+              <div class="animate-switch" *ngSwitchCase="1">
+                <div class="form-group">
+                  <label for="cyborgGenderSelect">Cyborg Gender:</label>
+                  <select class="form-control" id="cyborgGenderSelect"
+                          formControlName="cyborgGenderSelect"
+                          (change)="botTypeSelected = true"
+                          [ngClass]="{'is-invalid':createBotFormGroup.get('cyborgGenderSelect').touched && createBotFormGroup.errors?.invalidCyborgGender}">
+                    <option selected="selected" disabled="disabled" value="-1">Select Gender</option>
+                    <option *ngFor="let cyborgGender of cyborGenders"
+                            value="{{cyborgGender.id}}">
+                      {{cyborgGender.gender}}
+                    </option>
+                  </select>
+                  <div class="invalid-feedback">
+                    <div>Cyborg Gender is required</div>
+                  </div>
+                </div>
+              </div>
+              <!-- Default -->
+              <div class="animate-switch" *ngSwitchDefault></div>
+            </div>
+            <!-- / ngSwitch -->
+            <app-errand-checklist [botTypeSelected]="botTypeSelected"
+                                  [botName]="createBotFormGroup.get('botNameInput').value"
+                                  [formGroup]="createBotFormGroup"></app-errand-checklist>
+          </div>
+          <!-- form controls -->
+          <div class="modal-footer">
+            <button id="closeModal" type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            <div *ngIf="actor === null || (actor !== null && actor.self.isActive)">
+              <button type="submit" class="btn btn-primary"
+                      [disabled]="createBotFormGroup.invalid"
+                      *ngIf="!createBotFormGroup.invalid">
+                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"
+                      *ngIf="isWorking"
+                      ></span>
+                Create
+              </button>
+            </div>
+            <button id="closeModal" type="button" class="btn btn-secondary" data-dismiss="modal"
+                    *ngIf="actor !== null && !actor.self.isActive">
+              Dead Actor :(
+            </button>
+          </div>
+          <!-- / form controls -->
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+

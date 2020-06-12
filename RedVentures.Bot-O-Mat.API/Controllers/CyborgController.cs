@@ -33,6 +33,9 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
         #endregion
 
         #region public members
+        [HttpGet("genders")]
+        public ActionResult GetGenders() => Ok(Enum.GetValues(typeof(Gender)).Cast<Gender>().Select(e => new { gender = e.ToString(), id = (int)e }));
+
         [HttpGet("{id}")]
         public async Task<ActionResult<CyborgViewModel>> Get(int id)
         {

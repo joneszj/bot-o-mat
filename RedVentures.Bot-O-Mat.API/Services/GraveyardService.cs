@@ -26,7 +26,7 @@ namespace RedVentures.Bot_O_Mat.API.Services
             var cachedFallen = _helpersManager.Cache.TryGet<(DateTime, string), IEnumerable<GraveyardRecord>>(GetFallenKey(), out bool fallenFound);
             if (!fallenFound) cachedFallen = await RefreshFallenCache();
 
-            return new GraveyardViewModel(cachedFallen);
+            return new GraveyardViewModel(cachedFallen.OrderByDescending(e=>e.DateFallen).Take(100));
         }
 
         #region helpers

@@ -1,4 +1,5 @@
-﻿using RedVentures.Bot_O_Mat.API.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using RedVentures.Bot_O_Mat.API.Data;
 using RedVentures.Bot_O_Mat.API.Data.Enums;
 using System;
 using System.Linq;
@@ -13,12 +14,14 @@ namespace RedVentures.Bot_O_Mat.API.Services
         private readonly IRobotService _robotService;
         private readonly ICyborgService _cyborgService;
         private readonly Random _randomGenerator;
+        private readonly BotOMatContext _botOMatContext;
 
-        public BattleService(IRobotService robotService, ICyborgService cyborgService)
+        public BattleService(IRobotService robotService, ICyborgService cyborgService, BotOMatContext botOMatContext)
         {
             _robotService = robotService;
             _cyborgService = cyborgService;
             _randomGenerator = new Random();
+            _botOMatContext = botOMatContext;
         } 
         #endregion
 
@@ -43,6 +46,7 @@ namespace RedVentures.Bot_O_Mat.API.Services
             {
                 actorToDeactivate.IsActive = false;
                 actorToDeactivate.KilledById = actor.Id;
+                _botOMatContext.Entry(actorToDeactivate).State = EntityState.Modified;
                 return actorToDeactivate;
             }
             else return null;

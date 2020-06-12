@@ -1,0 +1,124 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TypeScriptCompileBlocked>true</TypeScriptCompileBlocked>
+    <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
+    <IsPackable>false</IsPackable>
+    <SpaRoot>ClientApp\</SpaRoot>
+    <DefaultItemExcludes>$(DefaultItemExcludes);$(SpaRoot)node_modules\**</DefaultItemExcludes>
+
+    <!-- Set this to true if you enable server-side prerendering -->
+    <BuildServerSideRenderer>false</BuildServerSideRenderer>
+    <RootNamespace>Bot_O_Mat.Web.Angular</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="3.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- Don't publish the SPA source files, but do show them in the project files list -->
+    <Content Remove="$(SpaRoot)**" />
+    <None Remove="$(SpaRoot)**" />
+    <None Include="$(SpaRoot)**" Exclude="$(SpaRoot)node_modules\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="ClientApp\src\app\components\home\about.component.ts" />
+    <None Remove="ClientApp\src\app\components\home\cta.component.ts" />
+    <None Remove="ClientApp\src\app\components\modals\createBot\createBot.component.ts" />
+    <None Remove="ClientApp\src\app\components\modals\errands\listErrandCheckboxes.component.ts" />
+    <None Remove="ClientApp\src\app\components\other\underConstruction.component.ts" />
+    <None Remove="ClientApp\src\app\components\signalR\signalR.component.ts" />
+    <None Remove="ClientApp\src\app\components\statistics\statistics.component.ts" />
+    <None Remove="ClientApp\src\app\enums\botTypes.enum.ts" />
+    <None Remove="ClientApp\src\app\models\actor.ts" />
+    <None Remove="ClientApp\src\app\models\actorType.ts" />
+    <None Remove="ClientApp\src\app\models\cyborg.ts" />
+    <None Remove="ClientApp\src\app\models\errand.ts" />
+    <None Remove="ClientApp\src\app\models\Gender.ts" />
+    <None Remove="ClientApp\src\app\models\graveyard.ts" />
+    <None Remove="ClientApp\src\app\models\killboard.ts" />
+    <None Remove="ClientApp\src\app\models\leaderboard.ts" />
+    <None Remove="ClientApp\src\app\models\link.ts" />
+    <None Remove="ClientApp\src\app\models\postCyborg.ts" />
+    <None Remove="ClientApp\src\app\models\postErrand.ts" />
+    <None Remove="ClientApp\src\app\models\postRobot.ts" />
+    <None Remove="ClientApp\src\app\models\robotType.ts" />
+    <None Remove="ClientApp\src\app\models\selectItem.ts" />
+    <None Remove="ClientApp\src\app\services\actorService.service.ts" />
+    <None Remove="ClientApp\src\app\services\APIService.service.ts" />
+    <None Remove="ClientApp\src\app\services\errandService.service.ts" />
+    <None Remove="ClientApp\src\app\services\navBarService.service.ts" />
+    <None Remove="ClientApp\src\app\services\statistics.service.ts" />
+    <None Remove="ClientApp\src\app\services\toolsService.service.ts" />
+    <None Remove="ClientApp\src\app\signalR\hub.ts" />
+    <None Remove="ClientApp\src\app\validators\minSelectedCheckboxes.validaotor.ts" />
+    <None Remove="ClientApp\src\app\validators\robotOrCyborgValidator.validator.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="ClientApp\src\app\components\home\about.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\home\cta.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\modals\createBot\createBot.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\modals\errands\listErrandCheckboxes.component.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="ClientApp\src\app\components\other\underConstruction.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\signalR\signalR.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\components\statistics\statistics.component.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\enums\botTypes.enum.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\actor.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\actorType.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\cyborg.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\errand.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\gender.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\graveyard.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\killboard.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\leaderboard.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\link.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\postCyborg.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\postErrand.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\postRobot.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\models\robotType.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\actorService.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\APIService.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\errandService.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\navBarService.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\statistics.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\services\toolsService.service.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\signalR\hub.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\validators\minSelectedCheckboxes.validaotor.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\validators\robotOrCyborgValidator.validator.ts" />
+  </ItemGroup>
+
+  <Target Name="DebugEnsureNodeEnv" BeforeTargets="Build" Condition=" '$(Configuration)' == 'Debug' And !Exists('$(SpaRoot)node_modules') ">
+    <!-- Ensure Node.js is installed -->
+    <Exec Command="node --version" ContinueOnError="true">
+      <Output TaskParameter="ExitCode" PropertyName="ErrorCode" />
+    </Exec>
+    <Error Condition="'$(ErrorCode)' != '0'" Text="Node.js is required to build and run this project. To continue, please install Node.js from https://nodejs.org/, and then restart your command prompt or IDE." />
+    <Message Importance="high" Text="Restoring dependencies using 'npm'. This may take several minutes..." />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+  </Target>
+
+  <Target Name="PublishRunWebpack" AfterTargets="ComputeFilesToPublish">
+    <!-- As part of publishing, ensure the JS resources are freshly built in production mode -->
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm install" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build -- --prod" />
+    <Exec WorkingDirectory="$(SpaRoot)" Command="npm run build:ssr -- --prod" Condition=" '$(BuildServerSideRenderer)' == 'true' " />
+
+    <!-- Include the newly-built files in the publish output -->
+    <ItemGroup>
+      <DistFiles Include="$(SpaRoot)dist\**; $(SpaRoot)dist-server\**" />
+      <DistFiles Include="$(SpaRoot)node_modules\**" Condition="'$(BuildServerSideRenderer)' == 'true'" />
+      <ResolvedFileToPublish Include="@(DistFiles->'%(FullPath)')" Exclude="@(ResolvedFileToPublish)">
+        <RelativePath>%(DistFiles.Identity)</RelativePath>
+        <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+        <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
+      </ResolvedFileToPublish>
+    </ItemGroup>
+  </Target>
+
+</Project>

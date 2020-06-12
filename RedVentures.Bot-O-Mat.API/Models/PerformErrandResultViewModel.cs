@@ -1,5 +1,6 @@
 ﻿using RedVentures.Bot_O_Mat.API.Data.Enums;
 using System;
+using System.Globalization;
 
 namespace RedVentures.Bot_O_Mat.API.Models
 {
@@ -8,7 +9,7 @@ namespace RedVentures.Bot_O_Mat.API.Models
         public PerformErrandResultViewModel(PerformErrandResult errandResult)
         {
             PerformingActorId = errandResult.PerformedErrand.ActorId;
-            Errand = Enum.GetName(typeof(ErrandType), errandResult.PerformedErrand.Type).Replace('_', ' ');
+            Errand = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(Enum.GetName(typeof(ErrandType), errandResult.PerformedErrand.Type).Replace('_', ' '));
             TerminatedActorId = errandResult.TerminatedActor?.Id;
             TerminatedActorName = errandResult.TerminatedActor?.Name;
             CompletedSuccessfully = errandResult.PerformedErrand.Status == ErrandStatus.Completed;

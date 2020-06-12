@@ -11,6 +11,6 @@
         rake_the_leaves = 18000,
         give_the_dog_a_bath = 14500,
         bake_some_cookies = 8000,
-        wash_the_car = 20000
+        wash_the_car = 25000
     }
 }

@@ -19,7 +19,6 @@ added robotcontroller functionality to get, getmany, and delete
 added errand entity
 made fk on errand icanperformerrand to allow us to use non-robot types (perhaps cyborgs and what not)
 added errand staty and type enums for value conversion and east of select generation
-added a seed method but it kept failing. TODO: understand seed method failure, else cleanup and abandon
 added robot and errand view models
 modified irobotservice
 added robotservice
@@ -39,7 +38,6 @@ issues with sqllite migrations (SQLite does not support this migration operation
 	I think id prefer a tpt schema but its not natively supported, so went with tph, ref: https://www.learnentityframeworkcore.com/inheritance/table-per-hierarchy
 abandoned .web (razor component) project
 created .spa (mvc + angular) to replace the .web project
-TODO: considering how alike the robot and cybor services are, consiger a generic abstraction
 added cyborg infrstructure
 added leaderboard controller and infrastructure
 added cors for ui requests
@@ -55,7 +53,7 @@ Add-Migration killedbySeed -Context botomatcontext
 had to drop db again (DropForeignKeyOperation not supported by sqllite)
 Add-Migration InitWithSeed -Context botomatcontext
 Add-Migration NewSeed -Context botomatcontext
-added errandactor to db context to enable typeless querying TODO: this allows us to refactor and make more flexible the services layer
+added errandactor to db context to enable typeless querying
 api.modles sc correction models
 added graveyard service
 simplified keys for caching

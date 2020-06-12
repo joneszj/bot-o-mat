@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using CommonPatterns.Filters;
 using Microsoft.AspNetCore.Mvc;
@@ -9,6 +10,7 @@ using RedVentures.Bot_O_Mat.API.Data.Enums;
 using RedVentures.Bot_O_Mat.API.Hubs;
 using RedVentures.Bot_O_Mat.API.Models;
 using RedVentures.Bot_O_Mat.API.Services;
+using System.Globalization;
 
 namespace RedVentures.Bot_O_Mat.API.Controllers
 {
@@ -30,6 +32,11 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
             _notificationHub = notificationHub;
         }
         #endregion
+
+        [HttpGet]
+        public ActionResult GetErrands() => Ok(Enum.GetValues(typeof(ErrandType)).Cast<ErrandType>().Select(e => 
+            new { errand = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(e.ToString().Replace('_', ' ')), value = (int)e })
+        );
 
         [HttpPost]
         public async Task<ActionResult<PerformErrandResultViewModel>> Post([FromBody] PerformErrandViewModel performErrandViewModel)
@@ -53,12 +60,12 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
 
         private async Task NotifyTaskCompleted(PerformErrandResult result)
         {
-            await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{result.PerformingActor.Name} ({Enum.GetName(typeof(ActorType), result.PerformingActor.ActorType)}) completed task: { Enum.GetName(typeof(ErrandType), result.PerformedErrand.Type) }!", SeverityLevel.Success));
+            await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{result.PerformingActor.Name} ({Enum.GetName(typeof(ActorType), result.PerformingActor.ActorType)}) completed task: { Enum.GetName(typeof(ErrandType), result.PerformedErrand.Type).Replace('_', ' ') }!", SeverityLevel.Success));
         }
 
         private async Task NotifyFailedTask(PerformErrandResult result)
         {
-            await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{result.PerformingActor.Name} ({Enum.GetName(typeof(ActorType), result.PerformingActor.ActorType)}) failed task: { Enum.GetName(typeof(ErrandType), result.PerformedErrand.Type) }!", SeverityLevel.Warn));
+            await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{result.PerformingActor.Name} ({Enum.GetName(typeof(ActorType), result.PerformingActor.ActorType)}) failed task: { Enum.GetName(typeof(ErrandType), result.PerformedErrand.Type).Replace('_', ' ') }!", SeverityLevel.Warn));
         }
 
         private async Task NotifyTerminatedUnit(PerformErrandResult result)
@@ -69,7 +76,7 @@ namespace RedVentures.Bot_O_Mat.API.Controllers
 
         private async Task NotifyTaskStarted(Data.DbSets.ErrandActor actor, PerformErrandViewModel errand)
         {
-            await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{actor.Name} ({Enum.GetName(typeof(ActorType), actor.ActorType)}) has started task: { Enum.GetName(typeof(ErrandType), errand.ErrandType) }!", SeverityLevel.Info));
+            await _notificationHub.Clients.All.SendAsync("Notify", new Notification($"{actor.Name} ({Enum.GetName(typeof(ActorType), actor.ActorType)}) has started task: { Enum.GetName(typeof(ErrandType), errand.ErrandType).Replace('_',' ') }!", SeverityLevel.Info));
         }
         #endregion
     }

@@ -57,7 +57,10 @@ namespace RedVentures.Bot_O_Mat.API
                 app.UseHsts();
             }
 
-            app.UseCors(policy => policy.WithOrigins("https://localhost:44328").AllowAnyMethod().AllowAnyHeader().AllowCredentials());
+            app.UseCors(policy => policy.WithOrigins(
+                "https://localhost:44328", // Razor
+                "https://localhost:44312" // Angular
+            ).AllowAnyMethod().AllowAnyHeader().AllowCredentials());
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();

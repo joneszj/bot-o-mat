@@ -27,7 +27,7 @@ namespace RedVentures.Bot_O_Mat.API.Services
             var cachedKillers = _helpersManager.Cache.TryGet<Tuple<DateTime, string>, KillBoardRecord[]>(new Tuple<DateTime, string>(DateTime.Today, "killers"), out bool killersFound);
             if (!killersFound) cachedKillers = await RefreshKillersCache();
 
-            return new KillBoardViewModel(cachedKillers);
+            return new KillBoardViewModel(cachedKillers.OrderByDescending(e=>e.KillCount).Take(100).ToArray());
         }
 
         #region helpers
